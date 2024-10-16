@@ -3,7 +3,7 @@
 ## Git command history - заголовок
 md - markdown - файл документация методичка
 
-из директории пректа /Users/a1/Documents/IT/Progects/carTO
+из директории проекта /Users/a1/Documents/IT/Progects/carTO
 
 создали файлик документации
 
