@@ -25,3 +25,8 @@ CREATE TABLE parts (part_id SERIAL PRIMARY KEY, name VARCHAR(200), car_to_servic
 --rollback DROP TABLE car_to_service_shedule;
 --rollback DROP TABLE service_operations;
 --rollback DROP TABLE parts;
+
+--changeset TestUsers_sql:2
+
+--ALTER TABLE service_shedule RENAME to service_schedule;
+--rollback ALTER TABLE service_schedule RENAME to service_shedule;

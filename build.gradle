@@ -2,6 +2,10 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
+
+	// подключение Hibernate
+	id "org.hibernate.orm" version "6.6.1.Final"
+
 }
 
 group = 'com.github'
@@ -19,11 +23,29 @@ repositories {
 
 dependencies {
 	//здесь перечилены все зависимости, которые задали в конструкторе
+
+
+
+	//implementation platform "org.hibernate.orm:hibernate-platform:6.6.1.Final"
+
+// use the versions from the platform
+	//implementation "org.hibernate.orm:hibernate-core"
+	//implementation "jakarta.transaction:jakarta.transaction-api"
+
+	// подключение javax.persistance - оно понимает синтаксис ORM для работы с базой
+	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+	implementation 'javax.persistence:javax.persistence-api:2.2'
+
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// подключение liquidbase
 	implementation 'org.liquibase:liquibase-core'
-	runtimeOnly 'org.postgresql:postgresql'
+
+	implementation 'org.postgresql:postgresql'
+//	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

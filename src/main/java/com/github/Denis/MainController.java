@@ -13,7 +13,7 @@ public class MainController {
 
     @GetMapping // обработчик get запроса
     public String showStatus() {
-        return "Hello, world!";
+        return "Hello, zavod!";
     }
 
 }
