@@ -21,10 +21,9 @@ public class Car {
 
     //SERIAL PRIMARY KEY, name VARCHAR(50)
 
-//TODO:
-
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Auto> autos;
+    @ManyToOne() //(fetch = FetchType.LAZY)
+    @JoinColumn (name="user_id")
+    private CarUser carUser;
 
 
     public Car() {

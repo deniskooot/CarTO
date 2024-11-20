@@ -26,14 +26,14 @@ CREATE TABLE parts (part_id SERIAL PRIMARY KEY, name VARCHAR(200), car_to_servic
 --rollback DROP TABLE service_operations;
 --rollback DROP TABLE parts;
 
---changeset TestUsers_sql:2
+----changeset TestUsers_sql:2
 
-ALTER TABLE service_shedule RENAME to service_schedule;
-ALTER TABLE service_schedule RENAME COLUMN service_shedule_id TO service_schedule_id;
-ALTER TABLE parts RENAME COLUMN car_to_service_shedule_id TO car_to_service_schedule_id;
+--ALTER TABLE service_shedule RENAME to service_schedule;
+--ALTER TABLE service_schedule RENAME COLUMN service_shedule_id TO service_schedule_id;
 
-
+--ALTER TABLE parts RENAME COLUMN car_to_service_shedule_id TO car_to_service_schedule_id;
 
 --rollback ALTER TABLE parts RENAME COLUMN car_to_service_schedule_id TO car_to_service_shedule_id;
+
 --rollback ALTER TABLE service_schedule RENAME COLUMN service_schedule_id TO service_shedule_id;
 --rollback ALTER TABLE service_schedule RENAME to service_shedule;

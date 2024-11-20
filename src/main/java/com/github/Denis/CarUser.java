@@ -1,6 +1,7 @@
 package com.github.Denis;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "car_users")
@@ -16,10 +17,10 @@ public class CarUser {
 
     //SERIAL PRIMARY KEY, name VARCHAR(50)
 
-//TODO:
-
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Auto> autos;
+    // mapped by указывает на поле в данном классе для связи
+    // orphanRemoval - с английского — "удалять сирот". Если мы удалим юзера из БД — все связанные с ним автомобили также будут удалены.
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Car> cars;
 
 
     public CarUser() {
@@ -38,14 +39,13 @@ public class CarUser {
         return name;
     }
 
-    public void setId(int id){
+    public void setId(int id) {
         this.id = id;
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {
@@ -54,35 +54,5 @@ public class CarUser {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-//    public CarUser(String name, int age) {
-//        this.name = name;
-//        this.age = age;
-//        autos = new ArrayList<>();
-//    }
-//    public void addAuto(Auto auto) {
-//        auto.setUser(this);
-//        autos.add(auto);
-//    }
-//    public void removeAuto(Auto auto) {
-//        autos.remove(auto);
-//    }
-
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//    public int getAge() {
-//        return age;
-//    }
-//    public void setAge(int age) {
-//        this.age = age;
-//    }
-//    public List<Auto> getAutos() {
-//        return autos;
-//    }
-
-//    public void setAutos(List<Auto> autos) {
-//        this.autos = autos;
-//    }
 }
 
