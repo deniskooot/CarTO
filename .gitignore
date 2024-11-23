@@ -36,3 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 pgdata/
+/build_backup_1/
