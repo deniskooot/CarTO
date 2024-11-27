@@ -1,45 +1,50 @@
+// plugins содержит плагины, которые предоставляют необходимые библиотеки и их версии
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.4'
 	id 'io.spring.dependency-management' version '1.1.6'
-
 	// подключение Hibernate
 	id "org.hibernate.orm" version "6.6.1.Final"
-
 }
 
+//Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java
 group = 'com.github'
 version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '1.8'
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
-
+//отвечает за ресурс с которого будут скачаны недостающие библиотеки
 repositories {
 	mavenCentral()
 }
 
+// dependencies - позволяет подключать необходимые нам зависимости, в том числе и стартеры SpringBoot
 dependencies {
 	//здесь перечилены все зависимости, которые задали в конструкторе
-
-
 
 	//implementation platform "org.hibernate.orm:hibernate-platform:6.6.1.Final"
 
 // use the versions from the platform
-	//implementation "org.hibernate.orm:hibernate-core"
+	implementation "org.hibernate.orm:hibernate-core"
 	//implementation "jakarta.transaction:jakarta.transaction-api"
 
 	// подключение javax.persistance - оно понимает синтаксис ORM для работы с базой
 	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
 	implementation 'javax.persistence:javax.persistence-api:2.2'
+	implementation 'org.springframework.boot:spring-boot-starter'
 
+//	зависимость для работы с PEST API
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+//	Data-jpa и postgresql - предоставляют набор библиотек для работы с БД, а конкретно с Postgre.
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// подключение liquidbase
 	implementation 'org.liquibase:liquibase-core'
@@ -50,6 +55,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+//test - говорит о том, что на этапе прогона тестов будет использован JUnit.
 tasks.named('test') {
 	useJUnitPlatform()
 }

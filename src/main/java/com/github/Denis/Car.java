@@ -21,10 +21,15 @@ public class Car {
 
     //SERIAL PRIMARY KEY, name VARCHAR(50)
 
-    @ManyToOne() //(fetch = FetchType.LAZY)
+//    @ManyToOne() //(fetch = FetchType.LAZY)
+//    @JoinColumn (name="user_id")
+//    private CarUser carUser;
+
+//    fetch = FetchType.LAZY говорит, что это ленивая инициализация. То есть данные из таблицы address будут загружаться по этому ключу только в том случае, когда к ним обратятся.
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name="user_id")
     private CarUser carUser;
-
 
     public Car() {
     }

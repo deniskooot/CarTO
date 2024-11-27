@@ -19,9 +19,14 @@ public class CarUser {
 
     // mapped by указывает на поле в данном классе для связи
     // orphanRemoval - с английского — "удалять сирот". Если мы удалим юзера из БД — все связанные с ним автомобили также будут удалены.
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Car> cars;
+//    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
 
+//    private List<Car> cars;
+
+
+@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+//@JoinColumn (name="user_id", foreignKey = @ForeignKey(name = "fk_users_address_id"))
+private List<Car> cars;
 
     public CarUser() {
     }
