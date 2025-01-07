@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE; //= "application/json";
 
 //контроллер - класс с аннотацией @RestController, который умеет что-то выводить на экран
 //@RestController = @Controller + @ResponseBody. Аннотация @Controller умеет слушать, получать и отвечать на запросы.
@@ -15,8 +15,9 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RestController
 
 
-
-//@RequestMapping("/api/v1/cars")
+//@RequestMapping говорит, по какому URL будут доступны наши контроллеры.
+@RequestMapping("/api/v1/cars") // работает //@RequestMapping("/api") - gpt предложил так
+//@RequestMapping("/") //не работает
 
 
 public class CarController {
@@ -30,12 +31,15 @@ public class CarController {
     }
 
 //    @GetMapping - сообщает SpringBoot, что это get метод и он умеет что-то возвращать.
-    @GetMapping //(produces = APPLICATION_JSON_VALUE)
+// APPLICATION_JSON_VALUE говорит о том, что данные возвращаются в формате json
+    @GetMapping (produces = APPLICATION_JSON_VALUE) // = "application/json"; //    @GetMapping("/hello")
 //    public String getName(){
     public List<Car> getAll(){
-        return List.of();
+//        return List.of();
+
 //        return name;
-//        return carRepo.findAll();
+        return carRepo.findAll();
 
     }
+
 }

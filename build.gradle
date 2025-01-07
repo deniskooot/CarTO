@@ -10,7 +10,7 @@ plugins {
 //Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java
 group = 'com.github'
 version = '0.0.1-SNAPSHOT'
-//sourceCompatibility = '1.8'
+//sourceCompatibility = '1.8' // '17' Или другая версия JDK
 
 java {
 	toolchain {
@@ -38,12 +38,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 
 //	зависимость для работы с PEST API
+//	Если вы хотите создать Spring web-приложение, просто добавьте зависимость
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 //	Data-jpa и postgresql - предоставляют набор библиотек для работы с БД, а конкретно с Postgre.
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+//	если вы хотите начать использовать Spring Data JPA для доступа к базе данных
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// подключение liquidbase
@@ -51,6 +53,7 @@ dependencies {
 
 	implementation 'org.postgresql:postgresql'
 //	runtimeOnly 'org.postgresql:postgresql'
+	// boot-starter-test базовой, вместе с boot-strter-web
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
