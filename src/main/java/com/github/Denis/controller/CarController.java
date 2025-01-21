@@ -1,11 +1,13 @@
 package com.github.Denis.controller;
 
 import com.github.Denis.entity.Car;
-import com.github.Denis.entity.CarUser;
 import com.github.Denis.repository.CarRepository;
-import com.github.Denis.repository.CarUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,14 +21,12 @@ import java.util.List;
 // базовый путь для всех запросов в этом контроллере
 @RequestMapping("/api")
 
-public class CarToController {
+public class CarController {
 
-    private final CarUserRepository carUserRepository;
     private final CarRepository carRepository;
 
     @Autowired
-    public CarToController(CarUserRepository carUserRepository, CarRepository carRepository) {
-        this.carUserRepository = carUserRepository;
+    public CarController(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 
@@ -37,12 +37,15 @@ public class CarToController {
     public List<Car> getCar() {
         return carRepository.findAll();
     }
-
-    @GetMapping("/users")
-
-    public List<CarUser> getAllCars(){
-        return carUserRepository.findAll();
+//@PathVariable - подставляет переменную пути
+    @GetMapping("/cars/{id}")
+    public Car getCarByID(@PathVariable int id) {
+        return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
-//    @PostMapping
+    @PostMapping("/cars")
+    public int saveCar(@RequestBody Car car){
+        car = carRepository.save(car);
+        return car.getId();
+    }
 }
