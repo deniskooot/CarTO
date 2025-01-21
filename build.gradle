@@ -7,11 +7,11 @@ plugins {
 	id "org.hibernate.orm" version "6.6.1.Final"
 }
 
-//Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java
+//Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java, targetCompability - какой версией компилировать
 group = 'com.github'
 version = '0.0.1-SNAPSHOT'
-//sourceCompatibility = '1.8' // '17' Или другая версия JDK
 
+// компилим 21 джавой
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
@@ -26,28 +26,13 @@ repositories {
 dependencies {
 	//здесь перечилены все зависимости, которые задали в конструкторе
 
-	//implementation platform "org.hibernate.orm:hibernate-platform:6.6.1.Final"
-
-// use the versions from the platform
-	//hibernate это реализация JPA
-
-	//implementation "jakarta.transaction:jakarta.transaction-api"
-
 	implementation "org.hibernate.orm:hibernate-core"
-//	implementation 'org.hibernate:hibernate-core:5.6.14.Final'
-//
-//	runtimeOnly 'org.postgresql:postgresql:42.5.0'
-
-
 	implementation 'org.springframework.boot:spring-boot-starter'
 
 //	зависимость для работы с PEST API
 //	Если вы хотите создать Spring web-приложение, просто добавьте зависимость
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
-//	Data-jpa и postgresql - предоставляют набор библиотек для работы с БД, а конкретно с Postgre.
-
-	//implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' //бот сказал удалить
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 //	если вы хотите начать использовать Spring Data JPA для доступа к базе данных
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -56,8 +41,7 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core'
 
 	implementation 'org.postgresql:postgresql'
-//	runtimeOnly 'org.postgresql:postgresql'
-	// boot-starter-test базовой, вместе с boot-strter-web
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework:spring-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter'
