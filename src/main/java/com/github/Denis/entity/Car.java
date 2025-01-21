@@ -34,7 +34,7 @@ public class Car {
 //    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 //    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"))
 //    @JoinColumn(name = "user_id", referencedColumnName = "id") // Указываем колонку связи
-    @JoinColumn(name = "user_id", referencedColumnName = "user _id") // Указываем колонку связи
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи
 
 
     private CarUser carUser;
@@ -42,14 +42,14 @@ public class Car {
     public Car() {
     }
 
-//    public Car(int id, String name, int mileage, String notes, CarUser carUser) {
-////        this.id = id;
-//        this.name = name;
-//        //this.userId = userId;
-//        this.mileage = mileage;
-//        this.notes = notes;
-//        this.carUser = carUser;
-//    }
+    public Car(int id, String name, int mileage, String notes, CarUser carUser) {
+//        this.id = id;
+        this.name = name;
+        //this.userId = userId;
+        this.mileage = mileage;
+        this.notes = notes;
+        this.carUser = carUser;
+    }
 
     public int getId() {
         return id;

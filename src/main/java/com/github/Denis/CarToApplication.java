@@ -25,8 +25,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan(basePackages = "com.github.Denis")
 
 @SpringBootApplication
-//@SpringBootApplication(scanBasePackages = "com.github.Denis")
-
 
 public class CarToApplication {
 
