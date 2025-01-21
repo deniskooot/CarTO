@@ -12,14 +12,20 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //Таким образом, вам просто нужно создать класс, аннотированный с помощью @SpringBootApplication, а Spring Boot включит
 // автоматическую настройку и отсканирует ваши ресурсы в текущем пакете:
-@SpringBootApplication
-//@EntityScan("com.github.Denis.*")
-@EnableJpaRepositories("com.github.Denis.*")
+
+//@EntityScan("com.github.Denis")
+// нужен если репозиторий находится в другом пакете
+//@EnableJpaRepositories(basePackages = "com.github.Denis") //"com.github.Denis.*" // basePackages = "com.example.demo.repository"
 
 // Добавление строки запускает поиск в ресурсах файла index.html:
 //@ComponentScan(basePackages = {"com.github.Denis.*"})
 
+@EnableJpaRepositories(basePackages = "com.github.Denis.*")//.repository.*
+@EntityScan(basePackages = "com.github.Denis.entity")
+@ComponentScan(basePackages = "com.github.Denis")
 
+@SpringBootApplication
+//@SpringBootApplication(scanBasePackages = "com.github.Denis")
 
 
 public class CarToApplication {
@@ -30,9 +36,3 @@ public class CarToApplication {
 
 }
 
-
-// Для запуска приложения выполните: ./gradlew bootRun
-// остановка ./gradlew -stop
-//С помощью Postman или curl
-//
-//Отправьте GET-запрос на http://localhost:8080/api/v1/cars

@@ -1,6 +1,6 @@
-package com.github.Denis;
+package com.github.Denis.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -24,17 +24,18 @@ public class CarUser {
 //    private List<Car> cars;
 
 
-@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+@OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = true)
 //@JoinColumn (name="user_id", foreignKey = @ForeignKey(name = "fk_users_address_id"))
+//@JoinColumn (name="user_id", foreignKey = @ForeignKey(name = "car_id"))
 private List<Car> cars;
 
     public CarUser() {
     }
 
-    public CarUser(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+//    public CarUser(int id, String name) {
+////        this.id = id;
+//        this.name = name;
+//    }
 
     public int getId() {
         return id;

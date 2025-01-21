@@ -1,6 +1,6 @@
 //package com.github.Denis;
 //
-//import javax.persistence.*;
+
 //
 //@Entity
 //@Table(name = "car_to_service_schedule")

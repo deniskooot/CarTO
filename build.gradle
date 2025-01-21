@@ -29,12 +29,16 @@ dependencies {
 	//implementation platform "org.hibernate.orm:hibernate-platform:6.6.1.Final"
 
 // use the versions from the platform
-	implementation "org.hibernate.orm:hibernate-core"
+	//hibernate это реализация JPA
+
 	//implementation "jakarta.transaction:jakarta.transaction-api"
 
-	// подключение javax.persistance - оно понимает синтаксис ORM для работы с базой
-	// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
-	implementation 'javax.persistence:javax.persistence-api:2.2'
+	implementation "org.hibernate.orm:hibernate-core"
+//	implementation 'org.hibernate:hibernate-core:5.6.14.Final'
+//
+//	runtimeOnly 'org.postgresql:postgresql:42.5.0'
+
+
 	implementation 'org.springframework.boot:spring-boot-starter'
 
 //	зависимость для работы с PEST API
@@ -43,7 +47,7 @@ dependencies {
 
 //	Data-jpa и postgresql - предоставляют набор библиотек для работы с БД, а конкретно с Postgre.
 
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	//implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' //бот сказал удалить
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 //	если вы хотите начать использовать Spring Data JPA для доступа к базе данных
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -55,6 +59,8 @@ dependencies {
 //	runtimeOnly 'org.postgresql:postgresql'
 	// boot-starter-test базовой, вместе с boot-strter-web
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework:spring-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
