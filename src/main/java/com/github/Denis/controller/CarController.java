@@ -35,15 +35,34 @@ public class CarController {
     public List<Car> getCar() {
         return carRepository.findAll();
     }
-//@PathVariable - подставляет переменную пути
-    @GetMapping("/cars/{id}")
-    public Car getCarByID(@PathVariable int id) {
-        return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
-    }
+//    public String getCar() {
+//        return "carRepository.findAll()";
+//    }
+////@PathVariable - подставляет переменную пути
+//    @GetMapping("/cars/{id}")
+//    public Car getCarByID(@PathVariable int id) {
+//        return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
+////    getReferenceById()
+//    }
+////    Предназначен для создания новой сущности
+//    @PostMapping("/cars")
+//    public int saveNewCar(@RequestBody Car car){
+//        car = carRepository.save(car);
+//        return car.getId();
+//    }
+//       Удаление сущности
+//    @DeleteMapping("/car/{id}")
+//    public void deleteCar(@PathVariable int id){
+//        carRepository.deleteById(id);
+//    }
 
-    @PostMapping("/cars")
-    public int saveCar(@RequestBody Car car){
-        car = carRepository.save(car);
-        return car.getId();
-    }
+    //обновление имеющейся в базе сущности
+//    @PatchMapping("/cars/{id}")
+//    public void updateCarData(@PathVariable int id, Car car){
+//        carRepository.find
+//        Car newCar = getCarByID(id); //findByID
+//        carRepository.save(car);
+//    }
+//    PUT меняет объект целиком
+//    PATCH изменяет отдельные поля ресурса.
 }
