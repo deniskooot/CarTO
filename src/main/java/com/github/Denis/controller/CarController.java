@@ -39,22 +39,27 @@ public class CarController {
 //        return "carRepository.findAll()";
 //    }
 ////@PathVariable - подставляет переменную пути
-//    @GetMapping("/cars/{id}")
-//    public Car getCarByID(@PathVariable int id) {
-//        return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
-////    getReferenceById()
-//    }
+    @GetMapping("/cars/{id}")
+//    TODO:
+//    endpoint возвращает 2 машины, возможно он берет user_id
+    public Car getCarByID(@PathVariable int id) {
+        return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
+//    getReferenceById()
+    }
 ////    Предназначен для создания новой сущности
-//    @PostMapping("/cars")
-//    public int saveNewCar(@RequestBody Car car){
-//        car = carRepository.save(car);
-//        return car.getId();
-//    }
+    @PostMapping("/cars")
+    public int saveNewCar(@RequestBody Car car){
+        car = carRepository.save(car);
+        return car.getId();
+    }
 //       Удаление сущности
-//    @DeleteMapping("/car/{id}")
-//    public void deleteCar(@PathVariable int id){
-//        carRepository.deleteById(id);
-//    }
+//    TODO:
+//    Как проверить DeleteMapping и проверить postmapping
+
+    @DeleteMapping("/car/{id}")
+    public void deleteCar(@PathVariable int id){
+        carRepository.deleteById(id);
+    }
 
     //обновление имеющейся в базе сущности
 //    @PatchMapping("/cars/{id}")
