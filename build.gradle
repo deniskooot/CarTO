@@ -5,6 +5,8 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.6'
 	// подключение Hibernate
 	id "org.hibernate.orm" version "6.6.1.Final"
+
+//	id("io.swagger.core.v3.swagger-gradle-plugin") version "2.2.28"
 }
 
 //Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java, targetCompability - какой версией компилировать
@@ -41,6 +43,25 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core'
 
 	implementation 'org.postgresql:postgresql'
+
+//	compile("io.springfox:springfox-swagger2:2.7.0-SNAPSHOT")
+//	compile("io.springfox:springfox-data-rest:2.7.0-SNAPSHOT")
+//	compile("io.springfox:springfox-swagger-ui:2.7.0-SNAPSHOT")
+//	implementation 'io.swagger.core.v3.swagger-gradle-plugin:io.swagger.core.v3.swagger-gradle-plugin.gradle.plugin'
+
+//	implementation 'org.springdoc:springdoc-openapi-ui:2.8.3' // Swagger UI
+//	implementation 'org.springdoc:springdoc-openapi-data-rest:2.8.3' // Поддержка Spring Data Rest (опционально)
+//	implementation 'org.springdoc:springdoc-openapi-webmvc-core:2.8.3' // Основная поддержка WebMVC
+
+//	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.8.3'
+// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+
+//	imllamentation Swagger on .../swagger-ui/index.html (and smth on ...v3/api-docs)
+//	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+	// if were needs to check start swagger on .../actuator/mappings
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework:spring-test'
