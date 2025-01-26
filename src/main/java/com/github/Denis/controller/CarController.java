@@ -2,6 +2,11 @@ package com.github.Denis.controller;
 
 import com.github.Denis.entity.Car;
 import com.github.Denis.repository.CarRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +25,9 @@ import java.util.List;
 @RequestMapping("/api")
 
 public class CarController {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final CarRepository carRepository;
 
@@ -47,14 +55,18 @@ public class CarController {
 //    getReferenceById()
     }
 ////    Предназначен для создания новой сущности
+    // post mappind не работает 2025-01-26T15:25:03.355+03:00 ERROR 78545 : Servlet.service() for servlet [dispatcherServlet]
+// in context with path [] threw exception [Request processing failed: org.springframework.orm.ObjectOptimisticLockingFailureException:
+// Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect): [com.github.Denis.entity.Car#4]] with root cause
     @PostMapping("/cars")
-    public int saveNewCar(@RequestBody Car car){
+    @Transactional
+//    @Valid - ghjdthztn
+    public int saveNewCar(@RequestBody @Valid Car car){
+
         car = carRepository.save(car);
         return car.getId();
     }
 //       Удаление сущности
-//    TODO:
-//    Как проверить DeleteMapping и проверить postmapping
 
     @DeleteMapping("/car/{id}")
     public void deleteCar(@PathVariable int id){

@@ -1,6 +1,14 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertFalse;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import org.springframework.validation.annotation.Validated;
 
 @Entity
 @Table(name = "cars")
@@ -13,12 +21,15 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
     private int id;
+    @NotBlank(message = "Select name")
     private String name;
 //    @Column(name = "user_id")
 //    private int userId;
 //    Вы используете связь @ManyToOne между Car и CarUser. Однако в классе Car вы также сохраняете поле userId, которое дублирует информацию, содержащуюся в carUser. Это может привести к конфликтам и путанице.
-
+//    валидация
+    @Positive(message = "Millage must bee >0")
     private int mileage;
+    @Nullable
     private String notes;
 
     //SERIAL PRIMARY KEY, name VARCHAR(50)
@@ -43,12 +54,17 @@ public class Car {
     }
 
     public Car(int id, String name, int mileage, String notes, CarUser carUser) {
-//        this.id = id;
+        this.id = id;
         this.name = name;
         //this.userId = userId;
         this.mileage = mileage;
         this.notes = notes;
         this.carUser = carUser;
+    }
+    @JsonIgnore // чтобы в результат GET не выводился (методы начинающиеся с is считаются полями по конвенции)
+    @AssertFalse(message = "BMW millage >1000000 impossible")
+    public boolean isBad(){
+        return this.mileage > 1_000_000 && name.contains("BMW");
     }
 
     public int getId() {
