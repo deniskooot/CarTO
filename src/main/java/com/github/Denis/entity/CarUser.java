@@ -25,8 +25,6 @@ public class CarUser {
 
 
 @OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = true)
-//@JoinColumn (name="user_id", foreignKey = @ForeignKey(name = "fk_users_address_id"))
-//@JoinColumn (name="user_id", foreignKey = @ForeignKey(name = "car_id"))
 private List<Car> cars;
 
     public CarUser() {

@@ -1,3 +1,8 @@
 databaseChangeLog:
   - include:
       file: db/changelog/sqlSchema.sql
+#spring:
+#  datasource:
+#    hikari:
+#      connection-timeout: 3000
+#      maximum-pool-size: 10

@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
@@ -43,9 +42,7 @@ public class CarController {
     public List<Car> getCar() {
         return carRepository.findAll();
     }
-//    public String getCar() {
-//        return "carRepository.findAll()";
-//    }
+
 ////@PathVariable - подставляет переменную пути
     @GetMapping("/cars/{id}")
 //    TODO:
@@ -60,7 +57,7 @@ public class CarController {
 // Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect): [com.github.Denis.entity.Car#4]] with root cause
     @PostMapping("/cars")
     @Transactional
-//    @Valid - ghjdthztn
+//    @Valid - проверяет
     public int saveNewCar(@RequestBody @Valid Car car){
 
         car = carRepository.save(car);

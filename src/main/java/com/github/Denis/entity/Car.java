@@ -3,12 +3,7 @@ package com.github.Denis.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.AssertFalse;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
-import org.springframework.validation.annotation.Validated;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "cars")
@@ -23,32 +18,20 @@ public class Car {
     private int id;
     @NotBlank(message = "Select name")
     private String name;
-//    @Column(name = "user_id")
-//    private int userId;
-//    Вы используете связь @ManyToOne между Car и CarUser. Однако в классе Car вы также сохраняете поле userId, которое дублирует информацию, содержащуюся в carUser. Это может привести к конфликтам и путанице.
-//    валидация
-    @Positive(message = "Millage must bee >0")
+    @PositiveOrZero(message = "Millage must bee >0")
     private int mileage;
     @Nullable
     private String notes;
 
-    //SERIAL PRIMARY KEY, name VARCHAR(50)
-
-//    @ManyToOne() //(fetch = FetchType.LAZY)
-//    @JoinColumn (name="user_id")
-//    private CarUser carUser;
-
 //    fetch = FetchType.LAZY говорит, что это ленивая инициализация. То есть данные из таблицы address будут загружаться по этому ключу только в том случае, когда к ним обратятся.
 
-    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn (name="user_id")
-//    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-//    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"))
+
+    //    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"))
 //    @JoinColumn(name = "user_id", referencedColumnName = "id") // Указываем колонку связи
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
     private CarUser carUser;
+
 
     public Car() {
     }
