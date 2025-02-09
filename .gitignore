@@ -37,3 +37,4 @@ out/
 .vscode/
 pgdata/
 /build_backup_1/
+.env
