@@ -37,3 +37,13 @@ ALTER TABLE parts RENAME COLUMN car_to_service_shedule_id TO car_to_service_sche
 --rollback ALTER TABLE parts RENAME COLUMN car_to_service_schedule_id TO car_to_service_shedule_id;
 --rollback ALTER TABLE service_schedule RENAME COLUMN service_schedule_id TO service_shedule_id;
 --rollback ALTER TABLE service_schedule RENAME to service_shedule;
+
+--changeset TestUsers_sql:3 context:"change table names"
+
+ALTER TABLE service_schedule RENAME TO service_schedules;
+ALTER TABLE car_to_service_schedule RENAME TO car_to_service_schedules;
+
+--rollback ALTER TABLE service_schedules RENAME TO service_schedule;
+--rollback ALTER TABLE car_to_service_schedules RENAME TO car_to_service_schedule;
+
+
