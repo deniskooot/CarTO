@@ -38,3 +38,5 @@ out/
 pgdata/
 /build_backup_1/
 .env
+
+src/main/java/com/github/Denis/trash/
