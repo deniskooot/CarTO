@@ -18,7 +18,7 @@ public class Car {
     private int id;
     @NotBlank(message = "Select name")
     private String name;
-    @PositiveOrZero(message = "Millage must bee >0")
+    @PositiveOrZero(message = "Millage must bee >=0")
     private int mileage;
     @Nullable
     private String notes;
