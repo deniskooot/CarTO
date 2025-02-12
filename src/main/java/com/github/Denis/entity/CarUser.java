@@ -1,6 +1,8 @@
 package com.github.Denis.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 @Entity
@@ -11,6 +13,7 @@ public class CarUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int id;
+    @NotBlank(message = "Select name")
     @Column(name = "name")
     private String name;
     //можно не указывать Column name, если оно совпадает с названием столбца в таблице

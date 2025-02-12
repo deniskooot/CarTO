@@ -1,0 +1,85 @@
+package com.github.Denis.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
+@Entity
+@Table(name = "parts")
+public class Part {
+
+    // TABLE parts (part_id SERIAL PRIMARY KEY, name VARCHAR(200), car_to_service_schedule_id INT, part_number_original VARCHAR(50), part_number_analogs VARCHAR(400), notes VARCHAR(1000),
+// FOREIGN KEY (car_to_service_shedule_id) REFERENCES  car_to_service_schedule (car_to_service_schedule_id));
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "part_id")
+    private int id;
+    @NotBlank(message = "Select name")
+    private String name;
+    private String part_number_original;
+    private String part_number_analogs;
+    private String notes;
+
+    //    car_to_service_schedule_id
+    Part() {
+
+    }
+
+    Part(int id, String name, String part_number_original, String part_number_analogs, String notes) {
+        this.id = id;
+        this.name = name;
+        this.part_number_original = part_number_original;
+        this.part_number_analogs = part_number_analogs;
+        this.notes = notes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public @NotBlank(message = "Select name") String getName() {
+        return name;
+    }
+
+    public void setName(@NotBlank(message = "Select name") String name) {
+        this.name = name;
+    }
+
+    public String getPart_number_original() {
+        return part_number_original;
+    }
+
+    public void setPart_number_original(String part_number_original) {
+        this.part_number_original = part_number_original;
+    }
+
+    public String getPart_number_analogs() {
+        return part_number_analogs;
+    }
+
+    public void setPart_number_analogs(String part_number_analogs) {
+        this.part_number_analogs = part_number_analogs;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return "Part{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", part_number_original='" + part_number_original + '\'' +
+                ", part_number_analogs='" + part_number_analogs + '\'' +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
+}

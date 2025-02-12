@@ -1,6 +1,8 @@
 package com.github.Denis.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.Duration;
 
@@ -16,8 +18,10 @@ public class ServiceSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_schedule_id")
     private int service_schedule_id;
+    @NotBlank(message = "Select name")
     private String name;
     private boolean is_required;
+    @PositiveOrZero(message = "Default_period must bee >=0")
     private int default_period_km;
 
     @Column(name = "default_period_time_days")

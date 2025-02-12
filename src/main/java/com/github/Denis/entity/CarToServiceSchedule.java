@@ -18,7 +18,6 @@ public class CarToServiceSchedule {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "car_to_service_schedule_id")
         private int id;
-
         private int periodicity_km;
         private Duration periodicity_time_days;
         private String notes;

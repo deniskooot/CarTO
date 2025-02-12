@@ -1,6 +1,7 @@
 package com.github.Denis.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class ServiceOperation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_operation_id")
     private int id;
+    @PositiveOrZero(message = "Millage must bee >=0")
     private int mileage_service_operation;
     //    Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
     @Temporal(TemporalType.DATE)
