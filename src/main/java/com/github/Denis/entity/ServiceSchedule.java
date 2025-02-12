@@ -23,7 +23,6 @@ public class ServiceSchedule {
     @Column(name = "default_period_time_days")
     private Duration default_period_time_days; // (INTERVAL '1095' DAY)
 
-
     public ServiceSchedule(){
 
     }
@@ -37,8 +36,6 @@ public class ServiceSchedule {
     }
 
     // INSERT INTO service_schedule VALUES (2, 'Замена свечей зажигания', true, 30_000, INTERVAL '1095' DAY);
-
-//    SQL-специфичные типы: java.sql.Date, java.sql.Time и java.sql.Timestamp
 
 //    name VARCHAR(100)
 //    is_required BOOLEAN
@@ -81,8 +78,8 @@ public class ServiceSchedule {
         return default_period_time_days;
     }
 
-    public void setDefault_period_time_days(Duration default_period_time_days) {
-        this.default_period_time_days = default_period_time_days;
+    public void setDefault_period_time_days(int default_period_time_days_int) {
+        this.default_period_time_days = Duration.ofDays(default_period_time_days_int);
     }
 }
 
