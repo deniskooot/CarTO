@@ -1,6 +1,11 @@
 
-.git
+.git*
 .idea
-buil*
+.*
+#buil*
 pgdata*
 *.md
+.gradle
+build
+gradle
+buildarchive
