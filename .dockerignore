@@ -2,6 +2,7 @@
 .git*
 .idea
 .*
+*.env
 #buil*
 pgdata*
 *.md

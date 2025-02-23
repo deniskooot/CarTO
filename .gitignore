@@ -37,6 +37,7 @@ out/
 .vscode/
 pgdata/
 /build_backup_1/
-.env
+*.env
+
 
 src/main/java/com/github/Denis/trash/
