@@ -14,9 +14,9 @@ plugins {
 //		)
 //	}
 //}
-bootJar {
-	mainClass = 'com.github.Denis.CarToApplication' // Укажи свой главный класс
-}
+//bootJar {
+//	mainClass = 'com.github.Denis.CarToApplication' // Укажи свой главный класс
+//}
 
 //Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java, targetCompability - какой версией компилировать
 group = 'com.github'
