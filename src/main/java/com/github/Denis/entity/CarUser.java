@@ -1,9 +1,12 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "car_users")
@@ -26,9 +29,10 @@ public class CarUser {
 
 //    private List<Car> cars;
 
-
-@OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = true)
-private List<Car> cars;
+//
+@OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = false)
+@JsonIgnore
+private List<Car> cars = new ArrayList<>();
 
     public CarUser() {
     }
@@ -60,6 +64,19 @@ private List<Car> cars;
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarUser carUser = (CarUser) o;
+        return id == carUser.id && Objects.equals(name, carUser.name) && Objects.equals(cars, carUser.cars);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, cars);
     }
 }
 

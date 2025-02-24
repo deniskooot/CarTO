@@ -5,6 +5,8 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -92,6 +94,19 @@ public class Car {
 //        this.userId = userId;
 //    }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return id == car.id && mileage == car.mileage && Objects.equals(name, car.name) && Objects.equals(notes, car.notes) && Objects.equals(carUser, car.carUser);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, mileage, notes, carUser);
+    }
 
     @Override
     public String toString() {
