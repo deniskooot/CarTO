@@ -30,27 +30,27 @@ public class PartController {
     // Read
     @GetMapping("/parts")
 
-    public List<Part> getCarUser() {
+    public List<Part> getPart() {
         return partRepository.findAll();
     }
 
     // Read by id
     @GetMapping("/parts/{id}")
-    public Part getCarUserByID(@PathVariable int id) {
+    public Part getPartByID(@PathVariable int id) {
         return partRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
     //    Create / Update
     @PostMapping("/parts")
     @Transactional
-    public int saveNewCarUser(@RequestBody @Valid Part part) {
+    public int saveNewPart(@RequestBody @Valid Part part) {
         part = partRepository.save(part);
         return part.getId();
     }
 
     //    Delete
     @DeleteMapping("/parts/{id}")
-    public void deleteCarUser(@PathVariable int id) {
+    public void deletePart(@PathVariable int id) {
         partRepository.deleteById(id);
     }
 
