@@ -41,8 +41,6 @@ public class CarUserController {
     }
 
     //    Create / Update
-//    TODO: не работает uodate, как это было в Car
-//     если мы передаем существующий id сначала срщдавала новую, сейчас выдает 500
     @PostMapping("/carusers")
     @Transactional
     public int saveNewCarUser(@RequestBody @Valid CarUser carUser) {
