@@ -1,5 +1,9 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.Denis.converter.DurationJsonConverter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.Duration;
@@ -19,6 +23,11 @@ public class CarToServiceSchedule {
         @Column(name = "car_to_service_schedule_id")
         private int id;
         private int periodicity_km;
+        /*@JsonSerialize(using = LocalDateTimeSerializer.class)
+        @JsonDeserialize(using = LocalDateTimeDeserializer.class)*/
+        @Schema(type = "integer", format = "int64", example = "10")
+        @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
+        @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
         private Duration periodicity_time_days;
         private String notes;
 
@@ -59,8 +68,8 @@ public class CarToServiceSchedule {
         return periodicity_time_days;
     }
 
-    public void setPeriodicity_time_days(int periodicity_time_days_int) {
-        this.periodicity_time_days = Duration.ofDays(periodicity_time_days_int);
+    public void setPeriodicity_time_days(Duration periodicity_time_days) {
+        this.periodicity_time_days = periodicity_time_days;
     }
 
     public String getNotes() {
@@ -80,4 +89,17 @@ public class CarToServiceSchedule {
                 ", notes='" + notes + '\'' +
                 '}';
     }
+    /*public static class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
+        @Override
+        public void serialize(LocalDateTime arg0, JsonGenerator arg1, SerializerProvider arg2) throws IOException {
+            arg1.writeString(arg0.toString());
+        }
+    }
+
+    public static class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+        @Override
+        public LocalDateTime deserialize(JsonParser arg0, DeserializationContext arg1) throws IOException {
+            return LocalDateTime.parse(arg0.getText());
+        }
+    }*/
 }
