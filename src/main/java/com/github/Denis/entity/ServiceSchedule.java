@@ -1,5 +1,9 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.Denis.converter.DurationJsonConverter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -17,13 +21,15 @@ public class ServiceSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_schedule_id")
-    private int service_schedule_id;
+    private int id;
     @NotBlank(message = "Select name")
     private String name;
     private boolean is_required;
     @PositiveOrZero(message = "Default_period must bee >=0")
     private int default_period_km;
-
+    @Schema(type = "integer", format = "int64", example = "10")
+    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
+    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
     @Column(name = "default_period_time_days")
     private Duration default_period_time_days; // (INTERVAL '1095' DAY)
 
@@ -31,8 +37,8 @@ public class ServiceSchedule {
 
     }
 
-    public ServiceSchedule(int service_schedule_id, String name, boolean is_required, int default_period_km, int default_period_time_days_int){
-        this.service_schedule_id = service_schedule_id;
+    public ServiceSchedule(int id, String name, boolean is_required, int default_period_km, int default_period_time_days_int){
+        this.id = id;
         this.name = name;
         this.is_required = is_required;
         this.default_period_km = default_period_km;
@@ -46,12 +52,12 @@ public class ServiceSchedule {
 //    default_period_km INT
 //    default_period_time_days INTERVAL DAY
 
-    public int getService_schedule_id() {
-        return service_schedule_id;
+    public int getId() {
+        return id;
     }
 
-    public void setService_schedule_id(int service_schedule_id) {
-        this.service_schedule_id = service_schedule_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -82,8 +88,8 @@ public class ServiceSchedule {
         return default_period_time_days;
     }
 
-    public void setDefault_period_time_days(int default_period_time_days_int) {
-        this.default_period_time_days = Duration.ofDays(default_period_time_days_int);
+    public void setDefault_period_time_days(Duration default_period_time_days) {
+        this.default_period_time_days = default_period_time_days;
     }
 }
 
