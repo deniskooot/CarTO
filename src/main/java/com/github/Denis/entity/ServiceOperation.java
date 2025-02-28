@@ -5,6 +5,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Date;
 
+// service_operations (service_operation_id SERIAL PRIMARY KEY, car_to_service_schedule_id INT, mileage_service_operation INT, date_service_operation DATE, notes VARCHAR(1000),
+//CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
+
 @Entity
 @Table(name = "service_operations")
 public class ServiceOperation {
@@ -20,11 +23,6 @@ public class ServiceOperation {
     private Date date_service_operation;
     private String notes;
 
-//    car_to_service_schedule_id
-
-//  TABLE service_operations
-//  (service_operation_id SERIAL PRIMARY KEY, car_to_service_schedule_id INT, mileage_service_operation INT, date_service_operation DATE, notes VARCHAR(1000),
-//  FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedule (car_to_service_schedule_id));
 
     ServiceOperation() {
     }

@@ -8,15 +8,14 @@ import jakarta.persistence.*;
 
 import java.time.Duration;
 
+// car_to_service_schedules (car_to_service_schedule_id SERIAL PRIMARY KEY, service_schedule_id INT, car_id INT, periodicity_km INT, periodicity_time_days INTERVAL DAY, notes VARCHAR(200),
+//        CONSTRAINT service_schedule_id_fk FOREIGN KEY (service_schedule_id) REFERENCES service_schedules (service_schedule_id),
+//        CONSTRAINT car_id_fk FOREIGN KEY (car_id) REFERENCES cars (car_id);
+
 @Entity
 @Table(name = "car_to_service_schedules")
 
 public class CarToServiceSchedule {
-
-// TABLE car_to_service_schedules
-// (car_to_service_schedule_id SERIAL PRIMARY KEY, service_schedule_id INT, car_id INT, periodicity_km INT, periodicity_time_days INTERVAL DAY, notes VARCHAR(200),
-// FOREIGN KEY (service_shedule_id)
-// REFERENCES service_shedule (service_shedule_id), FOREIGN KEY (car_id) REFERENCES cars (car_id));
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

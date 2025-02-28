@@ -10,11 +10,10 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.Duration;
 
+//service_schedules (service_schedule_id SERIAL PRIMARY KEY, name VARCHAR(100), is_required BOOLEAN, default_period_km INT, default_period_time_days INTERVAL DAY);
+
 @Entity
 @Table(name = "service_schedules")
-
-//CREATE TABLE service_shedule (service_shedule_id SERIAL PRIMARY KEY, name VARCHAR(100), is_required BOOLEAN, default_period_km INT, default_period_time_days INTERVAL DAY);
-//ALTER TABLE service_schedule RENAME COLUMN service_shedule_id TO service_schedule_id;
 
 public class ServiceSchedule {
 

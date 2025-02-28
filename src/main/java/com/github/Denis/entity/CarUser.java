@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// car_users (user_id SERIAL PRIMARY KEY, name VARCHAR(50));
+
 @Entity
 @Table(name = "car_users")
 public class CarUser {

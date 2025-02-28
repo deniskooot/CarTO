@@ -47,3 +47,39 @@ ALTER TABLE car_to_service_schedule RENAME TO car_to_service_schedules;
 --rollback ALTER TABLE car_to_service_schedules RENAME TO car_to_service_schedule;
 
 
+--changeset TestUsers_sql:4 context:"Rename shedule and change wrong Foreign key which didn't renamed while rename columns"
+
+ALTER TABLE car_to_service_schedules RENAME COLUMN service_shedule_id TO service_schedule_id;
+ALTER TABLE car_to_service_schedules DROP CONSTRAINT car_to_service_schedule_service_shedule_id_fkey;
+ALTER TABLE car_to_service_schedules ADD CONSTRAINT service_schedule_id_fk FOREIGN KEY (service_schedule_id) REFERENCES service_schedules (service_schedule_id);
+
+ALTER TABLE parts DROP CONSTRAINT parts_car_to_service_shedule_id_fkey;
+ALTER TABLE parts ADD CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
+
+ALTER TABLE service_operations DROP CONSTRAINT service_operations_car_to_service_schedule_id_fkey;
+ALTER TABLE service_operations ADD CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
+
+--rollback ALTER TABLE car_to_service_schedules RENAME COLUMN service_schedule_id TO service_shedule_id;
+--rollback ALTER TABLE car_to_service_schedules DROP CONSTRAINT car_to_service_schedule_service_shedule_id_fkey;
+--rollback ALTER TABLE car_to_service_schedules ADD FOREIGN KEY (service_shedule_id) REFERENCES service_shedule (service_shedule_id);
+
+--rollback ALTER TABLE parts DROP CONSTRAINT car_to_service_schedule_id_fk;
+--rollback ALTER TABLE parts ADD FOREIGN KEY (car_to_service_shedule_id) REFERENCES car_to_service_schedule (car_to_service_schedule_id);
+
+--rollback ALTER TABLE service_operations DROP CONSTRAINT car_to_service_schedule_id_fk;
+--rollback ALTER TABLE service_operations ADD FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedule (car_to_service_schedule_id));
+
+
+--changeset TestUsers_sql:5 context:"Rename car_to_service_schedules, cars Foreign key for custom names"
+
+ALTER TABLE car_to_service_schedules DROP CONSTRAINT car_to_service_schedule_car_id_fkey;
+ALTER TABLE car_to_service_schedules ADD CONSTRAINT car_id_fk FOREIGN KEY (car_id) REFERENCES cars (car_id);
+
+ALTER TABLE cars DROP CONSTRAINT car_user_id_fkey;
+ALTER TABLE cars ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES car_users (user_id);
+
+--rollback ALTER TABLE cars DROP CONSTRAINT user_id_fk;
+--rollback ALTER TABLE cars ADD FOREIGN KEY (user_id) REFERENCES car_users (user_id);
+
+--rollback ALTER TABLE car_to_service_schedules DROP CONSTRAINT car_id_fk;
+--rollback ALTER TABLE car_to_service_schedules ADD FOREIGN KEY (car_id) REFERENCES cars (car_id);

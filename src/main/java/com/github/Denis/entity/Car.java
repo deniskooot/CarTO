@@ -7,12 +7,12 @@ import jakarta.validation.constraints.*;
 
 import java.util.Objects;
 
+//    cars (car_id SERIAL PRIMARY KEY, name VARCHAR(50), user_id INT, mileage INT, notes VARCHAR(1000),
+//    CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES car_users (user_id);
+
 @Entity
 @Table(name = "cars")
 public class Car {
-
-    // car_id SERIAL PRIMARY KEY, name VARCHAR(50), user_id INT, mileage INT, notes VARCHAR(1000),
-    // FOREIGN KEY (user_id) REFERENCES  car_user(user_id)
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
