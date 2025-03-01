@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.Duration;
+import java.util.List;
 
 // car_to_service_schedules (car_to_service_schedule_id SERIAL PRIMARY KEY, service_schedule_id INT, car_id INT, periodicity_km INT, periodicity_time_days INTERVAL DAY, notes VARCHAR(200),
 //        CONSTRAINT service_schedule_id_fk FOREIGN KEY (service_schedule_id) REFERENCES service_schedules (service_schedule_id),
@@ -17,18 +18,26 @@ import java.time.Duration;
 
 public class CarToServiceSchedule {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "car_to_service_schedule_id")
-        private int id;
-        private int periodicity_km;
-        /*@JsonSerialize(using = LocalDateTimeSerializer.class)
-        @JsonDeserialize(using = LocalDateTimeDeserializer.class)*/
-        @Schema(type = "integer", format = "int64", example = "10")
-        @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
-        @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
-        private Duration periodicity_time_days;
-        private String notes;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "car_to_service_schedule_id")
+    private int id;
+    private int periodicity_km;
+    /*@JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)*/
+    @Schema(type = "integer", format = "int64", example = "10")
+    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
+    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
+    private Duration periodicity_time_days;
+    private String notes;
+
+    //    ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
+    @ManyToOne(fetch = FetchType.LAZY)
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
+    @JoinColumn(name = "car_id", referencedColumnName = "car_id")
+    private Car car;
+
 
 //    service_schedule_id
 //    car_id
@@ -37,15 +46,15 @@ public class CarToServiceSchedule {
 //        @JoinColumn (name="user_id")
 //        private CarUser carUser;
 
-        public CarToServiceSchedule() {
-        }
+    public CarToServiceSchedule() {
+    }
 
-        public CarToServiceSchedule(int id, int periodicity_km, int periodicity_time_days_int, String notes) {
-            this.id = id;
-            this.periodicity_km = periodicity_km;
-            this.periodicity_time_days = Duration.ofDays(periodicity_time_days_int);
-            this.notes = notes;
-        }
+    public CarToServiceSchedule(int id, int periodicity_km, int periodicity_time_days_int, String notes) {
+        this.id = id;
+        this.periodicity_km = periodicity_km;
+        this.periodicity_time_days = Duration.ofDays(periodicity_time_days_int);
+        this.notes = notes;
+    }
 
     public int getId() {
         return id;

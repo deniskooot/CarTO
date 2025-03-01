@@ -5,6 +5,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
 import java.util.Objects;
 
 //    cars (car_id SERIAL PRIMARY KEY, name VARCHAR(50), user_id INT, mileage INT, notes VARCHAR(1000),
@@ -20,9 +21,10 @@ public class Car {
     private int id;
     @NotBlank(message = "Select name")
     private String name;
-    @PositiveOrZero(message = "Millage must bee >=0")
+    @PositiveOrZero(message = "Mileage must bee >=0")
     private int mileage;
-    @Nullable
+    //    @Nullable — не работает валидация на уровне Hibernate, лучше заменить на @Column(nullable = true).
+    @Column(nullable = true)
     private String notes;
 
 //    fetch = FetchType.LAZY говорит, что это ленивая инициализация. То есть данные из таблицы address будут загружаться по этому ключу только в том случае, когда к ним обратятся.
@@ -30,10 +32,16 @@ public class Car {
 
     //    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"))
 //    @JoinColumn(name = "user_id", referencedColumnName = "id") // Указываем колонку связи
+    // ManyToOne CarUser reference, Car is owner reference (Car side is Many).
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    // Указываем колонку связи referencedColumnName - колонка в базе
     private CarUser carUser;
 
+    //    OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
+    private List<CarToServiceSchedule> carToServiceSchedules;
 
     public Car() {
     }
@@ -46,15 +54,17 @@ public class Car {
         this.notes = notes;
         this.carUser = carUser;
     }
+
     @JsonIgnore // чтобы в результат GET не выводился (методы начинающиеся с is считаются полями по конвенции)
     @AssertFalse(message = "BMW millage >1000000 impossible")
-    public boolean isBad(){
+    public boolean isBad() {
         return this.mileage > 1_000_000 && name.contains("BMW");
     }
 
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -62,6 +72,7 @@ public class Car {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -73,19 +84,22 @@ public class Car {
     public int getMileage() {
         return mileage;
     }
-    public void setMileage(int milage){
+
+    public void setMileage(int milage) {
         this.mileage = milage;
     }
 
     public String getNotes() {
         return notes;
     }
-    public void setNotes(String notes){
+
+    public void setNotes(String notes) {
         this.notes = notes;
     }
- public CarUser getCarUser(){
+
+    public CarUser getCarUser() {
         return carUser;
- }
+    }
 // public void setCarUser(CarUser carUser){
 //        this.carUser = carUser;
 // }
