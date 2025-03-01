@@ -35,8 +35,6 @@ public class CarToServiceSchedule {
 
     //    ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @ManyToOne(fetch = FetchType.LAZY)
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
     private Car car;
 
@@ -44,7 +42,6 @@ public class CarToServiceSchedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
     private ServiceSchedule serviceSchedule;
-
 
     //    OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).
     @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
@@ -56,12 +53,6 @@ public class CarToServiceSchedule {
     @JsonIgnore
     private List<Part> parts; // = new ArrayList<>();
 
-//    service_schedule_id
-//    car_id
-
-//        @ManyToOne() //(fetch = FetchType.LAZY)
-//        @JoinColumn (name="user_id")
-//        private CarUser carUser;
 
     public CarToServiceSchedule() {
     }

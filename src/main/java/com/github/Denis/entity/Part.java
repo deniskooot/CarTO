@@ -25,7 +25,6 @@ public class Part {
     @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
     private CarToServiceSchedule carToServiceSchedule;
 
-    //    car_to_service_schedule_id
     Part() {
 
     }

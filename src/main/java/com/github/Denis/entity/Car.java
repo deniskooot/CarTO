@@ -27,12 +27,6 @@ public class Car {
     @Column(nullable = true)
     private String notes;
 
-//    fetch = FetchType.LAZY говорит, что это ленивая инициализация. То есть данные из таблицы address будут загружаться по этому ключу только в том случае, когда к ним обратятся.
-
-
-    //    @JoinTable(name = "CarUser", joinColumns = @JoinColumn(name = "user_id"))
-//    @JoinColumn(name = "user_id", referencedColumnName = "id") // Указываем колонку связи
-    // ManyToOne CarUser reference, Car is owner reference (Car side is Many).
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     // Указываем колонку связи referencedColumnName - колонка в базе
@@ -42,6 +36,7 @@ public class Car {
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = false)
     @JsonIgnore
     private List<CarToServiceSchedule> carToServiceSchedules;
+
 
     public Car() {
     }
