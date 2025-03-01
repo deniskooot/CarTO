@@ -21,7 +21,9 @@ public class Part {
     private String notes;
 
     //    OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
+    private CarToServiceSchedule carToServiceSchedule;
 
     //    car_to_service_schedule_id
     Part() {

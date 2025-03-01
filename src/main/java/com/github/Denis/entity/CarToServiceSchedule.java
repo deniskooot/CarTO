@@ -52,7 +52,9 @@ public class CarToServiceSchedule {
     private List<ServiceOperation> serviceOperations; //= new ArrayList<>();
 
     //    OneToMany Part reference, Part is owner reference (Part side is Many).
-
+    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
+    private List<Part> parts; // = new ArrayList<>();
 
 //    service_schedule_id
 //    car_id
