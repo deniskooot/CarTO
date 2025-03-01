@@ -38,6 +38,16 @@ public class CarToServiceSchedule {
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
     private Car car;
 
+    //    ManyToOne ServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
+    private ServiceSchedule serviceSchedule;
+
+
+    //    OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).
+
+    //    OneToMany Part reference, Part is owner reference (Part side is Many).
+
 
 //    service_schedule_id
 //    car_id

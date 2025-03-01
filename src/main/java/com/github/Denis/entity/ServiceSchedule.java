@@ -1,5 +1,6 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.Denis.converter.DurationJsonConverter;
@@ -9,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.Duration;
+import java.util.List;
 
 //service_schedules (service_schedule_id SERIAL PRIMARY KEY, name VARCHAR(100), is_required BOOLEAN, default_period_km INT, default_period_time_days INTERVAL DAY);
 
@@ -31,6 +33,12 @@ public class ServiceSchedule {
     @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
     @Column(name = "default_period_time_days")
     private Duration default_period_time_days; // (INTERVAL '1095' DAY)
+
+    //    OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
+    @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
+    private List<CarToServiceSchedule> carToServiceSchedules;
+
 
     public ServiceSchedule(){
 

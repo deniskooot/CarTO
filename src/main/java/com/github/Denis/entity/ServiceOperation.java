@@ -23,6 +23,8 @@ public class ServiceOperation {
     private Date date_service_operation;
     private String notes;
 
+    //    OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
+
 
     ServiceOperation() {
     }

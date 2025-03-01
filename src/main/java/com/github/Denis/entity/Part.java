@@ -20,6 +20,9 @@ public class Part {
     private String part_number_analogs;
     private String notes;
 
+    //    OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
+
+
     //    car_to_service_schedule_id
     Part() {
 
