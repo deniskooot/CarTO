@@ -1,5 +1,6 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.Denis.converter.DurationJsonConverter;
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 // car_to_service_schedules (car_to_service_schedule_id SERIAL PRIMARY KEY, service_schedule_id INT, car_id INT, periodicity_km INT, periodicity_time_days INTERVAL DAY, notes VARCHAR(200),
@@ -45,6 +47,9 @@ public class CarToServiceSchedule {
 
 
     //    OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).
+    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
+    private List<ServiceOperation> serviceOperations; //= new ArrayList<>();
 
     //    OneToMany Part reference, Part is owner reference (Part side is Many).
 

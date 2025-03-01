@@ -37,7 +37,7 @@ public class ServiceSchedule {
     //    OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
     @JsonIgnore
-    private List<CarToServiceSchedule> carToServiceSchedules;
+    private List<CarToServiceSchedule> carToServiceSchedules; //= new ArrayList<>();
 
 
     public ServiceSchedule(){
