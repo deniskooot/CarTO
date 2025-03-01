@@ -3,6 +3,8 @@ package com.github.Denis.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import java.util.Objects;
+
 // parts (part_id SERIAL PRIMARY KEY, name VARCHAR(200), car_to_service_schedule_id INT, part_number_original VARCHAR(50), part_number_analogs VARCHAR(400), notes VARCHAR(1000),
 //CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
 
@@ -77,6 +79,14 @@ public class Part {
         this.notes = notes;
     }
 
+    public CarToServiceSchedule getCarToServiceSchedule() {
+        return carToServiceSchedule;
+    }
+
+    public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
+        this.carToServiceSchedule = carToServiceSchedule;
+    }
+
     @Override
     public String toString() {
         return "Part{" +
@@ -86,5 +96,18 @@ public class Part {
                 ", part_number_analogs='" + part_number_analogs + '\'' +
                 ", notes='" + notes + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Part part = (Part) o;
+        return id == part.id && Objects.equals(name, part.name) && Objects.equals(part_number_original, part.part_number_original) && Objects.equals(part_number_analogs, part.part_number_analogs) && Objects.equals(notes, part.notes) && Objects.equals(carToServiceSchedule, part.carToServiceSchedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, part_number_original, part_number_analogs, notes, carToServiceSchedule);
     }
 }

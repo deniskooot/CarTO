@@ -72,9 +72,21 @@ public class Car {
         this.name = name;
     }
 
-//    public int getUserId() {
-//        return userId;
-//    }
+    public CarUser getCarUser() {
+        return carUser;
+    }
+
+    public void setCarUser(CarUser carUser) {
+        this.carUser = carUser;
+    }
+
+    public List<CarToServiceSchedule> getCarToServiceSchedules() {
+        return carToServiceSchedules;
+    }
+
+    public void setCarToServiceSchedules(List<CarToServiceSchedule> carToServiceSchedules) {
+        this.carToServiceSchedules = carToServiceSchedules;
+    }
 
     public int getMileage() {
         return mileage;
@@ -91,17 +103,6 @@ public class Car {
     public void setNotes(String notes) {
         this.notes = notes;
     }
-
-    public CarUser getCarUser() {
-        return carUser;
-    }
-// public void setCarUser(CarUser carUser){
-//        this.carUser = carUser;
-// }
-
-//    public void setUserId(int userId) {
-//        this.userId = userId;
-//    }
 
 
     @Override

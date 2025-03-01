@@ -8,8 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 // car_to_service_schedules (car_to_service_schedule_id SERIAL PRIMARY KEY, service_schedule_id INT, car_id INT, periodicity_km INT, periodicity_time_days INTERVAL DAY, notes VARCHAR(200),
 //        CONSTRAINT service_schedule_id_fk FOREIGN KEY (service_schedule_id) REFERENCES service_schedules (service_schedule_id),
@@ -96,6 +96,38 @@ public class CarToServiceSchedule {
         this.notes = notes;
     }
 
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public ServiceSchedule getServiceSchedule() {
+        return serviceSchedule;
+    }
+
+    public void setServiceSchedule(ServiceSchedule serviceSchedule) {
+        this.serviceSchedule = serviceSchedule;
+    }
+
+    public List<ServiceOperation> getServiceOperations() {
+        return serviceOperations;
+    }
+
+    public void setServiceOperations(List<ServiceOperation> serviceOperations) {
+        this.serviceOperations = serviceOperations;
+    }
+
+    public List<Part> getParts() {
+        return parts;
+    }
+
+    public void setParts(List<Part> parts) {
+        this.parts = parts;
+    }
+
     @Override
     public String toString() {
         return "CarToServiceSchedule{" +
@@ -105,17 +137,17 @@ public class CarToServiceSchedule {
                 ", notes='" + notes + '\'' +
                 '}';
     }
-    /*public static class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
-        @Override
-        public void serialize(LocalDateTime arg0, JsonGenerator arg1, SerializerProvider arg2) throws IOException {
-            arg1.writeString(arg0.toString());
-        }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarToServiceSchedule that = (CarToServiceSchedule) o;
+        return id == that.id && periodicity_km == that.periodicity_km && Objects.equals(periodicity_time_days, that.periodicity_time_days) && Objects.equals(notes, that.notes) && Objects.equals(car, that.car) && Objects.equals(serviceSchedule, that.serviceSchedule) && Objects.equals(serviceOperations, that.serviceOperations) && Objects.equals(parts, that.parts);
     }
 
-    public static class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
-        @Override
-        public LocalDateTime deserialize(JsonParser arg0, DeserializationContext arg1) throws IOException {
-            return LocalDateTime.parse(arg0.getText());
-        }
-    }*/
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, periodicity_km, periodicity_time_days, notes, car, serviceSchedule, serviceOperations, parts);
+    }
 }

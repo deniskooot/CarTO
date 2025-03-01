@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import java.util.Date;
+import java.util.Objects;
 
 // service_operations (service_operation_id SERIAL PRIMARY KEY, car_to_service_schedule_id INT, mileage_service_operation INT, date_service_operation DATE, notes VARCHAR(1000),
 //CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
@@ -70,6 +71,14 @@ public class ServiceOperation {
         this.notes = notes;
     }
 
+    public CarToServiceSchedule getCarToServiceSchedule() {
+        return carToServiceSchedule;
+    }
+
+    public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
+        this.carToServiceSchedule = carToServiceSchedule;
+    }
+
     @Override
     public String toString() {
         return "ServiceOperation{" +
@@ -78,5 +87,18 @@ public class ServiceOperation {
                 ", date_service_operation=" + date_service_operation +
                 ", notes='" + notes + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServiceOperation that = (ServiceOperation) o;
+        return id == that.id && mileage_service_operation == that.mileage_service_operation && Objects.equals(date_service_operation, that.date_service_operation) && Objects.equals(notes, that.notes) && Objects.equals(carToServiceSchedule, that.carToServiceSchedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mileage_service_operation, date_service_operation, notes, carToServiceSchedule);
     }
 }

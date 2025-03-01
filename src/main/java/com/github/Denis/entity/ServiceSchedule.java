@@ -11,6 +11,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 
 //service_schedules (service_schedule_id SERIAL PRIMARY KEY, name VARCHAR(100), is_required BOOLEAN, default_period_km INT, default_period_time_days INTERVAL DAY);
 
@@ -52,13 +53,6 @@ public class ServiceSchedule {
         this.default_period_time_days = Duration.ofDays(default_period_time_days_int);
     }
 
-    // INSERT INTO service_schedule VALUES (2, 'Замена свечей зажигания', true, 30_000, INTERVAL '1095' DAY);
-
-//    name VARCHAR(100)
-//    is_required BOOLEAN
-//    default_period_km INT
-//    default_period_time_days INTERVAL DAY
-
     public int getId() {
         return id;
     }
@@ -97,6 +91,27 @@ public class ServiceSchedule {
 
     public void setDefault_period_time_days(Duration default_period_time_days) {
         this.default_period_time_days = default_period_time_days;
+    }
+
+    public List<CarToServiceSchedule> getCarToServiceSchedules() {
+        return carToServiceSchedules;
+    }
+
+    public void setCarToServiceSchedules(List<CarToServiceSchedule> carToServiceSchedules) {
+        this.carToServiceSchedules = carToServiceSchedules;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServiceSchedule that = (ServiceSchedule) o;
+        return id == that.id && is_required == that.is_required && default_period_km == that.default_period_km && Objects.equals(name, that.name) && Objects.equals(default_period_time_days, that.default_period_time_days) && Objects.equals(carToServiceSchedules, that.carToServiceSchedules);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, is_required, default_period_km, default_period_time_days, carToServiceSchedules);
     }
 }
 
