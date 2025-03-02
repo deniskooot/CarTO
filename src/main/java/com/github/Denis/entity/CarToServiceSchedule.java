@@ -1,6 +1,7 @@
 package com.github.Denis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.Denis.converter.DurationJsonConverter;
@@ -36,11 +37,13 @@ public class CarToServiceSchedule {
     //    ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Car car;
 
     //    ManyToOne ServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ServiceSchedule serviceSchedule;
 
     //    OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).

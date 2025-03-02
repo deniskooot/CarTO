@@ -1,5 +1,6 @@
 package com.github.Denis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -27,6 +28,7 @@ public class ServiceOperation {
     //    OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private CarToServiceSchedule carToServiceSchedule;
 
     ServiceOperation() {

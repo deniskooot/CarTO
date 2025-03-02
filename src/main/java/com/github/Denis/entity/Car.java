@@ -1,7 +1,7 @@
 package com.github.Denis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.annotation.Nullable;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -29,6 +29,7 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     // Указываем колонку связи referencedColumnName - колонка в базе
     private CarUser carUser;
 
