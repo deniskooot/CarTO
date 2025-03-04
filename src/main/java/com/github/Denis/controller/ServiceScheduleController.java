@@ -29,27 +29,27 @@ public class ServiceScheduleController {
     // Read
     @GetMapping("/serviceschedulerepository")
 
-    public List<ServiceSchedule> getServiceOperation() {
+    public List<ServiceSchedule> getServiceSchedule() {
         return serviceScheduleRepository.findAll();
     }
 
     // Read by id
     @GetMapping("/serviceschedulerepository/{id}")
-    public ServiceSchedule getServiceOperationByID(@PathVariable int id) {
+    public ServiceSchedule getServiceScheduleByID(@PathVariable int id) {
         return serviceScheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
     //    Create / Update
     @PostMapping("/serviceschedulerepository")
     @Transactional
-    public int saveNewServiceOperation(@RequestBody @Valid ServiceSchedule serviceSchedule) {
+    public int saveNewServiceSchedule(@RequestBody @Valid ServiceSchedule serviceSchedule) {
         serviceSchedule = serviceScheduleRepository.save(serviceSchedule);
         return serviceSchedule.getId();
     }
 
     //    Delete
     @DeleteMapping("/serviceschedulerepository/{id}")
-    public void deleteServiceOperation(@PathVariable int id) {
+    public void deleteServiceSchedule(@PathVariable int id) {
         serviceScheduleRepository.deleteById(id);
     }
 

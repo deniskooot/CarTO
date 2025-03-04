@@ -45,8 +45,6 @@ public class CarController {
 
 ////@PathVariable - подставляет переменную пути
     @GetMapping("/cars/{id}")
-//    TODO:
-//    endpoint возвращает 2 машины, возможно он берет user_id
     public Car getCarByID(@PathVariable int id) {
         return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
 //    getReferenceById()

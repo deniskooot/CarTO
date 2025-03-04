@@ -30,27 +30,27 @@ public class CarToServiceScheduleController {
     // Read
     @GetMapping("/cartoserviceschedulecontrollers")
 
-    public List<CarToServiceSchedule> getServiceOperation() {
+    public List<CarToServiceSchedule> getCarToServiceSchedule() {
         return carToServiceScheduleRepository.findAll();
     }
 
     // Read by id
     @GetMapping("/cartoserviceschedulecontrollers/{id}")
-    public CarToServiceSchedule getServiceOperationByID(@PathVariable int id) {
+    public CarToServiceSchedule getCarToServiceScheduleByID(@PathVariable int id) {
         return carToServiceScheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
     //    Create / Update
     @PostMapping("/cartoserviceschedulecontrollers")
     @Transactional
-    public int saveNewServiceOperation(@RequestBody @Valid CarToServiceSchedule carToServiceSchedule) {
+    public int saveNewCarToServiceSchedule(@RequestBody @Valid CarToServiceSchedule carToServiceSchedule) {
         carToServiceSchedule = carToServiceScheduleRepository.save(carToServiceSchedule);
         return carToServiceSchedule.getId();
     }
 
     //    Delete
     @DeleteMapping("/cartoserviceschedulecontrollers/{id}")
-    public void deleteServiceOperation(@PathVariable int id) {
+    public void deleteCarToServiceSchedule(@PathVariable int id) {
         carToServiceScheduleRepository.deleteById(id);
     }
 
