@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping
+@RequestMapping("/api")
 public class CarToServiceScheduleController {
 
     @PersistenceContext
@@ -28,20 +28,20 @@ public class CarToServiceScheduleController {
         this.carToServiceScheduleRepository = carToServiceScheduleRepository;
     }
     // Read
-    @GetMapping("/cartoserviceschedulecontrollers")
+    @GetMapping("/cartoserviceschedules")
 
     public List<CarToServiceSchedule> getCarToServiceSchedule() {
         return carToServiceScheduleRepository.findAll();
     }
 
     // Read by id
-    @GetMapping("/cartoserviceschedulecontrollers/{id}")
+    @GetMapping("/cartoserviceschedules/{id}")
     public CarToServiceSchedule getCarToServiceScheduleByID(@PathVariable int id) {
         return carToServiceScheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
     //    Create / Update
-    @PostMapping("/cartoserviceschedulecontrollers")
+    @PostMapping("/cartoserviceschedules")
     @Transactional
     public int saveNewCarToServiceSchedule(@RequestBody @Valid CarToServiceSchedule carToServiceSchedule) {
         carToServiceSchedule = carToServiceScheduleRepository.save(carToServiceSchedule);
@@ -49,7 +49,7 @@ public class CarToServiceScheduleController {
     }
 
     //    Delete
-    @DeleteMapping("/cartoserviceschedulecontrollers/{id}")
+    @DeleteMapping("/cartoserviceschedulecs/{id}")
     public void deleteCarToServiceSchedule(@PathVariable int id) {
         carToServiceScheduleRepository.deleteById(id);
     }

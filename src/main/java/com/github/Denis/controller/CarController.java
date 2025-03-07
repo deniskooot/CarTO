@@ -63,7 +63,7 @@ public class CarController {
     }
 //       Удаление сущности
 
-    @DeleteMapping("/car/{id}")
+    @DeleteMapping("/cars/{id}")
     public void deleteCar(@PathVariable int id){
         carRepository.deleteById(id);
     }

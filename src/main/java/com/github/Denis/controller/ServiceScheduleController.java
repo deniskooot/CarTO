@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api")
 public class ServiceScheduleController {
     @PersistenceContext
     private EntityManager entityManager;
@@ -27,20 +27,20 @@ public class ServiceScheduleController {
     }
 
     // Read
-    @GetMapping("/serviceschedulerepository")
+    @GetMapping("/serviceschedules")
 
     public List<ServiceSchedule> getServiceSchedule() {
         return serviceScheduleRepository.findAll();
     }
 
     // Read by id
-    @GetMapping("/serviceschedulerepository/{id}")
+    @GetMapping("/serviceschedules/{id}")
     public ServiceSchedule getServiceScheduleByID(@PathVariable int id) {
         return serviceScheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
     //    Create / Update
-    @PostMapping("/serviceschedulerepository")
+    @PostMapping("/serviceschedules")
     @Transactional
     public int saveNewServiceSchedule(@RequestBody @Valid ServiceSchedule serviceSchedule) {
         serviceSchedule = serviceScheduleRepository.save(serviceSchedule);
@@ -48,7 +48,7 @@ public class ServiceScheduleController {
     }
 
     //    Delete
-    @DeleteMapping("/serviceschedulerepository/{id}")
+    @DeleteMapping("/serviceschedules/{id}")
     public void deleteServiceSchedule(@PathVariable int id) {
         serviceScheduleRepository.deleteById(id);
     }
