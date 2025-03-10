@@ -16,7 +16,7 @@ import java.util.List;
 //контроллер - класс с аннотацией @RestController, который умеет что-то выводить на экран
 //@RestController = @Controller + @ResponseBody. Аннотация @Controller умеет слушать, получать и отвечать на запросы.
 //А @ResponseBody  дает фреймворку понять, что объект, который вы вернули из метода надо прогнать через HttpMessageConverter, чтобы получить готовое к отправке клиенту представление.
-
+@CrossOrigin(origins = "http://localhost:3000") // Разрешаем фронту
 @RestController
 
 //@RequestMapping говорит, по какому URL будут доступны наши контроллеры.
