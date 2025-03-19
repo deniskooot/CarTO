@@ -2,6 +2,7 @@ package com.github.Denis.controller;
 
 import com.github.Denis.entity.ServiceSchedule;
 import com.github.Denis.repository.ServiceScheduleRepository;
+import com.github.Denis.service.ServiceScheduleService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -16,41 +17,38 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ServiceScheduleController {
-    @PersistenceContext
-    private EntityManager entityManager;
 
-    private final ServiceScheduleRepository serviceScheduleRepository;
+    private final ServiceScheduleService serviceScheduleService;
 
     @Autowired
-    ServiceScheduleController(ServiceScheduleRepository serviceScheduleRepository){
-        this.serviceScheduleRepository = serviceScheduleRepository;
+    ServiceScheduleController(ServiceScheduleService serviceScheduleService) {
+        this.serviceScheduleService = serviceScheduleService;
     }
 
     // Read
     @GetMapping("/serviceschedules")
 
     public List<ServiceSchedule> getServiceSchedule() {
-        return serviceScheduleRepository.findAll();
+        return serviceScheduleService.getServiceSchedule();
     }
 
     // Read by id
     @GetMapping("/serviceschedules/{id}")
     public ServiceSchedule getServiceScheduleByID(@PathVariable int id) {
-        return serviceScheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
+        return serviceScheduleService.getServiceScheduleByID(id);
     }
 
     //    Create / Update
     @PostMapping("/serviceschedules")
     @Transactional
     public int saveNewServiceSchedule(@RequestBody @Valid ServiceSchedule serviceSchedule) {
-        serviceSchedule = serviceScheduleRepository.save(serviceSchedule);
-        return serviceSchedule.getId();
+        return serviceScheduleService.saveNewServiceSchedule(serviceSchedule);
     }
 
     //    Delete
     @DeleteMapping("/serviceschedules/{id}")
     public void deleteServiceSchedule(@PathVariable int id) {
-        serviceScheduleRepository.deleteById(id);
+        serviceScheduleService.deleteServiceSchedule(id);
     }
 
 }
