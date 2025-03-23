@@ -22,6 +22,7 @@ public class ServiceScheduleService {
         this.serviceScheduleRepository = serviceScheduleRepository;
     }
 
+
     //    Read all
     @Transactional
     public List<ServiceSchedule> getServiceSchedule() {

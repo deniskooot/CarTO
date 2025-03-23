@@ -1,16 +1,11 @@
 package com.github.Denis.controller;
 
 import com.github.Denis.entity.ServiceSchedule;
-import com.github.Denis.repository.ServiceScheduleRepository;
 import com.github.Denis.service.ServiceScheduleService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 

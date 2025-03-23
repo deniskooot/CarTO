@@ -1,5 +1,6 @@
 package com.github.Denis.controller;
 
+import com.github.Denis.dto.CarToServiceScheduleDTO;
 import com.github.Denis.entity.CarToServiceSchedule;
 import com.github.Denis.service.CarToServiceScheduleService;
 import jakarta.persistence.EntityManager;
@@ -26,6 +27,7 @@ public class CarToServiceScheduleController {
         this.carToServiceScheduleService = carToServiceScheduleService;
     }
 
+
     // Read
     @GetMapping("/cartoserviceschedules")
     public List<CarToServiceSchedule> getCarToServiceSchedule() {
@@ -41,8 +43,8 @@ public class CarToServiceScheduleController {
     //    Create / Update
     @PostMapping("/cartoserviceschedules")
     @Transactional
-    public int saveNewCarToServiceSchedule(@RequestBody @Valid CarToServiceSchedule carToServiceSchedule) {
-        return carToServiceScheduleService.saveCarToServiceSchedule(carToServiceSchedule);
+    public int saveNewCarToServiceSchedule(@RequestBody @Valid CarToServiceScheduleDTO carToServiceScheduleDTO) {
+        return carToServiceScheduleService.saveCarToServiceSchedule(carToServiceScheduleDTO);
     }
 
     //    Delete

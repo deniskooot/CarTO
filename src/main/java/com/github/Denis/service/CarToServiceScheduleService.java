@@ -1,6 +1,8 @@
 package com.github.Denis.service;
 
+import com.github.Denis.dto.CarToServiceScheduleDTO;
 import com.github.Denis.entity.CarToServiceSchedule;
+import com.github.Denis.mapper.CarToServiceScheduleMapper;
 import com.github.Denis.repository.CarToServiceScheduleRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ import java.util.List;
 public class CarToServiceScheduleService {
 
     private final CarToServiceScheduleRepository carToServiceScheduleRepository;
+    private final CarToServiceScheduleMapper carToServiceScheduleMapper;
 
     @Autowired
-    public CarToServiceScheduleService(CarToServiceScheduleRepository repository) {
+    public CarToServiceScheduleService(CarToServiceScheduleRepository repository, CarToServiceScheduleMapper carToServiceScheduleMapper) {
         this.carToServiceScheduleRepository = repository;
+        this.carToServiceScheduleMapper = carToServiceScheduleMapper;
     }
 
     // Read
@@ -38,8 +42,9 @@ public class CarToServiceScheduleService {
     }
 
     @Transactional
-    public int saveCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
-        return carToServiceScheduleRepository.save(carToServiceSchedule).getId();
+    public int saveCarToServiceSchedule(CarToServiceScheduleDTO dto) {
+        CarToServiceSchedule entity = carToServiceScheduleMapper.toEntity(dto);
+        return carToServiceScheduleRepository.save(entity).getId();
     }
 
 }
