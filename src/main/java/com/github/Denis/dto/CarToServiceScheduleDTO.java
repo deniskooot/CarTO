@@ -7,18 +7,20 @@ public class CarToServiceScheduleDTO {
     private Integer periodicity_time_days;
     private String notes;
     private Integer carId;
-    private Integer serviceScheduleId;
+    private String serviceScheduleName;
+    private boolean isRequired;
 
     public CarToServiceScheduleDTO(){
 
     }
-    public CarToServiceScheduleDTO(Integer id, Integer periodicity_km, Integer periodicity_time_days, String notes, Integer carId, Integer serviceScheduleId) {
+    public CarToServiceScheduleDTO(Integer id, Integer periodicity_km, Integer periodicity_time_days, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
         this.id = id;
         this.periodicity_km = periodicity_km;
         this.periodicity_time_days = periodicity_time_days;
         this.notes = notes;
         this.carId = carId;
-        this.serviceScheduleId = serviceScheduleId;
+        this.serviceScheduleName = serviceScheduleName;
+        this.isRequired = isRequired;
     }
 
     public Integer getId() {
@@ -61,11 +63,19 @@ public class CarToServiceScheduleDTO {
         this.carId = carId;
     }
 
-    public Integer getServiceScheduleId() {
-        return serviceScheduleId;
+    public String getServiceScheduleName() {
+        return serviceScheduleName;
     }
 
-    public void setServiceScheduleId(Integer serviceScheduleId) {
-        this.serviceScheduleId = serviceScheduleId;
+    public void setServiceScheduleName(String serviceScheduleName) {
+        this.serviceScheduleName = serviceScheduleName;
+    }
+
+    public boolean getIsRequired() {
+        return isRequired;
+    }
+
+    public void setIsRequired(boolean required) {
+        isRequired = required;
     }
 }

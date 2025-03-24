@@ -18,7 +18,7 @@ public interface CarToServiceScheduleMapper {
 
     // Преобразование из Entity в DTO
     @Mapping(source = "car.id", target = "carId")
-    @Mapping(source = "serviceSchedule.id", target = "serviceScheduleId")
+//    @Mapping(source = "serviceSchedule.id", target = "serviceScheduleId")
     @Mapping(source = "periodicity_time_days", target = "periodicity_time_days", qualifiedByName = "mapDurationToInteger")
 //    MapStruct автоматически генерирует реализацию этого метода на основе аннотаций @Mapping
 //    В скомпилированном коде будет реальный метод, который берет entity, извлекает из него нужные поля и создает DTO
@@ -26,7 +26,7 @@ public interface CarToServiceScheduleMapper {
 
     // Преобразование из DTO в Entity
     @Mapping(source = "carId", target = "car", qualifiedByName = "mapCarIdToCar")
-    @Mapping(source = "serviceScheduleId", target = "serviceSchedule", qualifiedByName = "mapServiceScheduleIdToServiceSchedule")
+//    @Mapping(source = "serviceScheduleName", target = "serviceSchedule", qualifiedByName = "mapServiceScheduleIdToServiceSchedule")
     @Mapping(source = "periodicity_time_days", target = "periodicity_time_days", qualifiedByName = "mapIntegerToDuration")
     CarToServiceSchedule toEntity(CarToServiceScheduleDTO dto);
     // Метод для преобразования carId в Car
@@ -50,13 +50,13 @@ public interface CarToServiceScheduleMapper {
     }
 
     // Метод для преобразования serviceScheduleId в ServiceSchedule
-    @Named("mapServiceScheduleIdToServiceSchedule")
-    default ServiceSchedule mapServiceScheduleIdToServiceSchedule(Integer id) {
-        if (id == null) return null;
-        ServiceSchedule serviceSchedule = new ServiceSchedule();
-        serviceSchedule.setId(id);
-        return serviceSchedule;
-    }
+//    @Named("mapServiceScheduleIdToServiceSchedule")
+//    default ServiceSchedule mapServiceScheduleIdToServiceSchedule(Integer id) {
+//        if (id == null) return null;
+//        ServiceSchedule serviceSchedule = new ServiceSchedule();
+//        serviceSchedule.setId(id);
+//        return serviceSchedule;
+//    }
 
 }
 
