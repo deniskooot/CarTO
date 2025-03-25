@@ -6,6 +6,7 @@ import com.github.Denis.entity.ServiceSchedule;
 import com.github.Denis.mapper.CarToServiceScheduleMapper;
 import com.github.Denis.repository.CarToServiceScheduleRepository;
 import com.github.Denis.repository.ServiceScheduleRepository;
+import com.github.Denis.utils.StringUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -53,7 +54,7 @@ public class CarToServiceScheduleService {
         CarToServiceSchedule carToServiceSchedule;
         int serviceScheduleId;
 //        спросили есть ли в базе запись с такой строкой
-        Optional<ServiceSchedule> findName = serviceScheduleRepository.findByName(dto.getServiceScheduleName().trim());
+        Optional<ServiceSchedule> findName = serviceScheduleRepository.findByNameIgnoreCase(dto.getServiceScheduleName().trim());
 
 
         if (findName.isPresent()) {
@@ -63,7 +64,8 @@ public class CarToServiceScheduleService {
         } else {
             // если такой работы в базе нет, создаем новую запись
             ServiceSchedule newServiceSchedule = new ServiceSchedule();
-            newServiceSchedule.setName(dto.getServiceScheduleName().trim());
+//            Приводим первый символ строки в верхний регистр
+            newServiceSchedule.setName(StringUtils.capitalizeFirstLetter(dto.getServiceScheduleName().trim()));
             newServiceSchedule.setDefault_period_km(dto.getPeriodicity_km());
             newServiceSchedule.setDefault_period_time_days(Duration.ofDays(dto.getPeriodicity_time_days()));
             newServiceSchedule.setIs_required(dto.getIsRequired());

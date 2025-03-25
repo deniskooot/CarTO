@@ -13,5 +13,5 @@ public interface ServiceScheduleRepository extends JpaRepository<ServiceSchedule
 //    Optional<ServiceSchedule> — метод вернёт объект ServiceSchedule, если он найден, или Optional.empty(), если нет.
 //findByName(String name) — Spring Data JPA сам сгенерирует SQL-запрос:
 //    SELECT * FROM service_schedule WHERE name = ? LIMIT 1;
-    Optional<ServiceSchedule> findByName(String name);
+    Optional<ServiceSchedule> findByNameIgnoreCase(String name);
 }
