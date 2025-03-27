@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,6 +28,15 @@ public class ServiceScheduleService {
     @Transactional
     public List<ServiceSchedule> getServiceSchedule() {
         return serviceScheduleRepository.findAll();
+    }
+
+    @Transactional
+    public List<String> getServiceScheduleNames(){
+        List<String> serviceScheduleNames = new ArrayList<>();
+        for (ServiceSchedule ss : serviceScheduleRepository.findAll()) {
+            serviceScheduleNames.add(ss.getName());
+        }
+        return serviceScheduleNames;
     }
 
     // Read by id

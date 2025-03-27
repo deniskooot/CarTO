@@ -14,4 +14,8 @@ public interface ServiceScheduleRepository extends JpaRepository<ServiceSchedule
 //findByName(String name) — Spring Data JPA сам сгенерирует SQL-запрос:
 //    SELECT * FROM service_schedule WHERE name = ? LIMIT 1;
     Optional<ServiceSchedule> findByNameIgnoreCase(String name);
+
+//    Optional<String> getNames();
+
 }
+

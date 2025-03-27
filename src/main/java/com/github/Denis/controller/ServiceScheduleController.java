@@ -27,6 +27,12 @@ public class ServiceScheduleController {
         return serviceScheduleService.getServiceSchedule();
     }
 
+    @GetMapping("/serviceschedulenames")
+
+    public List<String> getServiceScheduleNames(){
+        return serviceScheduleService.getServiceScheduleNames();
+    }
+
     // Read by id
     @GetMapping("/serviceschedules/{id}")
     public ServiceSchedule getServiceScheduleByID(@PathVariable int id) {
