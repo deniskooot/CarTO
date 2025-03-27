@@ -1,36 +1,39 @@
 package com.github.Denis.utils;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class StringUtils {
 
-    private static final Set<String> ABBREVIATIONS = new HashSet<>(Arrays.asList(
-            "ГРМ", "МБ", "ABS", "ESP", "АКПП", "МКПП"
-    ));
+    private static final Map<String, String> ABBREVIATIONS_MAP = createAbbreviationsMap();
+
+    private static Map<String, String> createAbbreviationsMap(){
+        Set<String> abbreviations = Set.of("ГРМ", "МБ", "ABS", "ESP", "АКПП", "МКПП");
+        Map<String, String> map = new HashMap<>();
+        for (String abbr : abbreviations){
+            map.put(abbr.toLowerCase(), abbr.toUpperCase());
+        }
+        return map;
+    }
 
     private StringUtils(){}
 
-    public static String normalizeServiceScheduleName(String input){
-        if (input == null || input.isEmpty()){
-            return input;
-        }
-        String result = capitalizeFirstLetter(input);
-        for (String abbr: ABBREVIATIONS) {
+    public static String normalizeServiceScheduleName(String input) {
+        if (input == null || input.isEmpty()) return input;
 
-// (?i) — делает регулярное выражение регистронезависимым.
-// \\b — обозначает границы слова, чтобы не заменять части других слов.
-// "аббревиатура" остается в верхнем регистре, если она есть в списке
-
-            result = input.replaceAll("\\b(?)" + abbr + "\\b", abbr);
+//             Разбиваем строку на слова
+//        \\ экранирует обратный слеш в строке Java.
+//          \s в регулярном выражении означает любой пробельный символ (пробел, табуляция и т.д.).
+//          + означает "один или более".
+        String[] words = input.split("\\s+");
+        StringJoiner result = new StringJoiner(" ");
+        for (String word : words) {
+            result.add(normalizeWord(word));
         }
-        return result;
+        String finalResult = result.toString();
+        return finalResult.isEmpty() ? finalResult :
+                Character.toUpperCase(finalResult.charAt(0)) + finalResult.substring(1);
     }
-
-    public static String capitalizeFirstLetter(String input){
-
-        return input.substring(0,1).toUpperCase() + input.substring(1);
+    private static String normalizeWord(String word){
+        return ABBREVIATIONS_MAP.getOrDefault(word.toLowerCase(), word);
     }
 }

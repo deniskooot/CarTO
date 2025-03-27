@@ -51,7 +51,6 @@ public class CarToServiceScheduleService {
     @Transactional
     public int saveCarToServiceSchedule(CarToServiceScheduleDTO dto) {
 //        получили DTO со строкой dto.getServiceScheduleName();
-        CarToServiceSchedule carToServiceSchedule;
         int serviceScheduleId;
 //        спросили есть ли в базе запись с такой строкой
         Optional<ServiceSchedule> findName = serviceScheduleRepository.findByNameIgnoreCase(dto.getServiceScheduleName().trim());
@@ -65,7 +64,7 @@ public class CarToServiceScheduleService {
             // если такой работы в базе нет, создаем новую запись
             ServiceSchedule newServiceSchedule = new ServiceSchedule();
 //            Приводим первый символ строки в верхний регистр
-            newServiceSchedule.setName(StringUtils.capitalizeFirstLetter(dto.getServiceScheduleName().trim()));
+            newServiceSchedule.setName(StringUtils.normalizeServiceScheduleName(dto.getServiceScheduleName().trim()));
             newServiceSchedule.setDefault_period_km(dto.getPeriodicity_km());
             newServiceSchedule.setDefault_period_time_days(Duration.ofDays(dto.getPeriodicity_time_days()));
             newServiceSchedule.setIs_required(dto.getIsRequired());
