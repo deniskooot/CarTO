@@ -31,7 +31,7 @@ public class ServiceOperation {
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private CarToServiceSchedule carToServiceSchedule;
 
-    ServiceOperation() {
+    public ServiceOperation() {
     }
 
     ServiceOperation(int id, int mileage_service_operation, Date date_service_operation, String notes) {

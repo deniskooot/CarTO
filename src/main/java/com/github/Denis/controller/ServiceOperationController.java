@@ -1,6 +1,8 @@
 package com.github.Denis.controller;
 
+import com.github.Denis.dto.ServiceOperationDTO;
 import com.github.Denis.entity.ServiceOperation;
+import com.github.Denis.mapper.ServiceOperationMapper;
 import com.github.Denis.repository.ServiceOperationsRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -23,9 +25,12 @@ public class ServiceOperationController {
 
     private final ServiceOperationsRepository serviceOperationsRepository;
 
+    private final ServiceOperationMapper serviceOperationMapper;
+
     @Autowired
-    ServiceOperationController(ServiceOperationsRepository serviceOperationsRepository){
+    ServiceOperationController(ServiceOperationsRepository serviceOperationsRepository, ServiceOperationMapper serviceOperationMapper){
         this.serviceOperationsRepository = serviceOperationsRepository;
+        this.serviceOperationMapper = serviceOperationMapper;
     }
 
     // Read
@@ -44,8 +49,9 @@ public class ServiceOperationController {
     //    Create / Update
     @PostMapping("/serviceoperations")
     @Transactional
-    public int saveNewServiceOperation(@RequestBody @Valid ServiceOperation serviceOperation) {
-        serviceOperation = serviceOperationsRepository.save(serviceOperation);
+    public int saveNewServiceOperation(@RequestBody @Valid ServiceOperationDTO serviceOperationDTO) {
+        ServiceOperation entity = serviceOperationMapper.toEntity(serviceOperationDTO);
+        ServiceOperation serviceOperation = serviceOperationsRepository.save(entity);
         return serviceOperation.getId();
     }
 
