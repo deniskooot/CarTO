@@ -11,12 +11,14 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface ServiceOperationMapper {
 
+
+
 //    toDTO
-    @Mapping(source = "carToServiceSchedule.id", target = "carToServiceScheduleId")
+    @Mapping(source = "carToServiceSchedule.id", target = "car_to_service_schedule_id")
     ServiceOperationDTO toDTO(ServiceOperation serviceOperation);
 
 //    toEntity
-    @Mapping(source = "carToServiceScheduleId", target = "carToServiceSchedule", qualifiedByName = "mapServiceOperationIdByServiceOperation")
+    @Mapping(source = "car_to_service_schedule_id", target = "carToServiceSchedule", qualifiedByName = "mapCarToServiceIdByServiceSchedule")
 //    @Mapping(source = "id", target = "id")
     @Mapping(source = "mileageServiceOperation", target = "mileage_service_operation")
     @Mapping(source = "dateServiceOperation", target = "date_service_operation")
@@ -24,27 +26,35 @@ public interface ServiceOperationMapper {
 
 
 
-    @Named("mapServiceOperationIdByServiceOperation")
-    default CarToServiceSchedule mapServiceOperationIdByServiceOperation(Integer id){
-        if (id == null) return null;
+    @Named("mapCarToServiceIdByServiceSchedule")
+    default CarToServiceSchedule mapCarToServiceIdByServiceSchedule(Integer car_to_service_schedule_id){
+        if (car_to_service_schedule_id == null) return null;
         CarToServiceSchedule carToServiceSchedule = new CarToServiceSchedule();
-        carToServiceSchedule.setId(id);
+        carToServiceSchedule.setId(car_to_service_schedule_id);
         return carToServiceSchedule;
     }
 
-//    private Integer id;
-//    private Integer mileageServiceOperation;
-//    private Date dateServiceOperation;
-//    private String notes;
-//    private Integer carToServiceScheduleId;
+//    Entity:
 
+//    private int id;=
+//    private int mileage_service_operation;+
+//    private Date date_service_operation;+
+//    private String notes;=
+//    private CarToServiceSchedule carToServiceSchedule;+
+
+//    DTO:
+
+//    private Integer id;=
+//    private Integer car_to_service_schedule_id;+
+//    private Integer mileageServiceOperation;+
+//    private Date dateServiceOperation;+
+//    private String notes;=
 
 //    React:
 
-//    car_id: 0,
-//    serviceScheduleId: 0,
-//    mileage_service_operation: 0,
-//    date_service_operation: "2025-04-01", //"YYYY-MM-DD"
-//    notes: ""
+//    car_to_service_schedule_id: number;
+//    mileageServiceOperation: number;
+//    dateServiceOperation: string; //"YYYY-MM-DD"
+//    notes?: string;
 
 }

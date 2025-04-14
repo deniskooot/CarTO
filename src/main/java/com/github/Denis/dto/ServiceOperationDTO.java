@@ -4,34 +4,23 @@ import java.util.Date;
 
 public class ServiceOperationDTO {
 
-//        @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "service_operation_id")
+
     private Integer id;
-//    @PositiveOrZero(message = "Millage must bee >=0")
+    private Integer car_to_service_schedule_id;
     private Integer mileageServiceOperation;
-//    //    Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
-//    @Temporal(TemporalType.DATE)
     private Date dateServiceOperation;
     private String notes;
-//
-//    //    OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
-//    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    private Integer carToServiceScheduleId;
-//    private CarToServiceSchedule carToServiceSchedule;
 
     public ServiceOperationDTO(){
 
     }
 
-    public ServiceOperationDTO(Integer id, Integer mileageServiceOperation, Date dateServiceOperation, String notes, Integer carToServiceScheduleId) {
+    public ServiceOperationDTO(Integer id, Integer car_to_service_schedule_id, Integer mileageServiceOperation, Date dateServiceOperation, String notes) {
         this.id = id;
+        this.car_to_service_schedule_id = car_to_service_schedule_id;
         this.mileageServiceOperation = mileageServiceOperation;
         this.dateServiceOperation = dateServiceOperation;
         this.notes = notes;
-        this.carToServiceScheduleId = carToServiceScheduleId;
     }
 
     public Integer getId() {
@@ -40,6 +29,14 @@ public class ServiceOperationDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getCar_to_service_schedule_id() {
+        return car_to_service_schedule_id;
+    }
+
+    public void setCar_to_service_schedule_id(Integer car_to_service_schedule_id) {
+        this.car_to_service_schedule_id = car_to_service_schedule_id;
     }
 
     public Integer getMileageServiceOperation() {
@@ -64,13 +61,5 @@ public class ServiceOperationDTO {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public Integer getCarToServiceScheduleId() {
-        return carToServiceScheduleId;
-    }
-
-    public void setCarToServiceScheduleId(Integer carToServiceScheduleId) {
-        this.carToServiceScheduleId = carToServiceScheduleId;
     }
 }
