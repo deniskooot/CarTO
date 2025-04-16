@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 
@@ -52,5 +53,12 @@ public class CarToServiceScheduleController {
     public void deleteCarToServiceSchedule(@PathVariable int id) {
         carToServiceScheduleService.deleteCarToServiceSchedule(id);
     }
+
+    // Get for list of works to schedule history page on front (by selected car)
+    @GetMapping("/service-schedule-history-list/{car_id}")
+    public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int car_id){
+        return carToServiceScheduleService.getServiceScheduleListForHistoryForm(car_id);
+    }
+
 
 }

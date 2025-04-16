@@ -1,10 +1,13 @@
 package com.github.Denis.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class ServiceOperationDTO {
 
-
+//@JsonNaming()
+    @JsonProperty("id")
     private Integer id;
     private Integer car_to_service_schedule_id;
     private Integer mileageServiceOperation;

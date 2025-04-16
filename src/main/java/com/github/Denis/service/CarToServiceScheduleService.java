@@ -11,10 +11,13 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -84,6 +87,31 @@ public class CarToServiceScheduleService {
         //сохраняем в CarToServiceSchedule entity сущность ServiceSchedule serviceSchedule
         entity.setServiceSchedule(serviceSchedule);
         return carToServiceScheduleRepository.save(entity).getId();
+    }
+
+    @Transactional
+    public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int car_id) {
+        Map<Integer, String> result = new HashMap<>();
+//        carToServiceScheduleRepository.findAll();
+
+        List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
+
+// проверка на null заставляет hibernate впервые обратиться к связи и ее подгрузить. После чего, при следующем обращении lazy связь уже подгружена
+        for (CarToServiceSchedule entity : carToServiceScheduleList) {
+            if (entity.getServiceSchedule() != null) {
+                result.put(entity.getId(), entity.getServiceSchedule().getName());
+
+                // Если name ещё не встречался — добавляем
+//                nameToIdMap.putIfAbsent(name, id);
+            }
+        }
+//        result.putAll();
+//        result.put(1, "s");
+
+
+
+
+        return result;
     }
 
 }
