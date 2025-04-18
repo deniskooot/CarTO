@@ -3,7 +3,6 @@ package com.github.Denis.mapper;
 import com.github.Denis.dto.CarToServiceScheduleDTO;
 import com.github.Denis.entity.Car;
 import com.github.Denis.entity.CarToServiceSchedule;
-import com.github.Denis.entity.ServiceSchedule;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -19,25 +18,24 @@ public interface CarToServiceScheduleMapper {
     // Преобразование из Entity в DTO
     @Mapping(source = "car.id", target = "carId")
 //    @Mapping(source = "serviceSchedule.id", target = "serviceScheduleId")
-    @Mapping(source = "periodicity_time_days", target = "periodicity_time_days", qualifiedByName = "mapDurationToInteger")
+    @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays", qualifiedByName = "mapDurationToInteger")
 //    MapStruct автоматически генерирует реализацию этого метода на основе аннотаций @Mapping
 //    В скомпилированном коде будет реальный метод, который берет entity, извлекает из него нужные поля и создает DTO
     CarToServiceScheduleDTO toDTO(CarToServiceSchedule entity);
 
     // Преобразование из DTO в Entity
     @Mapping(source = "carId", target = "car", qualifiedByName = "mapCarIdToCar")
-//    @Mapping(source = "serviceScheduleName", target = "serviceSchedule", qualifiedByName = "mapServiceScheduleIdToServiceSchedule")
-    @Mapping(source = "periodicity_time_days", target = "periodicity_time_days", qualifiedByName = "mapIntegerToDuration")
+    @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays", qualifiedByName = "mapIntegerToDuration")
     CarToServiceSchedule toEntity(CarToServiceScheduleDTO dto);
-    // Метод для преобразования carId в Car
 
+    // Метод для преобразования carId в Car
     @Named("mapDurationToInteger")
-    default Integer mapDurationToInteger(Duration durationInDays){
-        return durationInDays != null? (int) durationInDays.toDays() : null;
+    default Integer mapDurationToInteger(Duration durationInDays) {
+        return durationInDays != null ? (int) durationInDays.toDays() : null;
     }
 
     @Named("mapIntegerToDuration")
-    default Duration mapIntegerToDuration(Integer integerInDays){
+    default Duration mapIntegerToDuration(Integer integerInDays) {
         return integerInDays != null ? Duration.ofDays(integerInDays) : null;
     }
 
@@ -48,15 +46,6 @@ public interface CarToServiceScheduleMapper {
         car.setId(id);
         return car;
     }
-
-    // Метод для преобразования serviceScheduleId в ServiceSchedule
-//    @Named("mapServiceScheduleIdToServiceSchedule")
-//    default ServiceSchedule mapServiceScheduleIdToServiceSchedule(Integer id) {
-//        if (id == null) return null;
-//        ServiceSchedule serviceSchedule = new ServiceSchedule();
-//        serviceSchedule.setId(id);
-//        return serviceSchedule;
-//    }
 
 }
 

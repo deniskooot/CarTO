@@ -11,50 +11,20 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface ServiceOperationMapper {
 
-
-
-//    toDTO
-    @Mapping(source = "carToServiceSchedule.id", target = "car_to_service_schedule_id")
+    //    toDTO
+    @Mapping(source = "carToServiceSchedule.id", target = "carToServiceScheduleId")
     ServiceOperationDTO toDTO(ServiceOperation serviceOperation);
 
-//    toEntity
-    @Mapping(source = "car_to_service_schedule_id", target = "carToServiceSchedule", qualifiedByName = "mapCarToServiceIdByServiceSchedule")
-//    @Mapping(source = "id", target = "id")
-    @Mapping(source = "mileageServiceOperation", target = "mileage_service_operation")
-    @Mapping(source = "dateServiceOperation", target = "date_service_operation")
+    //    toEntity
+    @Mapping(source = "carToServiceScheduleId", target = "carToServiceSchedule", qualifiedByName = "mapCarToServiceIdByServiceSchedule")
     ServiceOperation toEntity(ServiceOperationDTO serviceOperationDTO);
 
-
-
     @Named("mapCarToServiceIdByServiceSchedule")
-    default CarToServiceSchedule mapCarToServiceIdByServiceSchedule(Integer car_to_service_schedule_id){
+    default CarToServiceSchedule mapCarToServiceIdByServiceSchedule(Integer car_to_service_schedule_id) {
         if (car_to_service_schedule_id == null) return null;
         CarToServiceSchedule carToServiceSchedule = new CarToServiceSchedule();
         carToServiceSchedule.setId(car_to_service_schedule_id);
         return carToServiceSchedule;
     }
-
-//    Entity:
-
-//    private int id;=
-//    private int mileage_service_operation;+
-//    private Date date_service_operation;+
-//    private String notes;=
-//    private CarToServiceSchedule carToServiceSchedule;+
-
-//    DTO:
-
-//    private Integer id;=
-//    private Integer car_to_service_schedule_id;+
-//    private Integer mileageServiceOperation;+
-//    private Date dateServiceOperation;+
-//    private String notes;=
-
-//    React:
-
-//    car_to_service_schedule_id: number;
-//    mileageServiceOperation: number;
-//    dateServiceOperation: string; //"YYYY-MM-DD"
-//    notes?: string;
 
 }

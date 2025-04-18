@@ -1,6 +1,7 @@
 package com.github.Denis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -19,10 +20,12 @@ public class ServiceOperation {
     @Column(name = "service_operation_id")
     private int id;
     @PositiveOrZero(message = "Millage must bee >=0")
-    private int mileage_service_operation;
+    @JsonProperty("mileage_service_operation")
+    private int mileageServiceOperation;
     //    Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
+    @JsonProperty("date_service_operation")
     @Temporal(TemporalType.DATE)
-    private Date date_service_operation;
+    private Date dateServiceOperation;
     private String notes;
 
     //    OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
@@ -34,10 +37,10 @@ public class ServiceOperation {
     public ServiceOperation() {
     }
 
-    ServiceOperation(int id, int mileage_service_operation, Date date_service_operation, String notes) {
+    ServiceOperation(int id, int mileageServiceOperation, Date dateServiceOperation, String notes) {
         this.id = id;
-        this.mileage_service_operation = mileage_service_operation;
-        this.date_service_operation = date_service_operation;
+        this.mileageServiceOperation = mileageServiceOperation;
+        this.dateServiceOperation = dateServiceOperation;
         this.notes = notes;
     }
 
@@ -49,20 +52,20 @@ public class ServiceOperation {
         this.id = id;
     }
 
-    public int getMileage_service_operation() {
-        return mileage_service_operation;
+    public int getMileageServiceOperation() {
+        return mileageServiceOperation;
     }
 
-    public void setMileage_service_operation(int mileage_service_operation) {
-        this.mileage_service_operation = mileage_service_operation;
+    public void setMileageServiceOperation(int mileageServiceOperation) {
+        this.mileageServiceOperation = mileageServiceOperation;
     }
 
-    public Date getDate_service_operation() {
-        return date_service_operation;
+    public Date getDateServiceOperation() {
+        return dateServiceOperation;
     }
 
-    public void setDate_service_operation(Date date_service_operation) {
-        this.date_service_operation = date_service_operation;
+    public void setDateServiceOperation(Date dateServiceOperation) {
+        this.dateServiceOperation = dateServiceOperation;
     }
 
     public String getNotes() {
@@ -85,8 +88,8 @@ public class ServiceOperation {
     public String toString() {
         return "ServiceOperation{" +
                 "id=" + id +
-                ", mileage_service_operation=" + mileage_service_operation +
-                ", date_service_operation=" + date_service_operation +
+                ", mileage_service_operation=" + mileageServiceOperation +
+                ", date_service_operation=" + dateServiceOperation +
                 ", notes='" + notes + '\'' +
                 '}';
     }
@@ -96,11 +99,11 @@ public class ServiceOperation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ServiceOperation that = (ServiceOperation) o;
-        return id == that.id && mileage_service_operation == that.mileage_service_operation && Objects.equals(date_service_operation, that.date_service_operation) && Objects.equals(notes, that.notes) && Objects.equals(carToServiceSchedule, that.carToServiceSchedule);
+        return id == that.id && mileageServiceOperation == that.mileageServiceOperation && Objects.equals(dateServiceOperation, that.dateServiceOperation) && Objects.equals(notes, that.notes) && Objects.equals(carToServiceSchedule, that.carToServiceSchedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, mileage_service_operation, date_service_operation, notes, carToServiceSchedule);
+        return Objects.hash(id, mileageServiceOperation, dateServiceOperation, notes, carToServiceSchedule);
     }
 }

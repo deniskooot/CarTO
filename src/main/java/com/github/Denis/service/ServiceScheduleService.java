@@ -30,6 +30,7 @@ public class ServiceScheduleService {
         return serviceScheduleRepository.findAll();
     }
 
+    // Endpoint for AddSchedule page on front (list of work names)
     @Transactional
     public List<String> getServiceScheduleNames(){
         List<String> serviceScheduleNames = new ArrayList<>();

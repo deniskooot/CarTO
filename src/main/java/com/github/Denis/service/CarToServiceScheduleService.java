@@ -53,35 +53,29 @@ public class CarToServiceScheduleService {
 
     @Transactional
     public int saveCarToServiceSchedule(CarToServiceScheduleDTO dto) {
-//        получили DTO со строкой dto.getServiceScheduleName();
+    // получили DTO со строкой dto.getServiceScheduleName();
         int serviceScheduleId;
-//        спросили есть ли в базе запись с такой строкой
+        // спросили есть ли в базе запись с такой строкой
         Optional<ServiceSchedule> findName = serviceScheduleRepository.findByNameIgnoreCase(dto.getServiceScheduleName().trim());
-
 
         if (findName.isPresent()) {
             // если такая работа в базе есть, получаем id
             serviceScheduleId = findName.get().getId();
-//            serviceScheduleId = findName.get();
         } else {
             // если такой работы в базе нет, создаем новую запись
             ServiceSchedule newServiceSchedule = new ServiceSchedule();
-//            Приводим первый символ строки в верхний регистр
+            // Приводим первый символ строки в верхний регистр
             newServiceSchedule.setName(StringUtils.normalizeServiceScheduleName(dto.getServiceScheduleName().trim()));
-            newServiceSchedule.setDefault_period_km(dto.getPeriodicity_km());
-            newServiceSchedule.setDefault_period_time_days(Duration.ofDays(dto.getPeriodicity_time_days()));
-            newServiceSchedule.setIs_required(dto.getIsRequired());
+            newServiceSchedule.setDefaultPeriodKm(dto.getPeriodicityKm());
+            newServiceSchedule.setDefaultPeriodTimeDays(Duration.ofDays(dto.getPeriodicityTimeDays()));
+            newServiceSchedule.setRequired(dto.getIsRequired());
 
             // сохраняем новую работу в базу и получаем id
-//            ServiceSchedule serviceScheduleId = serviceScheduleRepository.save(newServiceSchedule);
             serviceScheduleId = serviceScheduleRepository.save(newServiceSchedule).getId();
         }
 
-//        берем работу по ее id
+        // берем работу по ее id
         ServiceSchedule serviceSchedule = serviceScheduleRepository.getReferenceById(serviceScheduleId);
-
-//        далее тестить
-
 
         CarToServiceSchedule entity = carToServiceScheduleMapper.toEntity(dto);
         //сохраняем в CarToServiceSchedule entity сущность ServiceSchedule serviceSchedule
@@ -89,28 +83,22 @@ public class CarToServiceScheduleService {
         return carToServiceScheduleRepository.save(entity).getId();
     }
 
+    // Get for list of works to schedule history page on front (by selected car)
     @Transactional
     public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int car_id) {
         Map<Integer, String> result = new HashMap<>();
-//        carToServiceScheduleRepository.findAll();
-
+        // carToServiceScheduleRepository.findAll();
         List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
 
-// проверка на null заставляет hibernate впервые обратиться к связи и ее подгрузить. После чего, при следующем обращении lazy связь уже подгружена
+        // проверка на null заставляет hibernate впервые обратиться к связи и ее подгрузить. После чего, при следующем обращении lazy связь уже подгружена
         for (CarToServiceSchedule entity : carToServiceScheduleList) {
             if (entity.getServiceSchedule() != null) {
                 result.put(entity.getId(), entity.getServiceSchedule().getName());
 
                 // Если name ещё не встречался — добавляем
-//                nameToIdMap.putIfAbsent(name, id);
+                // nameToIdMap.putIfAbsent(name, id);
             }
         }
-//        result.putAll();
-//        result.put(1, "s");
-
-
-
-
         return result;
     }
 

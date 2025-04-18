@@ -25,12 +25,12 @@ public class CarUser {
 
     // mapped by указывает на поле в данном классе для связи
     // orphanRemoval - с английского — "удалять сирот". Если мы удалим юзера из БД — все связанные с ним автомобили также будут удалены.
-//    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
 
-//    OneToMany Car reference, Car is owner reference (Car side is Many).
-@OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = false)
-@JsonIgnore
-private List<Car> cars = new ArrayList<>();
+    //    OneToMany Car reference, Car is owner reference (Car side is Many).
+    @OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = false)
+    @JsonIgnore
+    private List<Car> cars = new ArrayList<>();
 
     public CarUser() {
     }

@@ -1,6 +1,7 @@
 package com.github.Denis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.Denis.converter.DurationJsonConverter;
@@ -26,14 +27,17 @@ public class ServiceSchedule {
     private int id;
     @NotBlank(message = "Select name")
     private String name;
-    private boolean is_required;
+    @JsonProperty("is_required")
+    private boolean isRequired;
     @PositiveOrZero(message = "Default_period must bee >=0")
-    private int default_period_km;
+    @JsonProperty("default_period_km")
+    private int defaultPeriodKm;
     @Schema(type = "integer", format = "int64", example = "10")
     @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
     @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
     @Column(name = "default_period_time_days")
-    private Duration default_period_time_days; // (INTERVAL '1095' DAY)
+    @JsonProperty("default_period_time_days")
+    private Duration defaultPeriodTimeDays; // (INTERVAL '1095' DAY)
 
     //    OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
@@ -41,16 +45,16 @@ public class ServiceSchedule {
     private List<CarToServiceSchedule> carToServiceSchedules; //= new ArrayList<>();
 
 
-    public ServiceSchedule(){
+    public ServiceSchedule() {
 
     }
 
-    public ServiceSchedule(int id, String name, boolean is_required, int default_period_km, int default_period_time_days_int){
+    public ServiceSchedule(int id, String name, boolean isRequired, int defaultPeriodKm, int defaultPeriodTimeDaysInt) {
         this.id = id;
         this.name = name;
-        this.is_required = is_required;
-        this.default_period_km = default_period_km;
-        this.default_period_time_days = Duration.ofDays(default_period_time_days_int);
+        this.isRequired = isRequired;
+        this.defaultPeriodKm = defaultPeriodKm;
+        this.defaultPeriodTimeDays = Duration.ofDays(defaultPeriodTimeDaysInt);
     }
 
     public int getId() {
@@ -69,28 +73,28 @@ public class ServiceSchedule {
         this.name = name;
     }
 
-    public boolean isIs_required() {
-        return is_required;
+    public boolean isRequired() {
+        return isRequired;
     }
 
-    public void setIs_required(boolean is_required) {
-        this.is_required = is_required;
+    public void setRequired(boolean required) {
+        this.isRequired = required;
     }
 
-    public int getDefault_period_km() {
-        return default_period_km;
+    public int getDefaultPeriodKm() {
+        return defaultPeriodKm;
     }
 
-    public void setDefault_period_km(int default_period_km) {
-        this.default_period_km = default_period_km;
+    public void setDefaultPeriodKm(int defaultPeriodKm) {
+        this.defaultPeriodKm = defaultPeriodKm;
     }
 
-    public Duration getDefault_period_time_days() {
-        return default_period_time_days;
+    public Duration getDefaultPeriodTimeDays() {
+        return defaultPeriodTimeDays;
     }
 
-    public void setDefault_period_time_days(Duration default_period_time_days) {
-        this.default_period_time_days = default_period_time_days;
+    public void setDefaultPeriodTimeDays(Duration defaultPeriodTimeDays) {
+        this.defaultPeriodTimeDays = defaultPeriodTimeDays;
     }
 
     public List<CarToServiceSchedule> getCarToServiceSchedules() {
@@ -106,12 +110,12 @@ public class ServiceSchedule {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ServiceSchedule that = (ServiceSchedule) o;
-        return id == that.id && is_required == that.is_required && default_period_km == that.default_period_km && Objects.equals(name, that.name) && Objects.equals(default_period_time_days, that.default_period_time_days) && Objects.equals(carToServiceSchedules, that.carToServiceSchedules);
+        return id == that.id && isRequired == that.isRequired && defaultPeriodKm == that.defaultPeriodKm && Objects.equals(name, that.name) && Objects.equals(defaultPeriodTimeDays, that.defaultPeriodTimeDays) && Objects.equals(carToServiceSchedules, that.carToServiceSchedules);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, is_required, default_period_km, default_period_time_days, carToServiceSchedules);
+        return Objects.hash(id, name, isRequired, defaultPeriodKm, defaultPeriodTimeDays, carToServiceSchedules);
     }
 }
 

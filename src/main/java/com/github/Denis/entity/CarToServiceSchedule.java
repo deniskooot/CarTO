@@ -2,6 +2,7 @@ package com.github.Denis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.Denis.converter.DurationJsonConverter;
@@ -25,13 +26,13 @@ public class CarToServiceSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_to_service_schedule_id")
     private int id;
-    private int periodicity_km;
-    /*@JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)*/
+    @JsonProperty("periodicity_km")
+    private int periodicityKm;
     @Schema(type = "integer", format = "int64", example = "10")
     @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
     @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
-    private Duration periodicity_time_days;
+    @JsonProperty("periodicity_time_days")
+    private Duration periodicityTimeDays;
     private String notes;
 
     //    ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
@@ -60,10 +61,10 @@ public class CarToServiceSchedule {
     public CarToServiceSchedule() {
     }
 
-    public CarToServiceSchedule(int id, int periodicity_km, int periodicity_time_days_int, String notes) {
+    public CarToServiceSchedule(int id, int periodicityKm, int periodicity_time_days_int, String notes) {
         this.id = id;
-        this.periodicity_km = periodicity_km;
-        this.periodicity_time_days = Duration.ofDays(periodicity_time_days_int);
+        this.periodicityKm = periodicityKm;
+        this.periodicityTimeDays = Duration.ofDays(periodicity_time_days_int);
         this.notes = notes;
     }
 
@@ -75,20 +76,20 @@ public class CarToServiceSchedule {
         this.id = id;
     }
 
-    public int getPeriodicity_km() {
-        return periodicity_km;
+    public int getPeriodicityKm() {
+        return periodicityKm;
     }
 
-    public void setPeriodicity_km(int periodicity_km) {
-        this.periodicity_km = periodicity_km;
+    public void setPeriodicityKm(int periodicityKm) {
+        this.periodicityKm = periodicityKm;
     }
 
-    public Duration getPeriodicity_time_days() {
-        return periodicity_time_days;
+    public Duration getPeriodicityTimeDays() {
+        return periodicityTimeDays;
     }
 
-    public void setPeriodicity_time_days(Duration periodicity_time_days) {
-        this.periodicity_time_days = periodicity_time_days;
+    public void setPeriodicityTimeDays(Duration periodicityTimeDays) {
+        this.periodicityTimeDays = periodicityTimeDays;
     }
 
     public String getNotes() {
@@ -135,8 +136,8 @@ public class CarToServiceSchedule {
     public String toString() {
         return "CarToServiceSchedule{" +
                 "id=" + id +
-                ", periodicity_km=" + periodicity_km +
-                ", periodicity_time_days=" + periodicity_time_days +
+                ", periodicity_km=" + periodicityKm +
+                ", periodicity_time_days=" + periodicityTimeDays +
                 ", notes='" + notes + '\'' +
                 '}';
     }
@@ -146,11 +147,11 @@ public class CarToServiceSchedule {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CarToServiceSchedule that = (CarToServiceSchedule) o;
-        return id == that.id && periodicity_km == that.periodicity_km && Objects.equals(periodicity_time_days, that.periodicity_time_days) && Objects.equals(notes, that.notes) && Objects.equals(car, that.car) && Objects.equals(serviceSchedule, that.serviceSchedule) && Objects.equals(serviceOperations, that.serviceOperations) && Objects.equals(parts, that.parts);
+        return id == that.id && periodicityKm == that.periodicityKm && Objects.equals(periodicityTimeDays, that.periodicityTimeDays) && Objects.equals(notes, that.notes) && Objects.equals(car, that.car) && Objects.equals(serviceSchedule, that.serviceSchedule) && Objects.equals(serviceOperations, that.serviceOperations) && Objects.equals(parts, that.parts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, periodicity_km, periodicity_time_days, notes, car, serviceSchedule, serviceOperations, parts);
+        return Objects.hash(id, periodicityKm, periodicityTimeDays, notes, car, serviceSchedule, serviceOperations, parts);
     }
 }

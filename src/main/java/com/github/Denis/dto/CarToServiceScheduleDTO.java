@@ -1,10 +1,14 @@
 package com.github.Denis.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CarToServiceScheduleDTO {
 
     private Integer id;
-    private Integer periodicity_km;
-    private Integer periodicity_time_days;
+    @JsonProperty("periodicity_km")
+    private Integer periodicityKm;
+    @JsonProperty("periodicity_time_days")
+    private Integer periodicityTimeDays;
     private String notes;
     private Integer carId;
     private String serviceScheduleName;
@@ -13,10 +17,10 @@ public class CarToServiceScheduleDTO {
     public CarToServiceScheduleDTO(){
 
     }
-    public CarToServiceScheduleDTO(Integer id, Integer periodicity_km, Integer periodicity_time_days, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
+    public CarToServiceScheduleDTO(Integer id, Integer periodicityKm, Integer periodicityTimeDays, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
         this.id = id;
-        this.periodicity_km = periodicity_km;
-        this.periodicity_time_days = periodicity_time_days;
+        this.periodicityKm = periodicityKm;
+        this.periodicityTimeDays = periodicityTimeDays;
         this.notes = notes;
         this.carId = carId;
         this.serviceScheduleName = serviceScheduleName;
@@ -31,20 +35,20 @@ public class CarToServiceScheduleDTO {
         this.id = id;
     }
 
-    public Integer getPeriodicity_km() {
-        return periodicity_km;
+    public Integer getPeriodicityKm() {
+        return periodicityKm;
     }
 
-    public void setPeriodicity_km(Integer periodicity_km) {
-        this.periodicity_km = periodicity_km;
+    public void setPeriodicityKm(Integer periodicityKm) {
+        this.periodicityKm = periodicityKm;
     }
 
-    public Integer getPeriodicity_time_days() {
-        return periodicity_time_days;
+    public Integer getPeriodicityTimeDays() {
+        return periodicityTimeDays;
     }
 
-    public void setPeriodicity_time_days(Integer periodicity_time_days) {
-        this.periodicity_time_days = periodicity_time_days;
+    public void setPeriodicityTimeDays(Integer periodicityTimeDays) {
+        this.periodicityTimeDays = periodicityTimeDays;
     }
 
     public String getNotes() {

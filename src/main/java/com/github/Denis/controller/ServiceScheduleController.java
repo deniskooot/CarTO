@@ -27,8 +27,8 @@ public class ServiceScheduleController {
         return serviceScheduleService.getServiceSchedule();
     }
 
+    // Endpoint for AddSchedule page on front (list of work names)
     @GetMapping("/serviceschedulenames")
-
     public List<String> getServiceScheduleNames(){
         return serviceScheduleService.getServiceScheduleNames();
     }

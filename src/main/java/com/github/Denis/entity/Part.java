@@ -1,6 +1,7 @@
 package com.github.Denis.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -19,8 +20,10 @@ public class Part {
     private int id;
     @NotBlank(message = "Select name")
     private String name;
-    private String part_number_original;
-    private String part_number_analogs;
+    @JsonProperty("part_number_original")
+    private String partNumberOriginal;
+    @JsonProperty("part_number_analogs")
+    private String partNumberAnalogs;
     private String notes;
 
     //    OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
@@ -33,11 +36,11 @@ public class Part {
 
     }
 
-    Part(int id, String name, String part_number_original, String part_number_analogs, String notes) {
+    Part(int id, String name, String partNumberOriginal, String partNumberAnalogs, String notes) {
         this.id = id;
         this.name = name;
-        this.part_number_original = part_number_original;
-        this.part_number_analogs = part_number_analogs;
+        this.partNumberOriginal = partNumberOriginal;
+        this.partNumberAnalogs = partNumberAnalogs;
         this.notes = notes;
     }
 
@@ -57,20 +60,20 @@ public class Part {
         this.name = name;
     }
 
-    public String getPart_number_original() {
-        return part_number_original;
+    public String getPartNumberOriginal() {
+        return partNumberOriginal;
     }
 
-    public void setPart_number_original(String part_number_original) {
-        this.part_number_original = part_number_original;
+    public void setPartNumberOriginal(String partNumberOriginal) {
+        this.partNumberOriginal = partNumberOriginal;
     }
 
-    public String getPart_number_analogs() {
-        return part_number_analogs;
+    public String getPartNumberAnalogs() {
+        return partNumberAnalogs;
     }
 
-    public void setPart_number_analogs(String part_number_analogs) {
-        this.part_number_analogs = part_number_analogs;
+    public void setPartNumberAnalogs(String partNumberAnalogs) {
+        this.partNumberAnalogs = partNumberAnalogs;
     }
 
     public String getNotes() {
@@ -94,8 +97,8 @@ public class Part {
         return "Part{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", part_number_original='" + part_number_original + '\'' +
-                ", part_number_analogs='" + part_number_analogs + '\'' +
+                ", part_number_original='" + partNumberOriginal + '\'' +
+                ", part_number_analogs='" + partNumberAnalogs + '\'' +
                 ", notes='" + notes + '\'' +
                 '}';
     }
@@ -105,11 +108,11 @@ public class Part {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Part part = (Part) o;
-        return id == part.id && Objects.equals(name, part.name) && Objects.equals(part_number_original, part.part_number_original) && Objects.equals(part_number_analogs, part.part_number_analogs) && Objects.equals(notes, part.notes) && Objects.equals(carToServiceSchedule, part.carToServiceSchedule);
+        return id == part.id && Objects.equals(name, part.name) && Objects.equals(partNumberOriginal, part.partNumberOriginal) && Objects.equals(partNumberAnalogs, part.partNumberAnalogs) && Objects.equals(notes, part.notes) && Objects.equals(carToServiceSchedule, part.carToServiceSchedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, part_number_original, part_number_analogs, notes, carToServiceSchedule);
+        return Objects.hash(id, name, partNumberOriginal, partNumberAnalogs, notes, carToServiceSchedule);
     }
 }

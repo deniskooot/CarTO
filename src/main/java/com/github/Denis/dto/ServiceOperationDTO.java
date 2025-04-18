@@ -6,10 +6,10 @@ import java.util.Date;
 
 public class ServiceOperationDTO {
 
-//@JsonNaming()
     @JsonProperty("id")
     private Integer id;
-    private Integer car_to_service_schedule_id;
+    @JsonProperty("car_to_service_schedule_id")
+    private Integer carToServiceScheduleId;
     private Integer mileageServiceOperation;
     private Date dateServiceOperation;
     private String notes;
@@ -18,9 +18,9 @@ public class ServiceOperationDTO {
 
     }
 
-    public ServiceOperationDTO(Integer id, Integer car_to_service_schedule_id, Integer mileageServiceOperation, Date dateServiceOperation, String notes) {
+    public ServiceOperationDTO(Integer id, Integer carToServiceScheduleId, Integer mileageServiceOperation, Date dateServiceOperation, String notes) {
         this.id = id;
-        this.car_to_service_schedule_id = car_to_service_schedule_id;
+        this.carToServiceScheduleId = carToServiceScheduleId;
         this.mileageServiceOperation = mileageServiceOperation;
         this.dateServiceOperation = dateServiceOperation;
         this.notes = notes;
@@ -34,12 +34,12 @@ public class ServiceOperationDTO {
         this.id = id;
     }
 
-    public Integer getCar_to_service_schedule_id() {
-        return car_to_service_schedule_id;
+    public Integer getCarToServiceScheduleId() {
+        return carToServiceScheduleId;
     }
 
-    public void setCar_to_service_schedule_id(Integer car_to_service_schedule_id) {
-        this.car_to_service_schedule_id = car_to_service_schedule_id;
+    public void setCarToServiceScheduleId(Integer carToServiceScheduleId) {
+        this.carToServiceScheduleId = carToServiceScheduleId;
     }
 
     public Integer getMileageServiceOperation() {
