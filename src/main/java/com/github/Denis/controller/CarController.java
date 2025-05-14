@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //контроллер - класс с аннотацией @RestController, который умеет что-то выводить на экран
 //@RestController = @Controller + @ResponseBody. Аннотация @Controller умеет слушать, получать и отвечать на запросы.
@@ -49,6 +51,21 @@ public class CarController {
         return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
 //    getReferenceById()
     }
+
+
+    @GetMapping("/get-car-list")
+    public Map<Integer, String> getCarList(@RequestParam Integer userId){
+        HashMap<Integer, String> result = new HashMap<>();
+        List<Car> cars = carRepository.getCarsByUserId(userId);
+        for (Car car: cars){
+            if (car.getCarUser() != null){
+                result.put(car.getId(), car.getName());
+            }
+
+        }
+        return result;
+    }
+
 ////    Предназначен для создания новой сущности
     // post mappind не работает 2025-01-26T15:25:03.355+03:00 ERROR 78545 : Servlet.service() for servlet [dispatcherServlet]
 // in context with path [] threw exception [Request processing failed: org.springframework.orm.ObjectOptimisticLockingFailureException:

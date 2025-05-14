@@ -130,5 +130,15 @@ public class Car {
                 '}';
     }
 
+
+//    {
+//  "brandId": 123,
+//  "brandName": "Bike",
+//  "mileage": "45831 км",
+//  "yearlyMileage": "7000 км",
+//  "notes": "car_notes"
+//}
+
+
 }
 
