@@ -70,37 +70,16 @@ public class CarToServiceScheduleController {
 
 // endpoint выдачи списка работ в main страницу по параметрам
 
-//    @GetMapping("/api/tasks")
-//public List<ScheduleListDTO> getTasks(
-//    @RequestParam long car_id,
-//    @RequestParam String schedule_perspective_mileage_or_year,
-//    @RequestParam int schedule_perspective_value,
-//    @RequestParam boolean show_required
-//) {
-//
-//        return List<CarToServiceSchedule>
-//    }
+    @GetMapping("/tasks")
+public List<ScheduleListDTO> getTasks(
+    @RequestParam int car_id,
+    @RequestParam String schedule_perspective_mileage_or_year,
+    @RequestParam int schedule_perspective_value,
+    @RequestParam boolean show_required
+) {
 
-//    @Table(name = "car_to_service_schedules")
-
-//    @Column(name = "car_to_service_schedule_id")
-//    private int id;
-//    @JsonProperty("periodicity_km")
-//    private int periodicityKm;
-//    private Duration periodicityTimeDays;
-//    private String notes;
-//
-//    @JoinColumn(name = "car_id", referencedColumnName = "car_id")
-//    private Car car;
-//
-//    @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
-//    private ServiceSchedule serviceSchedule;
-//
-//    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
-//    private List<ServiceOperation> serviceOperations; //= new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
-//    private List<Part> parts; // = new ArrayList<>();
+        return carToServiceScheduleService.getTaskList(car_id, schedule_perspective_mileage_or_year, schedule_perspective_value, show_required);
+    }
 
 
     // Обработка логики и возврат списка работ

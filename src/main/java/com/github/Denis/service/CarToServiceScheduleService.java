@@ -1,12 +1,14 @@
 package com.github.Denis.service;
 
 import com.github.Denis.dto.CarToServiceScheduleDTO;
+import com.github.Denis.dto.ScheduleListDTO;
 import com.github.Denis.entity.CarToServiceSchedule;
 import com.github.Denis.entity.ServiceSchedule;
 import com.github.Denis.mapper.CarToServiceScheduleMapper;
 import com.github.Denis.repository.CarToServiceScheduleRepository;
 import com.github.Denis.repository.ServiceScheduleRepository;
 import com.github.Denis.utils.StringUtils;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
@@ -15,10 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.ZonedDateTime;
+import java.util.*;
 
 @Service
 public class CarToServiceScheduleService {
@@ -101,5 +101,74 @@ public class CarToServiceScheduleService {
         }
         return result;
     }
+
+    // Get tasks (schedules) list for main page (forward by selected car, mileage and time, with show required/ non required parameter)
+    @Transactional
+    public List<ScheduleListDTO> getTaskList(int car_id, String schedule_perspective_mileage_or_year, int schedule_perspective_value, boolean show_required){
+
+//        получили список работ по car_id (пока что без учета флага обязательности, просто все работы по машине)
+        List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
+
+        if (carToServiceScheduleList.isEmpty()) {
+            throw new EntityNotFoundException("Нет расписаний для машины с id: " + car_id);
+        }
+
+//        для простоты сделаю сначала для одного
+
+//        это одна из работ, полученная по car_id
+        CarToServiceSchedule carToServiceScheduleOne = carToServiceScheduleList.getFirst();
+
+//        создаем и наполняем DTO для одной работы по обслуживанию
+        ScheduleListDTO oneTask = new ScheduleListDTO();
+if(carToServiceScheduleOne.getServiceSchedule()!= null) {
+
+}
+        //Наименование работы //private String scheduleName;
+        oneTask.setScheduleName(carToServiceScheduleOne.getServiceSchedule().getName());
+        //    Пробег //private Integer scheduleMileageKm;
+//        пока просто беру данные и выдаю за результат, тут логика добавления пробега должна быть
+        oneTask.setScheduleMileageKm(carToServiceScheduleOne.getPeriodicityKm());
+        //    Дата //private Date scheduleDate;
+        ZonedDateTime startDate = ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
+        oneTask.setScheduleDate(startDate.plusDays(carToServiceScheduleOne.getPeriodicityTimeDays().toDays()));
+//    //    Примечание
+//    private String scheduleNotes;
+        oneTask.setScheduleNotes(carToServiceScheduleOne.getNotes());
+//    //    * - обязательна ли работа?
+//    private Boolean scheduleIsRequired;
+        oneTask.setScheduleIsRequired(carToServiceScheduleOne.getServiceSchedule().isRequired());
+//    private List<Part> scheduleParts;
+        oneTask.setScheduleParts(carToServiceScheduleOne.getParts());
+
+    List<ScheduleListDTO> tasksList = new ArrayList<>();
+    tasksList.add(oneTask);
+//        вернули List DTO (пока что просто график вернули от нуля без логики)
+
+        return tasksList;
+
+    }
+
+
+//    @Table(name = "car_to_service_schedules")
+
+//    @Column(name = "car_to_service_schedule_id")
+//    private int id;
+//    @JsonProperty("periodicity_km")
+//    private int periodicityKm;
+//    private Duration periodicityTimeDays;
+//    private String notes;
+//
+//    @JoinColumn(name = "car_id", referencedColumnName = "car_id")
+//    private Car car;
+//
+//    @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
+//    private ServiceSchedule serviceSchedule;
+//
+//    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+//    private List<ServiceOperation> serviceOperations; //= new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+//    private List<Part> parts; // = new ArrayList<>();
+
 
 }
