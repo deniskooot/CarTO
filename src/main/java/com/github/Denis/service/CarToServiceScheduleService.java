@@ -113,40 +113,36 @@ public class CarToServiceScheduleService {
             throw new EntityNotFoundException("Нет расписаний для машины с id: " + car_id);
         }
 
-//        для простоты сделаю сначала для одного
-
-//        это одна из работ, полученная по car_id
-        CarToServiceSchedule carToServiceScheduleOne = carToServiceScheduleList.getFirst();
-
-//        создаем и наполняем DTO для одной работы по обслуживанию
-        ScheduleListDTO oneTask = new ScheduleListDTO();
-if(carToServiceScheduleOne.getServiceSchedule()!= null) {
-
-}
-        //Наименование работы //private String scheduleName;
-        oneTask.setScheduleName(carToServiceScheduleOne.getServiceSchedule().getName());
-        //    Пробег //private Integer scheduleMileageKm;
-//        пока просто беру данные и выдаю за результат, тут логика добавления пробега должна быть
-        oneTask.setScheduleMileageKm(carToServiceScheduleOne.getPeriodicityKm());
-        //    Дата //private Date scheduleDate;
-        ZonedDateTime startDate = ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
-        oneTask.setScheduleDate(startDate.plusDays(carToServiceScheduleOne.getPeriodicityTimeDays().toDays()));
-//    //    Примечание
-//    private String scheduleNotes;
-        oneTask.setScheduleNotes(carToServiceScheduleOne.getNotes());
-//    //    * - обязательна ли работа?
-//    private Boolean scheduleIsRequired;
-        oneTask.setScheduleIsRequired(carToServiceScheduleOne.getServiceSchedule().isRequired());
-//    private List<Part> scheduleParts;
-        oneTask.setScheduleParts(carToServiceScheduleOne.getParts());
-
-    List<ScheduleListDTO> tasksList = new ArrayList<>();
-    tasksList.add(oneTask);
-//        вернули List DTO (пока что просто график вернули от нуля без логики)
-
+        List<ScheduleListDTO> tasksList = new ArrayList<>();
+        for (CarToServiceSchedule carToServiceSchedule: carToServiceScheduleList){
+            tasksList.add(putScheduleData(carToServiceSchedule));
+        }
         return tasksList;
 
     }
+
+//    метод для создания одной строки в работе
+    public ScheduleListDTO putScheduleData(CarToServiceSchedule carToServiceSchedule){
+        //        создаем и наполняем DTO для одной работы по обслуживанию
+        ScheduleListDTO result = new ScheduleListDTO();
+        //Наименование работы //private String scheduleName;
+        result.setScheduleName(carToServiceSchedule.getServiceSchedule().getName());
+        // Пробег //private Integer scheduleMileageKm;
+//        пока просто беру данные и выдаю за результат, тут логика добавления пробега должна быть
+        result.setScheduleMileageKm(carToServiceSchedule.getPeriodicityKm());
+        //    Дата //private Date scheduleDate;
+        ZonedDateTime startDate = ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
+        result.setScheduleDate(startDate.plusDays(carToServiceSchedule.getPeriodicityTimeDays().toDays()));
+//    Примечание //private String scheduleNotes;
+        result.setScheduleNotes(carToServiceSchedule.getNotes());
+//    * - обязательна ли работа? //private Boolean scheduleIsRequired;
+        result.setScheduleIsRequired(carToServiceSchedule.getServiceSchedule().isRequired());
+//    private List<Part> scheduleParts;
+        result.setScheduleParts(carToServiceSchedule.getParts());
+        return result;
+    }
+
+}
 
 
 //    @Table(name = "car_to_service_schedules")
@@ -169,6 +165,3 @@ if(carToServiceScheduleOne.getServiceSchedule()!= null) {
 //
 //    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
 //    private List<Part> parts; // = new ArrayList<>();
-
-
-}
