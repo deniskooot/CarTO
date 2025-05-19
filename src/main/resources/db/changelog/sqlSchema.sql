@@ -83,3 +83,13 @@ ALTER TABLE cars ADD CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES car_
 
 --rollback ALTER TABLE car_to_service_schedules DROP CONSTRAINT car_id_fk;
 --rollback ALTER TABLE car_to_service_schedules ADD FOREIGN KEY (car_id) REFERENCES cars (car_id);
+
+--changeset TestUsers_sql:6 context:"Add start date, mileage and yearly_mileage in cars table"
+
+ALTER TABLE cars ADD COLUMN start_date date;
+ALTER TABLE cars ADD COLUMN start_mileage integer;
+ALTER TABLE cars ADD COLUMN yearly_mileage integer;
+
+--rollback ALTER TABLE cars DROP COLUMN start_date;
+--rollback ALTER TABLE cars DROP COLUMN start_mileage;
+--rollback ALTER TABLE cars DROP COLUMN yearly_mileage;
