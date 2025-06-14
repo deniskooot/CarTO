@@ -93,3 +93,9 @@ ALTER TABLE cars ADD COLUMN yearly_mileage integer;
 --rollback ALTER TABLE cars DROP COLUMN start_date;
 --rollback ALTER TABLE cars DROP COLUMN start_mileage;
 --rollback ALTER TABLE cars DROP COLUMN yearly_mileage;
+
+--changeset TestUsers_sql:7 context:"Change datatype to start_date to timestamptz(0) in cars table"
+
+ALTER TABLE cars ALTER COLUMN start_date TYPE timestamptz(0);
+
+--rollback ALTER TABLE cars ALTER COLUMN start_date TYPE date;

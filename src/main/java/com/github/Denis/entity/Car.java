@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,6 +27,16 @@ public class Car {
     //    @Nullable — не работает валидация на уровне Hibernate, лучше заменить на @Column(nullable = true).
     @Column(nullable = true)
     private String notes;
+
+//    timestamptz(0) - время с часовой зоной, минимальная точность 0 - секунды без дробных знаков
+    @Column(name = "start_date", columnDefinition = "timestamptz(0)")
+    private ZonedDateTime startDate;
+
+    @Column(name = "start_mileage")
+    private int startMileage;
+
+    @Column(name = "yearly_mileage")
+    private int yearlyMileage;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
@@ -105,6 +116,29 @@ public class Car {
         this.notes = notes;
     }
 
+    public ZonedDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(ZonedDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getStartMileage() {
+        return startMileage;
+    }
+
+    public void setStartMileage(int startMileage) {
+        this.startMileage = startMileage;
+    }
+
+    public int getYearlyMileage() {
+        return yearlyMileage;
+    }
+
+    public void setYearlyMileage(int yearlyMileage) {
+        this.yearlyMileage = yearlyMileage;
+    }
 
     @Override
     public boolean equals(Object o) {
