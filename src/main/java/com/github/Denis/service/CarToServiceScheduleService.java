@@ -121,6 +121,12 @@ public class CarToServiceScheduleService {
 
     }
 
+    //javaDOC
+    /**
+     *
+     * @param carToServiceSchedule
+     * @return
+     */
 //    метод для создания одной строки в работе
     public ScheduleListDTO putScheduleData(CarToServiceSchedule carToServiceSchedule){
         //        создаем и наполняем DTO для одной работы по обслуживанию

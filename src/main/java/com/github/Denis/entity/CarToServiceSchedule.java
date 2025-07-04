@@ -29,8 +29,14 @@ public class CarToServiceSchedule {
     @JsonProperty("periodicity_km")
     private int periodicityKm;
     @Schema(type = "integer", format = "int64", example = "10")
-    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
-    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
+
+//    я убрал сериалайзеры вместе с Лексом, потому что в маппере у меня описано это преобразование,
+//    возможно сейчас Hibernate уже без сериалайзера поймет, как преобразовывать
+//    дополнительно: сериалайзер преобразовывает объект в строку (например, для отправки на фронт)
+//    здесь как бедто корректнее было назвать конвертер
+
+//    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
+//    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
     @JsonProperty("periodicity_time_days")
     private Duration periodicityTimeDays;
     private String notes;

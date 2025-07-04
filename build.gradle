@@ -41,6 +41,9 @@ dependencies {
 
 //	зависимость для работы с PEST API
 //	Если вы хотите создать Spring web-приложение, просто добавьте зависимость
+
+//	org.springframework.boot - groupId
+//	spring-boot-starter-web - artifactId
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -54,6 +57,7 @@ dependencies {
 
 	// last version 2.8.3 didn't work because of java 17 library conflict (java 17 recommend)
 	//	https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+	//swagger implementation
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 	// if were needs to check start swagger on .../actuator/mappings
 //	implementation 'org.springframework.boot:spring-boot-starter-actuator'

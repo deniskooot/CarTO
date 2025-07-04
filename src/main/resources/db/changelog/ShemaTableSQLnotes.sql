@@ -3,7 +3,7 @@
 
 CREATE TABLE car_users (user_id SERIAL PRIMARY KEY, name VARCHAR(50));
 
-CREATE TABLE cars (car_id SERIAL PRIMARY KEY, name VARCHAR(50), user_id INT, mileage INT, notes VARCHAR(1000),
+CREATE TABLE cars (car_id SERIAL PRIMARY KEY, name VARCHAR(50), user_id INT, mileage INT, notes VARCHAR(1000, start_date TIMESTAMPTZ(0), start_mileage INT, yearly_mileage INT),
 CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES car_users (user_id);
 
 CREATE TABLE service_schedules (service_schedule_id SERIAL PRIMARY KEY, name VARCHAR(100), is_required BOOLEAN, default_period_km INT, default_period_time_days INTERVAL DAY);
