@@ -3,6 +3,7 @@ package com.github.Denis.service;
 import com.github.Denis.dto.CarToServiceScheduleDTO;
 import com.github.Denis.dto.ScheduleListDTO;
 import com.github.Denis.entity.CarToServiceSchedule;
+import com.github.Denis.entity.Part;
 import com.github.Denis.entity.ServiceSchedule;
 import com.github.Denis.mapper.CarToServiceScheduleMapper;
 import com.github.Denis.repository.CarToServiceScheduleRepository;
@@ -102,52 +103,127 @@ public class CarToServiceScheduleService {
         return result;
     }
 
-    // Get tasks (schedules) list for main page (forward by selected car, mileage and time, with show required/ non required parameter)
+    // Get tasks (schedules) list for main page (forward by selected car, mileage and time, with show required/ non required parameter) type Mode = "km" | "years";
     @Transactional
     public List<ScheduleListDTO> getTaskList(int car_id, String schedule_perspective_mileage_or_year, int schedule_perspective_value, boolean show_required){
 
 //        получили список работ по car_id (пока что без учета флага обязательности, просто все работы по машине)
         List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
-
+//carToServiceScheduleList - все работы по car_id из CarToServiceSchedule
         if (carToServiceScheduleList.isEmpty()) {
             throw new EntityNotFoundException("Нет расписаний для машины с id: " + car_id);
         }
-
+//tasksList - список задач, возвращаемых во фронт     private String scheduleName;
+//    Integer scheduleMileageKm; ZonedDateTime scheduleDate; String scheduleNotes; Boolean scheduleIsRequired; List<Part> scheduleParts;
         List<ScheduleListDTO> tasksList = new ArrayList<>();
         for (CarToServiceSchedule carToServiceSchedule: carToServiceScheduleList){
-            tasksList.add(putScheduleData(carToServiceSchedule));
+
+
+            Integer startMileage = carToServiceSchedule.getCar().getStartMileage(); //стартовый пробег
+
+            ZonedDateTime startDate = carToServiceSchedule.getCar().getStartDate(); //стартовая дата
+
+            Integer yearlyMileage = carToServiceSchedule.getCar().getYearlyMileage(); //годовой пробег
+
+            Integer car_mileage = carToServiceSchedule.getCar().getMileage(); //текущий пробег
+
+            ZonedDateTime current_date = ZonedDateTime.now(); //текущая дата
+
+            String name = carToServiceSchedule.getServiceSchedule().getName(); //наименование работы
+
+            String notes = carToServiceSchedule.getNotes(); //заметки
+
+            Boolean isRequired = carToServiceSchedule.getServiceSchedule().isRequired(); //обязательность
+
+            List<Part> parts = carToServiceSchedule.getParts(); //список запчастей
+
+
+            Integer periodicityKm = carToServiceSchedule.getPeriodicityKm();//периодичность работы по пробегу
+
+            Integer periodicityDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodKm();//периодичность работы по пробегу по умолчанию
+
+            Duration periodicityDays = carToServiceSchedule.getPeriodicityTimeDays();//периодичность работы по дате
+
+            Duration periodicityDaysDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodTimeDays(); //периодичность работы по дате по умолчанию
+
+            //schedule_perspective_mileage_or_year - в чем перспектива
+            //schedule_perspective_value - значение перспективы
+
+            Integer mileage = car_mileage; //пробег для выполнения работы
+
+//            ZonedDateTime date = ZonedDateTime.parse("2025-01-01T00:00:00+03:00"); //дата выполнения работы
+
+            ZonedDateTime date = current_date; //дата выполнения работы
+
+
+            if(schedule_perspective_value < 0 && schedule_perspective_value > 1_000_000){
+                //TODO: add validation
+            }
+            if(schedule_perspective_mileage_or_year.equals("km")){
+                while(mileage < schedule_perspective_value){
+
+                    tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
+                    mileage += periodicityKm;
+                    date.plusDays(periodicityDays.toDays());
+
+                    //TODO: рассмотреть случай, когда нет даты
+                }
+            }
+
+//            if(schedule_perspective_mileage_or_year.equals("years")){}
+
+
+
+
+//            tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
         }
+//        for (CarToServiceSchedule carToServiceSchedule: carToServiceScheduleList){
+//            tasksList.add(putScheduleData(carToServiceSchedule));
+//        }
+        Comparator<ScheduleListDTO> scheduleListDTOComparator = Comparator
+                .comparing(ScheduleListDTO::getScheduleMileageKm)
+                .thenComparing(ScheduleListDTO::getScheduleDate);
+//        tasksList.sort(scheduleListDTOComparator);
+//        tasksList.sort(scheduleListDTOComparator);
+        Collections.sort(tasksList, scheduleListDTOComparator);
+//        List.sort(scheduleListDTOComparator);
         return tasksList;
 
+
     }
 
+//    public ScheduleListDTO setOneSchedule(Integer startMileage, ZonedDateTime startDate, Integer yearlyMileage,
+//                                          Integer car_mileage, String name, Integer mileage, ZonedDateTime date, String notes,
+//                                          Boolean isRequired, List<Part> parts){
+//        return new ScheduleListDTO(name, mileage, date, notes, isRequired, parts);
+//    }
     //javaDOC
-    /**
-     *
-     * @param carToServiceSchedule
-     * @return
-     */
+//    /**
+//     *
+//     * @param carToServiceSchedule
+//     * @return
+//     */
 //    метод для создания одной строки в работе
-    public ScheduleListDTO putScheduleData(CarToServiceSchedule carToServiceSchedule){
-        //        создаем и наполняем DTO для одной работы по обслуживанию
-        ScheduleListDTO result = new ScheduleListDTO();
-        //Наименование работы //private String scheduleName;
-        result.setScheduleName(carToServiceSchedule.getServiceSchedule().getName());
-        // Пробег //private Integer scheduleMileageKm;
-//        пока просто беру данные и выдаю за результат, тут логика добавления пробега должна быть
-        result.setScheduleMileageKm(carToServiceSchedule.getPeriodicityKm());
-        //    Дата //private Date scheduleDate;
-        ZonedDateTime startDate = ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
-        result.setScheduleDate(startDate.plusDays(carToServiceSchedule.getPeriodicityTimeDays().toDays()));
-//    Примечание //private String scheduleNotes;
-        result.setScheduleNotes(carToServiceSchedule.getNotes());
-//    * - обязательна ли работа? //private Boolean scheduleIsRequired;
-        result.setScheduleIsRequired(carToServiceSchedule.getServiceSchedule().isRequired());
-//    private List<Part> scheduleParts;
-        result.setScheduleParts(carToServiceSchedule.getParts());
-        return result;
-    }
-
+//    public ScheduleListDTO putScheduleData(CarToServiceSchedule carToServiceSchedule){
+//        //        создаем и наполняем DTO для одной работы по обслуживанию
+//        ScheduleListDTO result = new ScheduleListDTO();
+//        //Наименование работы //private String scheduleName;
+//        result.setScheduleName(carToServiceSchedule.getServiceSchedule().getName());
+//        // Пробег //private Integer scheduleMileageKm;
+////        пока просто беру данные и выдаю за результат, тут логика добавления пробега должна быть
+//        result.setScheduleMileageKm(carToServiceSchedule.getPeriodicityKm());
+//        //    Дата //private Date scheduleDate;
+//        ZonedDateTime startDate = ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
+//        result.setScheduleDate(startDate.plusDays(carToServiceSchedule.getPeriodicityTimeDays().toDays()));
+////    Примечание //private String scheduleNotes;
+//        result.setScheduleNotes(carToServiceSchedule.getNotes());
+////    * - обязательна ли работа? //private Boolean scheduleIsRequired;
+//        result.setScheduleIsRequired(carToServiceSchedule.getServiceSchedule().isRequired());
+////    private List<Part> scheduleParts;
+//        result.setScheduleParts(carToServiceSchedule.getParts());
+//        return result;
+//    }
+//
 }
 
 
