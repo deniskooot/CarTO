@@ -54,7 +54,7 @@ public class CarToServiceScheduleService {
 
     @Transactional
     public int saveCarToServiceSchedule(CarToServiceScheduleDTO dto) {
-    // получили DTO со строкой dto.getServiceScheduleName();
+        // получили DTO со строкой dto.getServiceScheduleName();
         int serviceScheduleId;
         // спросили есть ли в базе запись с такой строкой
         Optional<ServiceSchedule> findName = serviceScheduleRepository.findByNameIgnoreCase(dto.getServiceScheduleName().trim());
@@ -105,9 +105,11 @@ public class CarToServiceScheduleService {
 
     // Get tasks (schedules) list for main page (forward by selected car, mileage and time, with show required/ non required parameter) type Mode = "km" | "years";
     @Transactional
-    public List<ScheduleListDTO> getTaskList(int car_id, String schedule_perspective_mileage_or_year, int schedule_perspective_value, boolean show_required){
+    public List<ScheduleListDTO> getTaskList(int car_id, String schedule_perspective_mileage_or_year, int schedule_perspective_value, boolean show_required) {
 
 //        получили список работ по car_id (пока что без учета флага обязательности, просто все работы по машине)
+
+        //TODO: здесь используется текущая дата, однако на странице есть возможность поменять дату, нужно учитывать дату со страницы, если она отличается от текущей
         List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
 //carToServiceScheduleList - все работы по car_id из CarToServiceSchedule
         if (carToServiceScheduleList.isEmpty()) {
@@ -116,7 +118,7 @@ public class CarToServiceScheduleService {
 //tasksList - список задач, возвращаемых во фронт     private String scheduleName;
 //    Integer scheduleMileageKm; ZonedDateTime scheduleDate; String scheduleNotes; Boolean scheduleIsRequired; List<Part> scheduleParts;
         List<ScheduleListDTO> tasksList = new ArrayList<>();
-        for (CarToServiceSchedule carToServiceSchedule: carToServiceScheduleList){
+        for (CarToServiceSchedule carToServiceSchedule : carToServiceScheduleList) {
 
 
             Integer startMileage = carToServiceSchedule.getCar().getStartMileage(); //стартовый пробег
@@ -147,7 +149,7 @@ public class CarToServiceScheduleService {
             Duration periodicityDaysDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodTimeDays(); //периодичность работы по дате по умолчанию
 
             //schedule_perspective_mileage_or_year - в чем перспектива
-            //schedule_perspective_value - значение перспективы
+            //schedule_perspective_value - значение перспективы либо км либо количество лет
 
             Integer mileage = car_mileage; //пробег для выполнения работы
 
@@ -155,24 +157,32 @@ public class CarToServiceScheduleService {
 
             ZonedDateTime date = current_date; //дата выполнения работы
 
+            if (!show_required && !isRequired) {
+                continue;
+            }
 
-            if(schedule_perspective_value < 0 && schedule_perspective_value > 1_000_000){
+            if (schedule_perspective_value < 0 && schedule_perspective_value > 1_000_000) {
                 //TODO: add validation
             }
-            if(schedule_perspective_mileage_or_year.equals("km")){
-                while(mileage < schedule_perspective_value){
-
+            // schedule list by km
+            if (schedule_perspective_mileage_or_year.equals("km")) {
+                while (mileage < schedule_perspective_value) {
                     tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
                     mileage += periodicityKm;
-                    date.plusDays(periodicityDays.toDays());
-
+                    date = date.plusDays(periodicityDays.toDays());
+//TODO: добавить расчет даты
                     //TODO: рассмотреть случай, когда нет даты
+                }
+                // schedule list by years
+            } else if (schedule_perspective_mileage_or_year.equals("years")) {
+                while (date.isBefore(current_date.plusYears(schedule_perspective_value))) {
+                    tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
+                    date = date.plusDays(periodicityDays.toDays());
+                    mileage += periodicityKm;
                 }
             }
 
 //            if(schedule_perspective_mileage_or_year.equals("years")){}
-
-
 
 
 //            tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
