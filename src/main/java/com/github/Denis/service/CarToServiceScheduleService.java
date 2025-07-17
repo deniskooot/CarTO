@@ -162,7 +162,7 @@ public class CarToServiceScheduleService {
             }
 
             if (schedule_perspective_value < 0 && schedule_perspective_value > 1_000_000) {
-                //TODO: add validation
+                throw new IllegalArgumentException("Incorrect perspective parameter: " + schedule_perspective_value + " must be < 0 or > 1_000_000)");
             }
             // schedule list by km
             if (schedule_perspective_mileage_or_year.equals("km")) {
