@@ -41,3 +41,5 @@ pgdata/
 
 
 src/main/java/com/github/Denis/trash/
+
+.DS_Store
