@@ -1,9 +1,12 @@
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
+### Java build and compile
 !**/src/main/**/build/
 !**/src/test/**/build/
+*.class
+
+### Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -35,11 +38,13 @@ out/
 
 ### VS Code ###
 .vscode/
-pgdata/
-/build_backup_1/
+
+### Local env variables
 *.env
 
-
-src/main/java/com/github/Denis/trash/
-
+### MacOS files
 .DS_Store
+
+### Logs, tmp
+*.log
+*.tmp
