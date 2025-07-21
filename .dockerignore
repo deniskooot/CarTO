@@ -2,11 +2,13 @@
 .git*
 .idea
 .*
+.DS_Store
+#.vscode
+#.idea
+
 *.env
-#buil*
 pgdata*
 *.md
 .gradle
 build
 gradle
-buildarchive
