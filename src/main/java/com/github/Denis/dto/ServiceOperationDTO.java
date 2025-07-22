@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
+/**
+ * Class for history of schedule front page
+ *
+ */
 public class ServiceOperationDTO {
 
     @JsonProperty("id")
@@ -14,7 +18,7 @@ public class ServiceOperationDTO {
     private Date dateServiceOperation;
     private String notes;
 
-    public ServiceOperationDTO(){
+    public ServiceOperationDTO() {
 
     }
 

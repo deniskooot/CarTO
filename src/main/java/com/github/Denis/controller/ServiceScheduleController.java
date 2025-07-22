@@ -22,14 +22,13 @@ public class ServiceScheduleController {
 
     // Read
     @GetMapping("/serviceschedules")
-
     public List<ServiceSchedule> getServiceSchedule() {
         return serviceScheduleService.getServiceSchedule();
     }
 
     // Endpoint for AddSchedule page on front (list of work names)
     @GetMapping("/serviceschedulenames")
-    public List<String> getServiceScheduleNames(){
+    public List<String> getServiceScheduleNames() {
         return serviceScheduleService.getServiceScheduleNames();
     }
 
@@ -39,14 +38,14 @@ public class ServiceScheduleController {
         return serviceScheduleService.getServiceScheduleByID(id);
     }
 
-    //    Create / Update
+    // Create / Update
     @PostMapping("/serviceschedules")
     @Transactional
     public int saveNewServiceSchedule(@RequestBody @Valid ServiceSchedule serviceSchedule) {
         return serviceScheduleService.saveNewServiceSchedule(serviceSchedule);
     }
 
-    //    Delete
+    // Delete
     @DeleteMapping("/serviceschedules/{id}")
     public void deleteServiceSchedule(@PathVariable int id) {
         serviceScheduleService.deleteServiceSchedule(id);

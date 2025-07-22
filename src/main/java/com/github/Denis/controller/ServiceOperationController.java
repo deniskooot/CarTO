@@ -16,26 +16,22 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-
 @RequestMapping("/api")
 public class ServiceOperationController {
 
     @PersistenceContext
     private EntityManager entityManager;
-
     private final ServiceOperationsRepository serviceOperationsRepository;
-
     private final ServiceOperationMapper serviceOperationMapper;
 
     @Autowired
-    ServiceOperationController(ServiceOperationsRepository serviceOperationsRepository, ServiceOperationMapper serviceOperationMapper){
+    ServiceOperationController(ServiceOperationsRepository serviceOperationsRepository, ServiceOperationMapper serviceOperationMapper) {
         this.serviceOperationsRepository = serviceOperationsRepository;
         this.serviceOperationMapper = serviceOperationMapper;
     }
 
     // Read
     @GetMapping("/serviceoperations")
-
     public List<ServiceOperation> getServiceOperation() {
         return serviceOperationsRepository.findAll();
     }
@@ -46,7 +42,7 @@ public class ServiceOperationController {
         return serviceOperationsRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
-    //    Create / Update
+    // Create / Update
     @PostMapping("/serviceoperations")
     @Transactional
     public int saveNewServiceOperation(@RequestBody @Valid ServiceOperationDTO serviceOperationDTO) {
@@ -55,7 +51,7 @@ public class ServiceOperationController {
         return serviceOperation.getId();
     }
 
-    //    Delete
+    // Delete
     @DeleteMapping("/serviceoperations/{id}")
     public void deleteServiceOperation(@PathVariable int id) {
         serviceOperationsRepository.deleteById(id);

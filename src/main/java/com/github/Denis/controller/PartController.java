@@ -14,19 +14,18 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-
 @RequestMapping("/api")
 public class PartController {
 
     @PersistenceContext
     private EntityManager entityManager;
-
     private final PartRepository partRepository;
 
     @Autowired
-    PartController(PartRepository partRepository){
+    PartController(PartRepository partRepository) {
         this.partRepository = partRepository;
     }
+
     // Read
     @GetMapping("/parts")
 
@@ -40,7 +39,7 @@ public class PartController {
         return partRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
-    //    Create / Update
+    // Create / Update
     @PostMapping("/parts")
     @Transactional
     public int saveNewPart(@RequestBody @Valid Part part) {
@@ -48,7 +47,7 @@ public class PartController {
         return part.getId();
     }
 
-    //    Delete
+    // Delete
     @DeleteMapping("/parts/{id}")
     public void deletePart(@PathVariable int id) {
         partRepository.deleteById(id);

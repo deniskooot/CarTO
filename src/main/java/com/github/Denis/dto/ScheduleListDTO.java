@@ -5,19 +5,17 @@ import com.github.Denis.entity.Part;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * DTO class for list of schedules for frontend
+ *
+ */
 public class ScheduleListDTO {
 
-//Наименование работы
-    private String scheduleName;
-    //    Пробег
-    private Integer scheduleMileageKm;
-    //    Дата
-    private ZonedDateTime scheduleDate;
-    //    Примечание
-    private String scheduleNotes;
-    //    * - обязательна ли работа?
-    private Boolean scheduleIsRequired;
-
+    private String scheduleName; // Наименование работы
+    private Integer scheduleMileageKm; // Пробег
+    private ZonedDateTime scheduleDate; // Дата
+    private String scheduleNotes; // Примечание
+    private Boolean scheduleIsRequired; // * - обязательна ли работа?
     private List<Part> scheduleParts;
 
 //    @JsonProperty("id")
