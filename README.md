@@ -4,19 +4,20 @@ Car maintenance schedule app shows upcoming work on the car.
 
 Java backend application built using Spring Boot and Docker. The project includes settings for working with PostgreSQL, Liquibase migrations, and Swagger.
 
-Using:
--- Java 21 Docker, The project includes settings for working with PostgreSQL, Liquibase migrations, Swagger (springdoc-openapi).
--- Spring Boot 3
--- Gradle
--- PostgreSQL
--- Liquibase
--- Docker, Docker Compose
+Using: </br>
+-- Java 21 Docker, The project includes settings for working with PostgreSQL, Liquibase migrations, Swagger (springdoc-openapi). </br>
+-- Spring Boot 3 </br>
+-- Gradle </br>
+-- PostgreSQL </br>
+-- Liquibase </br>
+-- Docker, Docker Compose </br>
 
 # Project structure
 
+```
 src/main/java/com/github/Denis/
-├── external_info_files/ # Non required files. Script for handle create database structure including all changesets.
-├── gradle/              # Gradle wrapper and config
+├── external_info_files/        # Non required files. Script for handle create database structure including all changesets.
+├── gradle/                     # Gradle wrapper and config
 ├── src/main/       
     ├── java/
         ├── config/             # Local spring configuration
@@ -38,8 +39,9 @@ src/main/java/com/github/Denis/
 ├── docker-compose              # Multistage build (database + application)
 ├── Dockerfile                  # Build container config
 └── settings.gradle             # Gradle build settings
+```
 
-2. Running App:
+# Running App:
 
 Create `.env` file:
 
@@ -64,7 +66,7 @@ If you don't use Docker you can try:
 java -jar build/libs/CarTO-0.0.1-SNAPSHOT.jar
 ```
 
-3. Database migration:
+# Database migration:
 
 Migrations are managed via Liquibase, main file:
 `src/main/resources/db/changelog/db.changelog-master.yaml`
