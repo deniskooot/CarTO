@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
+// Configure to allow frontend go to ports of backend
 @Configuration
 public class CorsConfig {
     @Bean

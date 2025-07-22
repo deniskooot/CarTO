@@ -9,6 +9,10 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.time.Duration;
 
+/**
+ * Class for Duration-JSON convert. Hibernate must know how to do it for validation works.
+ *
+ */
 public class DurationJsonConverter {
 
     public static class DurationSerializer extends JsonSerializer<Duration> {
@@ -24,11 +28,5 @@ public class DurationJsonConverter {
             return Duration.ofDays(p.getLongValue()); // Пример: "PT10S"
         }
     }
-
-
-
-
-
-
 
 }

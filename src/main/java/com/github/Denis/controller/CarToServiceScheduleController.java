@@ -1,23 +1,16 @@
 package com.github.Denis.controller;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.github.Denis.converter.DurationJsonConverter;
 import com.github.Denis.dto.CarToServiceScheduleDTO;
 import com.github.Denis.dto.ScheduleListDTO;
-import com.github.Denis.entity.*;
+import com.github.Denis.entity.CarToServiceSchedule;
 import com.github.Denis.service.CarToServiceScheduleService;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -32,12 +25,10 @@ public class CarToServiceScheduleController {
     private final CarToServiceScheduleService carToServiceScheduleService;
 
     @Autowired
-    CarToServiceScheduleController(CarToServiceScheduleService carToServiceScheduleService){
+    CarToServiceScheduleController(CarToServiceScheduleService carToServiceScheduleService) {
         this.carToServiceScheduleService = carToServiceScheduleService;
     }
 
-
-    // Read
     @GetMapping("/cartoserviceschedules")
     public List<CarToServiceSchedule> getCarToServiceSchedule() {
         return carToServiceScheduleService.getCarToServiceSchedule();
@@ -49,14 +40,14 @@ public class CarToServiceScheduleController {
         return carToServiceScheduleService.getCarToServiceScheduleByID(id);
     }
 
-    //    Create / Update
+    // Create / Update
     @PostMapping("/cartoserviceschedules")
     @Transactional
     public int saveNewCarToServiceSchedule(@RequestBody @Valid CarToServiceScheduleDTO carToServiceScheduleDTO) {
         return carToServiceScheduleService.saveCarToServiceSchedule(carToServiceScheduleDTO);
     }
 
-    //    Delete
+    // Delete
     @DeleteMapping("/cartoserviceschedulecs/{id}")
     public void deleteCarToServiceSchedule(@PathVariable int id) {
         carToServiceScheduleService.deleteCarToServiceSchedule(id);
@@ -64,53 +55,26 @@ public class CarToServiceScheduleController {
 
     // Get for list of works to schedule history page on front (by selected car)
     @GetMapping("/service-schedule-history-list/{car_id}")
-    public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int car_id){
+    public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int car_id) {
         return carToServiceScheduleService.getServiceScheduleListForHistoryForm(car_id);
     }
 
-// endpoint выдачи списка работ в main страницу по параметрам
-
+    /**
+     * Get task list for main page
+     *
+     * @param car_id id of selected car
+     * @param schedule_perspective_mileage_or_year perspective parameter selection flag (years or mileage)
+     * @param schedule_perspective_value value parameter using
+     * @param show_required is show non-required tasks (recommended tasks)?
+     * @return List of tasks
+     */
     @GetMapping("/tasks")
-public List<ScheduleListDTO> getTasks(
-    @RequestParam int car_id,
-    @RequestParam String schedule_perspective_mileage_or_year,
-    @RequestParam int schedule_perspective_value,
-    @RequestParam boolean show_required
-) {
-
+    public List<ScheduleListDTO> getTasks(
+            @RequestParam int car_id,
+            @RequestParam String schedule_perspective_mileage_or_year,
+            @RequestParam int schedule_perspective_value,
+            @RequestParam boolean show_required
+    ) {
         return carToServiceScheduleService.getTaskList(car_id, schedule_perspective_mileage_or_year, schedule_perspective_value, show_required);
     }
-
-
-    // Обработка логики и возврат списка работ
-//        <tr>
-//                <th className="border px-2 py-1 text-left">Наименование работы</th>
-//                <th className="border px-2 py-1 text-left">Пробег</th>
-//                <th className="border px-2 py-1 text-left">Дата</th>
-//                <th className="border px-2 py-1 text-left">Примечание</th>
-//                <th className="border px-2 py-1 text-left">*</th>
-//              </tr>
-//            </thead>
-//            <tbody>
-//              <tr>
-//                <td className="border px-2 py-1">Замена масла</td>
-//                <td className="border px-2 py-1">50000</td>
-//                <td className="border px-2 py-1">25.04.2025</td>
-//                <td className="border px-2 py-1">Последний раз залил Shell, шайба на сливную пробку не нужна, есть в запасе</td>
-//                <td className="border px-2 py-1 text-center">
-//                  <input type="checkbox" checked readOnly />
-//                </td>
-//              </tr>
-//              <tr>
-//                <td className="border px-2 py-1">Замена масла</td>
-//                <td className="border px-2 py-1">57500</td>
-//                <td className="border px-2 py-1">25.04.2026</td>
-//                <td className="border px-2 py-1">Заметки пользователя</td>
-//                <td className="border px-2 py-1 text-center">
-//                  <input type="checkbox" readOnly />
-//                </td>
-//              </tr>
-
-
-
 }

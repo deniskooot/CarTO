@@ -2,6 +2,10 @@ package com.github.Denis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * This class match DTO frontend form with backend Entity CarToServiceSchedule
+ *
+ */
 public class CarToServiceScheduleDTO {
 
     private Integer id;
@@ -14,9 +18,10 @@ public class CarToServiceScheduleDTO {
     private String serviceScheduleName;
     private boolean isRequired;
 
-    public CarToServiceScheduleDTO(){
+    public CarToServiceScheduleDTO() {
 
     }
+
     public CarToServiceScheduleDTO(Integer id, Integer periodicityKm, Integer periodicityTimeDays, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
         this.id = id;
         this.periodicityKm = periodicityKm;

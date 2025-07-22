@@ -15,21 +15,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//контроллер - класс с аннотацией @RestController, который умеет что-то выводить на экран
-//@RestController = @Controller + @ResponseBody. Аннотация @Controller умеет слушать, получать и отвечать на запросы.
-//А @ResponseBody  дает фреймворку понять, что объект, который вы вернули из метода надо прогнать через HttpMessageConverter, чтобы получить готовое к отправке клиенту представление.
-//@CrossOrigin(origins = "http://localhost:3000") // Разрешаем фронту
+/*
+@RestController = @Controller + @ResponseBody. Аннотация @Controller умеет слушать, получать и отвечать на запросы.
+@ResponseBody дает фреймворку понять, что объект, который вы вернули из метода надо прогнать через HttpMessageConverter,
+чтобы получить готовое к отправке клиенту представление.
+*/
 @RestController
-
-//@RequestMapping говорит, по какому URL будут доступны наши контроллеры.
-// базовый путь для всех запросов в этом контроллере
-@RequestMapping("/api")
-
+@RequestMapping("/api") //@RequestMapping говорит, по какому URL будут доступны наши контроллеры - базовый путь для всех запросов в этом контроллере
 public class CarController {
 
     @PersistenceContext
     private EntityManager entityManager;
-
     private final CarRepository carRepository;
 
     @Autowired
@@ -37,61 +33,59 @@ public class CarController {
         this.carRepository = carRepository;
     }
 
-//    @GetMapping - сообщает SpringBoot, что это get метод и он умеет что-то возвращать.
-// APPLICATION_JSON_VALUE говорит о том, что данные возвращаются в формате json
-    @GetMapping("/cars")  //(produces = APPLICATION_JSON_VALUE) = "application/json"; //    @GetMapping("/hello")
-
+    @GetMapping("/cars") // @GetMapping - сообщает SpringBoot, что это get метод и он умеет что-то возвращать.
     public List<Car> getCar() {
         return carRepository.findAll();
     }
 
-////@PathVariable - подставляет переменную пути
+    //@PathVariable - подставляет переменную пути - комментарий к функции
     @GetMapping("/cars/{id}")
     public Car getCarByID(@PathVariable int id) {
         return carRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
-//    getReferenceById()
     }
 
-
     @GetMapping("/get-car-list")
-    public Map<Integer, String> getCarList(@RequestParam Integer userId){
+    public Map<Integer, String> getCarList(@RequestParam Integer userId) {
         HashMap<Integer, String> result = new HashMap<>();
         List<Car> cars = carRepository.getCarsByUserId(userId);
-        for (Car car: cars){
-            if (car.getCarUser() != null){
+        for (Car car : cars) {
+            if (car.getCarUser() != null) {
                 result.put(car.getId(), car.getName());
             }
-
         }
         return result;
     }
 
-////    Предназначен для создания новой сущности
-    // post mappind не работает 2025-01-26T15:25:03.355+03:00 ERROR 78545 : Servlet.service() for servlet [dispatcherServlet]
-// in context with path [] threw exception [Request processing failed: org.springframework.orm.ObjectOptimisticLockingFailureException:
-// Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect): [com.github.Denis.entity.Car#4]] with root cause
+    /**
+     * Предназначен для создания новой сущности Car
+     *
+     * @param car сущность, которую необходимо сохранить в базе
+     * @return id созданной сущности Car
+     */
     @PostMapping("/cars")
     @Transactional
-//    @Valid - проверяет
-    public int saveNewCar(@RequestBody @Valid Car car){
-
+    public int saveNewCar(@RequestBody @Valid Car car) {
+        // @Valid - валидация Car
         car = carRepository.save(car);
         return car.getId();
     }
-//       Удаление сущности
 
+    /**
+     * Удаление сущности Car
+     *
+     * @param id сущности
+     */
     @DeleteMapping("/cars/{id}")
-    public void deleteCar(@PathVariable int id){
+    public void deleteCar(@PathVariable int id) {
         carRepository.deleteById(id);
     }
 
-    //обновление имеющейся в базе сущности
+//    обновление имеющейся в базе сущности
 //    @PatchMapping("/cars/{id}")
 //    public void updateCarData(@PathVariable int id, Car car){
 //        carRepository.find
 //        Car newCar = getCarByID(id); //findByID
 //        carRepository.save(car);
 //    }
-//    PUT меняет объект целиком
-//    PATCH изменяет отдельные поля ресурса.
+
 }

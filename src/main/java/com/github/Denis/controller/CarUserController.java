@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-
 @RequestMapping("/api")
 public class CarUserController {
     @PersistenceContext
@@ -40,7 +39,7 @@ public class CarUserController {
         return carUserRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
-    //    Create / Update
+    //Create / Update
     @PostMapping("/carusers")
     @Transactional
     public int saveNewCarUser(@RequestBody @Valid CarUser carUser) {
@@ -48,7 +47,7 @@ public class CarUserController {
         return carUser.getId();
     }
 
-    //    Delete
+    // Delete
     @DeleteMapping("/carusers/{id}")
     public void deleteCarUser(@PathVariable int id) {
         carUserRepository.deleteById(id);
