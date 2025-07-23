@@ -47,11 +47,20 @@ public class CarToServiceScheduleService {
         return carToServiceScheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
     }
 
+    // Delete by id
     @Transactional
     public void deleteCarToServiceSchedule(int id) {
         carToServiceScheduleRepository.deleteById(id);
     }
 
+    /**
+     * Method to save new CarToServiceSchedule to database.
+     * Method checks exist of ServiceSchedule with name == dto.getServiceScheduleName().
+     * If ServiceSchedule exist id returned, if don't id new saved entity returned.
+     *
+     * @param dto CarToServiceScheduleDTO object
+     * @return ID if ServiceSchedule dto.getServiceScheduleName() already exist in database or ID of new saved entity
+     */
     @Transactional
     public int saveCarToServiceSchedule(CarToServiceScheduleDTO dto) {
         // получили DTO со строкой dto.getServiceScheduleName();
@@ -70,7 +79,6 @@ public class CarToServiceScheduleService {
             newServiceSchedule.setDefaultPeriodKm(dto.getPeriodicityKm());
             newServiceSchedule.setDefaultPeriodTimeDays(Duration.ofDays(dto.getPeriodicityTimeDays()));
             newServiceSchedule.setRequired(dto.getIsRequired());
-
             // сохраняем новую работу в базу и получаем id
             serviceScheduleId = serviceScheduleRepository.save(newServiceSchedule).getId();
         }
@@ -84,78 +92,65 @@ public class CarToServiceScheduleService {
         return carToServiceScheduleRepository.save(entity).getId();
     }
 
-    // Get for list of works to schedule history page on front (by selected car)
-    @Transactional
-    public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int car_id) {
+    /**
+     * Method to Get for list of works to schedule history page on frontend (by selected car)
+     *
+     * @param carId id of car to find schedules
+     * @return Map of ID and name of service schedules
+     */
+    // Transactional
+    public Map<Integer, String> getServiceScheduleListForHistoryForm(@PathVariable int carId) {
         Map<Integer, String> result = new HashMap<>();
-        // carToServiceScheduleRepository.findAll();
-        List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
+        List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(carId);
 
-        // проверка на null заставляет hibernate впервые обратиться к связи и ее подгрузить. После чего, при следующем обращении lazy связь уже подгружена
+        // Проверка на null заставляет hibernate впервые обратиться к связи и ее подгрузить. После чего, при следующем обращении lazy связь уже подгружена
         for (CarToServiceSchedule entity : carToServiceScheduleList) {
             if (entity.getServiceSchedule() != null) {
                 result.put(entity.getId(), entity.getServiceSchedule().getName());
-
-                // Если name ещё не встречался — добавляем
-                // nameToIdMap.putIfAbsent(name, id);
             }
         }
         return result;
     }
 
-    // Get tasks (schedules) list for main page (forward by selected car, mileage and time, with show required/ non required parameter) type Mode = "km" | "years";
+    /**
+     * Method for get tasks (schedules) list for main page (forward by selected car, mileage and time, with show required/ non required parameter) type Mode = "km" | "years";
+     *
+     *
+     * @param car_id id of selected car
+     * @param schedule_perspective_mileage_or_year perspective parameter selection flag (years or mileage)
+     * @param schedule_perspective_value value parameter using
+     * @param show_required is show non-required tasks (recommended tasks)?
+     * @return List of tasks
+     */
     @Transactional
     public List<ScheduleListDTO> getTaskList(int car_id, String schedule_perspective_mileage_or_year, int schedule_perspective_value, boolean show_required) {
 
-//        получили список работ по car_id (пока что без учета флага обязательности, просто все работы по машине)
-
         //TODO: здесь используется текущая дата, однако на странице есть возможность поменять дату, нужно учитывать дату со страницы, если она отличается от текущей
+        //получили список работ по car_id (пока что без учета флага обязательности, просто все работы по машине)
         List<CarToServiceSchedule> carToServiceScheduleList = carToServiceScheduleRepository.findAllByCarId(car_id);
-//carToServiceScheduleList - все работы по car_id из CarToServiceSchedule
         if (carToServiceScheduleList.isEmpty()) {
             throw new EntityNotFoundException("Нет расписаний для машины с id: " + car_id);
         }
-//tasksList - список задач, возвращаемых во фронт     private String scheduleName;
-//    Integer scheduleMileageKm; ZonedDateTime scheduleDate; String scheduleNotes; Boolean scheduleIsRequired; List<Part> scheduleParts;
-        List<ScheduleListDTO> tasksList = new ArrayList<>();
+        List<ScheduleListDTO> tasksList = new ArrayList<>(); // список задач, возвращаемых во фронт
         for (CarToServiceSchedule carToServiceSchedule : carToServiceScheduleList) {
 
-
             Integer startMileage = carToServiceSchedule.getCar().getStartMileage(); //стартовый пробег
-
             ZonedDateTime startDate = carToServiceSchedule.getCar().getStartDate(); //стартовая дата
-
             Integer yearlyMileage = carToServiceSchedule.getCar().getYearlyMileage(); //годовой пробег
-
             Integer car_mileage = carToServiceSchedule.getCar().getMileage(); //текущий пробег
-
             ZonedDateTime current_date = ZonedDateTime.now(); //текущая дата
-
             String name = carToServiceSchedule.getServiceSchedule().getName(); //наименование работы
-
             String notes = carToServiceSchedule.getNotes(); //заметки
-
             Boolean isRequired = carToServiceSchedule.getServiceSchedule().isRequired(); //обязательность
-
             List<Part> parts = carToServiceSchedule.getParts(); //список запчастей
-
-
             Integer periodicityKm = carToServiceSchedule.getPeriodicityKm();//периодичность работы по пробегу
-
             Integer periodicityDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodKm();//периодичность работы по пробегу по умолчанию
-
             Duration periodicityDays = carToServiceSchedule.getPeriodicityTimeDays();//периодичность работы по дате
-
             Duration periodicityDaysDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodTimeDays(); //периодичность работы по дате по умолчанию
-
             //schedule_perspective_mileage_or_year - в чем перспектива
             //schedule_perspective_value - значение перспективы либо км либо количество лет
-
             Integer mileage = car_mileage; //пробег для выполнения работы
-
-//            ZonedDateTime date = ZonedDateTime.parse("2025-01-01T00:00:00+03:00"); //дата выполнения работы
-
-            ZonedDateTime date = current_date; //дата выполнения работы
+            ZonedDateTime date = current_date; //дата выполнения работы ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
 
             if (!show_required && !isRequired) {
                 continue;
@@ -170,8 +165,6 @@ public class CarToServiceScheduleService {
                     tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
                     mileage += periodicityKm;
                     date = date.plusDays(periodicityDays.toDays());
-//TODO: добавить расчет даты
-                    //TODO: рассмотреть случай, когда нет даты
                 }
                 // schedule list by years
             } else if (schedule_perspective_mileage_or_year.equals("years")) {
@@ -181,79 +174,14 @@ public class CarToServiceScheduleService {
                     mileage += periodicityKm;
                 }
             }
-
-//            if(schedule_perspective_mileage_or_year.equals("years")){}
-
-
-//            tasksList.add(new ScheduleListDTO(name, mileage, date, notes, isRequired, parts));
+            //TODO: рассмотреть случай, когда нет даты и когда нет пробега
         }
-//        for (CarToServiceSchedule carToServiceSchedule: carToServiceScheduleList){
-//            tasksList.add(putScheduleData(carToServiceSchedule));
-//        }
+
+        // Comparator to sort task list
         Comparator<ScheduleListDTO> scheduleListDTOComparator = Comparator
                 .comparing(ScheduleListDTO::getScheduleMileageKm)
                 .thenComparing(ScheduleListDTO::getScheduleDate);
-//        tasksList.sort(scheduleListDTOComparator);
-//        tasksList.sort(scheduleListDTOComparator);
         Collections.sort(tasksList, scheduleListDTOComparator);
-//        List.sort(scheduleListDTOComparator);
         return tasksList;
-
-
     }
-
-//    public ScheduleListDTO setOneSchedule(Integer startMileage, ZonedDateTime startDate, Integer yearlyMileage,
-//                                          Integer car_mileage, String name, Integer mileage, ZonedDateTime date, String notes,
-//                                          Boolean isRequired, List<Part> parts){
-//        return new ScheduleListDTO(name, mileage, date, notes, isRequired, parts);
-//    }
-    //javaDOC
-//    /**
-//     *
-//     * @param carToServiceSchedule
-//     * @return
-//     */
-//    метод для создания одной строки в работе
-//    public ScheduleListDTO putScheduleData(CarToServiceSchedule carToServiceSchedule){
-//        //        создаем и наполняем DTO для одной работы по обслуживанию
-//        ScheduleListDTO result = new ScheduleListDTO();
-//        //Наименование работы //private String scheduleName;
-//        result.setScheduleName(carToServiceSchedule.getServiceSchedule().getName());
-//        // Пробег //private Integer scheduleMileageKm;
-////        пока просто беру данные и выдаю за результат, тут логика добавления пробега должна быть
-//        result.setScheduleMileageKm(carToServiceSchedule.getPeriodicityKm());
-//        //    Дата //private Date scheduleDate;
-//        ZonedDateTime startDate = ZonedDateTime.parse("2025-01-01T00:00:00+03:00");
-//        result.setScheduleDate(startDate.plusDays(carToServiceSchedule.getPeriodicityTimeDays().toDays()));
-////    Примечание //private String scheduleNotes;
-//        result.setScheduleNotes(carToServiceSchedule.getNotes());
-////    * - обязательна ли работа? //private Boolean scheduleIsRequired;
-//        result.setScheduleIsRequired(carToServiceSchedule.getServiceSchedule().isRequired());
-////    private List<Part> scheduleParts;
-//        result.setScheduleParts(carToServiceSchedule.getParts());
-//        return result;
-//    }
-//
 }
-
-
-//    @Table(name = "car_to_service_schedules")
-
-//    @Column(name = "car_to_service_schedule_id")
-//    private int id;
-//    @JsonProperty("periodicity_km")
-//    private int periodicityKm;
-//    private Duration periodicityTimeDays;
-//    private String notes;
-//
-//    @JoinColumn(name = "car_id", referencedColumnName = "car_id")
-//    private Car car;
-//
-//    @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
-//    private ServiceSchedule serviceSchedule;
-//
-//    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
-//    private List<ServiceOperation> serviceOperations; //= new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
-//    private List<Part> parts; // = new ArrayList<>();

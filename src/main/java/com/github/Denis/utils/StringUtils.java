@@ -1,12 +1,15 @@
 package com.github.Denis.utils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringJoiner;
 
 public class StringUtils {
 
     private static final Map<String, String> ABBREVIATIONS_MAP = createAbbreviationsMap();
 
-    private static Map<String, String> createAbbreviationsMap(){
+    private static Map<String, String> createAbbreviationsMap() {
         Set<String> abbreviations = Set.of(
                 "ГРМ",    // Газораспределительный механизм (Timing Belt/Chain)
                 "ABS",    // Антиблокировочная система (Anti-lock Braking System)
@@ -108,23 +111,26 @@ public class StringUtils {
                 "ФК",     // Фильтрующий клапан (Filter Valve)
                 "ХК",     // Холодный клапан (Cold Valve)
                 "ЧК"      // Четырехканальный клапан (Four-Channel Valve)
-                );
+        );
         Map<String, String> map = new HashMap<>();
-        for (String abbr : abbreviations){
+        // приводим все аббревиатуры в нижний и верхний регистр, нижний регистр для сравнения с обрабатываемой строкой
+        for (String abbr : abbreviations) {
             map.put(abbr.toLowerCase(), abbr.toUpperCase());
         }
         return map;
     }
 
-    private StringUtils(){}
+    private StringUtils() {
+    }
 
     public static String normalizeServiceScheduleName(String input) {
         if (input == null || input.isEmpty()) return input;
 
-//             Разбиваем строку на слова
-//        \\ экранирует обратный слеш в строке Java.
-//          \s в регулярном выражении означает любой пробельный символ (пробел, табуляция и т.д.).
-//          + означает "один или более".
+        /* Разбиваем строку на слова
+        экранирует обратный слеш в строке Java.
+        \s в регулярном выражении означает любой пробельный символ (пробел, табуляция и т.д.).
+        + означает "один или более".
+        */
         String[] words = input.split("\\s+");
         StringJoiner result = new StringJoiner(" ");
         for (String word : words) {
@@ -132,9 +138,12 @@ public class StringUtils {
         }
         String finalResult = result.toString();
         return finalResult.isEmpty() ? finalResult :
+                // Первый символ названия работы приводим в верхний регистр
                 Character.toUpperCase(finalResult.charAt(0)) + finalResult.substring(1);
     }
-    private static String normalizeWord(String word){
+
+    //  Если аббревиатура есть в списке аббревиатур - приводим ее в верхний регистр
+    private static String normalizeWord(String word) {
         return ABBREVIATIONS_MAP.getOrDefault(word.toLowerCase(), word);
     }
 }
