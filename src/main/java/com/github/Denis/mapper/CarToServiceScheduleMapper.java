@@ -9,18 +9,12 @@ import org.mapstruct.Named;
 
 import java.time.Duration;
 
-// @Mapper — говорит MapStruct, что этот интерфейс является маппером
-// componentModel = "spring" — интегрирует маппер с Spring, чтобы его можно было внедрять через @Autowired
-// MapStruct автоматически реализует интерфейс CarToServiceScheduleMapper
 @Mapper(componentModel = "spring")
 public interface CarToServiceScheduleMapper {
 
     // Преобразование из Entity в DTO
     @Mapping(source = "car.id", target = "carId")
-//    @Mapping(source = "serviceSchedule.id", target = "serviceScheduleId")
     @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays", qualifiedByName = "mapDurationToInteger")
-//    MapStruct автоматически генерирует реализацию этого метода на основе аннотаций @Mapping
-//    В скомпилированном коде будет реальный метод, который берет entity, извлекает из него нужные поля и создает DTO
     CarToServiceScheduleDTO toDTO(CarToServiceSchedule entity);
 
     // Преобразование из DTO в Entity
@@ -28,17 +22,19 @@ public interface CarToServiceScheduleMapper {
     @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays", qualifiedByName = "mapIntegerToDuration")
     CarToServiceSchedule toEntity(CarToServiceScheduleDTO dto);
 
-    // Метод для преобразования carId в Car
+    // Преобразование Duration to Integer
     @Named("mapDurationToInteger")
     default Integer mapDurationToInteger(Duration durationInDays) {
         return durationInDays != null ? (int) durationInDays.toDays() : null;
     }
 
+    // Преобразование Integer to Duration
     @Named("mapIntegerToDuration")
     default Duration mapIntegerToDuration(Integer integerInDays) {
         return integerInDays != null ? Duration.ofDays(integerInDays) : null;
     }
 
+    // Метод для преобразования carId в Car
     @Named("mapCarIdToCar")
     default Car mapCarIdToCar(Integer id) {
         if (id == null) return null;

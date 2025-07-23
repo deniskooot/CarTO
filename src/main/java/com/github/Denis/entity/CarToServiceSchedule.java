@@ -13,13 +13,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 
-// car_to_service_schedules (car_to_service_schedule_id SERIAL PRIMARY KEY, service_schedule_id INT, car_id INT, periodicity_km INT, periodicity_time_days INTERVAL DAY, notes VARCHAR(200),
-//        CONSTRAINT service_schedule_id_fk FOREIGN KEY (service_schedule_id) REFERENCES service_schedules (service_schedule_id),
-//        CONSTRAINT car_id_fk FOREIGN KEY (car_id) REFERENCES cars (car_id);
-
 @Entity
 @Table(name = "car_to_service_schedules")
-
 public class CarToServiceSchedule {
 
     @Id
@@ -30,39 +25,29 @@ public class CarToServiceSchedule {
     private int periodicityKm;
     @Schema(type = "integer", format = "int64", example = "10")
 
-//    я убрал сериалайзеры вместе с Лексом, потому что в маппере у меня описано это преобразование,
-//    возможно сейчас Hibernate уже без сериалайзера поймет, как преобразовывать
-//    дополнительно: сериалайзер преобразовывает объект в строку (например, для отправки на фронт)
-//    здесь как бедто корректнее было назвать конвертер
-
-//    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
-//    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
+    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
+    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
     @JsonProperty("periodicity_time_days")
     private Duration periodicityTimeDays;
     private String notes;
 
-    //    ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @JoinColumn(name = "car_id", referencedColumnName = "car_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Car car;
 
-    //    ManyToOne ServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // ManyToOne ServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private ServiceSchedule serviceSchedule;
 
-    //    OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).
-    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).
     @JsonIgnore
-    private List<ServiceOperation> serviceOperations; //= new ArrayList<>();
+    private List<ServiceOperation> serviceOperations;
 
-    //    OneToMany Part reference, Part is owner reference (Part side is Many).
-    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany Part reference, Part is owner reference (Part side is Many).
     @JsonIgnore
-    private List<Part> parts; // = new ArrayList<>();
-
+    private List<Part> parts;
 
     public CarToServiceSchedule() {
     }

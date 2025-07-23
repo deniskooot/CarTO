@@ -7,9 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
-// parts (part_id SERIAL PRIMARY KEY, name VARCHAR(200), car_to_service_schedule_id INT, part_number_original VARCHAR(50), part_number_analogs VARCHAR(400), notes VARCHAR(1000),
-//CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
-
 @Entity
 @Table(name = "parts")
 public class Part {
@@ -26,14 +23,12 @@ public class Part {
     private String partNumberAnalogs;
     private String notes;
 
-    //    OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
     @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private CarToServiceSchedule carToServiceSchedule;
 
     Part() {
-
     }
 
     Part(int id, String name, String partNumberOriginal, String partNumberAnalogs, String notes) {

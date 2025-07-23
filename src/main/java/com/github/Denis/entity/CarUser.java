@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-// car_users (user_id SERIAL PRIMARY KEY, name VARCHAR(50));
-
 @Entity
 @Table(name = "car_users")
 public class CarUser {
@@ -21,14 +19,12 @@ public class CarUser {
     @NotBlank(message = "Select name")
     @Column(name = "name")
     private String name;
-    //можно не указывать Column name, если оно совпадает с названием столбца в таблице
 
-    // mapped by указывает на поле в данном классе для связи
-    // orphanRemoval - с английского — "удалять сирот". Если мы удалим юзера из БД — все связанные с ним автомобили также будут удалены.
-    // @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-
-    //    OneToMany Car reference, Car is owner reference (Car side is Many).
-    @OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = false)
+    /* mapped by указывает на поле в данном классе для связи
+    orphanRemoval - с английского — "удалять сирот". Если мы удалим юзера из БД — все связанные с ним автомобили также будут удалены.
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    */
+    @OneToMany(mappedBy = "carUser", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany Car reference, Car is owner reference (Car side is Many).
     @JsonIgnore
     private List<Car> cars = new ArrayList<>();
 

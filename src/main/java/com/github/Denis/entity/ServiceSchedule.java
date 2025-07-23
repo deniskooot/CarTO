@@ -14,8 +14,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 
-//service_schedules (service_schedule_id SERIAL PRIMARY KEY, name VARCHAR(100), is_required BOOLEAN, default_period_km INT, default_period_time_days INTERVAL DAY);
-
 @Entity
 @Table(name = "service_schedules")
 
@@ -38,15 +36,11 @@ public class ServiceSchedule {
     @Column(name = "default_period_time_days")
     @JsonProperty("default_period_time_days")
     private Duration defaultPeriodTimeDays; // (INTERVAL '1095' DAY)
-
-    //    OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
-    @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "serviceSchedule", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
     @JsonIgnore
-    private List<CarToServiceSchedule> carToServiceSchedules; //= new ArrayList<>();
-
+    private List<CarToServiceSchedule> carToServiceSchedules;
 
     public ServiceSchedule() {
-
     }
 
     public ServiceSchedule(int id, String name, boolean isRequired, int defaultPeriodKm, int defaultPeriodTimeDaysInt) {

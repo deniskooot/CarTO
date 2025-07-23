@@ -8,9 +8,6 @@ import jakarta.validation.constraints.PositiveOrZero;
 import java.util.Date;
 import java.util.Objects;
 
-// service_operations (service_operation_id SERIAL PRIMARY KEY, car_to_service_schedule_id INT, mileage_service_operation INT, date_service_operation DATE, notes VARCHAR(1000),
-//CONSTRAINT car_to_service_schedule_id_fk FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedules (car_to_service_schedule_id);
-
 @Entity
 @Table(name = "service_operations")
 public class ServiceOperation {
@@ -22,14 +19,12 @@ public class ServiceOperation {
     @PositiveOrZero(message = "Millage must bee >=0")
     @JsonProperty("mileage_service_operation")
     private int mileageServiceOperation;
-    //    Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
     @JsonProperty("date_service_operation")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE) // Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
     private Date dateServiceOperation;
     private String notes;
 
-    //    OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
     @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private CarToServiceSchedule carToServiceSchedule;
