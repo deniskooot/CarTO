@@ -28,7 +28,6 @@ public class PartController {
 
     // Read
     @GetMapping("/parts")
-
     public List<Part> getPart() {
         return partRepository.findAll();
     }

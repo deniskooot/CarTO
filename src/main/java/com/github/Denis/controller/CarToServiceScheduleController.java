@@ -21,7 +21,6 @@ public class CarToServiceScheduleController {
 
     @PersistenceContext
     private EntityManager entityManager;
-
     private final CarToServiceScheduleService carToServiceScheduleService;
 
     @Autowired

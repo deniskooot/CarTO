@@ -18,7 +18,6 @@ import java.util.List;
 public class CarUserController {
     @PersistenceContext
     private EntityManager entityManager;
-
     private final CarUserRepository carUserRepository;
 
     @Autowired
@@ -28,7 +27,6 @@ public class CarUserController {
 
     // Read
     @GetMapping("/carusers")
-
     public List<CarUser> getCarUser() {
         return carUserRepository.findAll();
     }
