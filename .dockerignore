@@ -11,4 +11,3 @@ pgdata*
 *.md
 .gradle
 build
-gradle
