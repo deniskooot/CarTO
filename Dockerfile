@@ -9,7 +9,7 @@ RUN gradle build -x test --no-daemon --stacktrace --parallel --build-cache
 
 
 ## Runtime stage
-FROM eclipse-temurin:21-jre AS cartodokerrunner
+FROM eclipse-temurin:25-jre AS cartodokerrunner
 
 WORKDIR /app
 
