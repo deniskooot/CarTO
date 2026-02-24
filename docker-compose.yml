@@ -1,14 +1,19 @@
 services:
   # 2 сервиса у нас
   carto:
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
     env_file: "carto.env"
     build: . # где искать dockerfile (в корне)
     ports:
-      - "8082:8081" # проброс порта в контейнер (8081 внутри)
-    depends_on: # установление зависимостей. текущий сервис запускается после запуска базы
+      - "8082:8080" # проброс порта в контейнер (8081 внутри)
+    depends_on: # Установление зависимостей. Текущий сервис запускается после запуска базы
       - postgres
 
   postgres:
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=prod
     env_file: "carto.env"
     image: postgres:17
     volumes:
@@ -28,6 +33,14 @@ services:
         limits:
           cpus: '1'
           memory: 4G
+    entrypoint: [ "/bin/bash", "-c","
+      docker-entrypoint.sh postgres &
+      rm -f /initialised.txt || true &&
+      until pg_isready -U $POSTGRES_USER; do sleep 3; done &&
+      psql -U PG_USER -d postgres -c 'CREATE DATABASE local;' || true &&
+      echo done > /initialised.txt &&
+      wait"
+    ]
 
 volumes:
   pgdata:

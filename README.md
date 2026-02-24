@@ -50,7 +50,6 @@ SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/dbname
 SPRING_DATASOURCE_USERNAME=your_user
 SPRING_DATASOURCE_PASSWORD=your_password
 SERVER_PORT=8082
-APPLICATION_NAME=carTO
 ```
 
 Run app:
