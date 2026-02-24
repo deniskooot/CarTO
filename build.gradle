@@ -1,7 +1,7 @@
 // plugins содержит плагины, которые предоставляют необходимые библиотеки и их версии
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.4'
+	id 'org.springframework.boot' version '4.0.3'
 	id 'io.spring.dependency-management' version '1.1.6'
 	// подключение Hibernate
 	id "org.hibernate.orm" version "6.6.1.Final"
