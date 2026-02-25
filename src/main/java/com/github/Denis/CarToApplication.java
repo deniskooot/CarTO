@@ -14,17 +14,5 @@ public class CarToApplication {
     static void main(String[] args) {
         SpringApplication.run(CarToApplication.class, args);
     }
-
-    /**
-     * Class for launch application in IDE
-     */
-    @SpringBootApplication
-    public static class LocalRun {
-        static void main() {
-            SpringApplication app = new SpringApplication(CarToApplication.class);
-            app.setAdditionalProfiles("local");
-            app.run();
-        }
-    }
 }
 

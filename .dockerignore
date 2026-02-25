@@ -1,11 +1,10 @@
-
+*.env
 .git*
 .idea
 .*
 .DS_Store
 #.vscode
 #.idea
-
 *.env
 pgdata*
 *.md

@@ -43,13 +43,11 @@ src/main/java/com/github/Denis/
 
 # Running App:
 
-Create `.env` file:
+Create `carto.env` file with production DB credentials:
 
 ```env
-SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/dbname
-SPRING_DATASOURCE_USERNAME=your_user
-SPRING_DATASOURCE_PASSWORD=your_password
-SERVER_PORT=8082
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=<your_password_here>
 ```
 
 Run app:

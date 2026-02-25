@@ -1,6 +1,7 @@
 // plugins содержит плагины, которые предоставляют необходимые библиотеки и их версии
 plugins {
 	id 'java'
+	id 'application'
 	id 'org.springframework.boot' version '4.0.3'
 	id 'io.spring.dependency-management' version '1.1.7'
 	// подключение Hibernate
@@ -12,16 +13,17 @@ wrapper {
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-${distributionType.name().toLowerCase()}.zip"
 }
 
-//jar {
-//	manifest {
-//		attributes(
-//				'Main-Class': 'com.github.Denis.CarToApplication'
-//		)
-//	}
-//}
-//bootJar {
-//	mainClass = 'com.github.Denis.CarToApplication' // Укажи свой главный класс
-//}
+application {
+	mainClass = 'com.github.Denis.CarToApplication'
+}
+
+jar {
+	dependsOn bootJar
+
+	// Отключает генерацию лишнего JAR файла
+	enabled = false
+	archiveFileName = bootJar.archiveFileName
+}
 
 //Параметры group, version отвечают за группу и версию проекта, а sourceCompatibility - версию java, targetCompability - какой версией компилировать
 group = 'com.github'
@@ -70,13 +72,8 @@ dependencies {
 
 	//	подключение mapstruct для маппера DTO
 	implementation 'org.mapstruct:mapstruct:1.6.3'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
-
-//		implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-//		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-
-
-
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework:spring-test'

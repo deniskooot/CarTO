@@ -3,12 +3,13 @@ package com.github.Denis.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 // Configure to allow frontend go to ports of backend
 @Configuration
-public class CorsConfig {
+public class CorsConfig implements WebMvcConfigurer {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -20,5 +21,11 @@ public class CorsConfig {
                         .allowedHeaders("*"); // Разрешаем любые заголовки
             }
         };
+    }
+
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/").setViewName("redirect:/swagger-ui.html");
     }
 }

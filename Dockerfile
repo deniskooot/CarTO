@@ -5,7 +5,7 @@ FROM gradle:9.3.1-jdk25 AS build
 
 COPY . .
 
-RUN gradle build -x test --no-daemon --stacktrace --parallel --build-cache
+RUN gradle build -x test --no-daemon --stacktrace --parallel --build-cache --configuration-cache
 
 
 ## Runtime stage
