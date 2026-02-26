@@ -10,20 +10,23 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface ServiceOperationMapper {
 
-    //    toDTO
-    @Mapping(source = "carToServiceSchedule.id", target = "carToServiceScheduleId")
-    ServiceOperationDTO toDTO(ServiceOperation serviceOperation);
+  //    toDTO
+  @Mapping(source = "carToServiceSchedule.id", target = "carToServiceScheduleId")
+  ServiceOperationDTO toDTO(ServiceOperation serviceOperation);
 
-    //    toEntity
-    @Mapping(source = "carToServiceScheduleId", target = "carToServiceSchedule", qualifiedByName = "mapCarToServiceIdByServiceSchedule")
-    ServiceOperation toEntity(ServiceOperationDTO serviceOperationDTO);
+  //    toEntity
+  @Mapping(
+      source = "carToServiceScheduleId",
+      target = "carToServiceSchedule",
+      qualifiedByName = "mapCarToServiceIdByServiceSchedule")
+  ServiceOperation toEntity(ServiceOperationDTO serviceOperationDTO);
 
-    @Named("mapCarToServiceIdByServiceSchedule")
-    default CarToServiceSchedule mapCarToServiceIdByServiceSchedule(Integer car_to_service_schedule_id) {
-        if (car_to_service_schedule_id == null) return null;
-        CarToServiceSchedule carToServiceSchedule = new CarToServiceSchedule();
-        carToServiceSchedule.setId(car_to_service_schedule_id);
-        return carToServiceSchedule;
-    }
-
+  @Named("mapCarToServiceIdByServiceSchedule")
+  default CarToServiceSchedule mapCarToServiceIdByServiceSchedule(
+      Integer car_to_service_schedule_id) {
+    if (car_to_service_schedule_id == null) return null;
+    CarToServiceSchedule carToServiceSchedule = new CarToServiceSchedule();
+    carToServiceSchedule.setId(car_to_service_schedule_id);
+    return carToServiceSchedule;
+  }
 }

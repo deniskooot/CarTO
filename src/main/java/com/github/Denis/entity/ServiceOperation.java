@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
-
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,87 +11,105 @@ import java.util.Objects;
 @Table(name = "service_operations")
 public class ServiceOperation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "service_operation_id")
-    private int id;
-    @PositiveOrZero(message = "Millage must bee >=0")
-    @JsonProperty("mileage_service_operation")
-    private int mileageServiceOperation;
-    @JsonProperty("date_service_operation")
-    @Temporal(TemporalType.DATE) // Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
-    private Date dateServiceOperation;
-    @Column
-    private String notes;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "service_operation_id")
+  private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
-    @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    private CarToServiceSchedule carToServiceSchedule;
+  @PositiveOrZero(message = "Millage must bee >=0")
+  @JsonProperty("mileage_service_operation")
+  private int mileageServiceOperation;
 
-    public ServiceOperation() {
-    }
+  @JsonProperty("date_service_operation")
+  @Temporal(
+      TemporalType
+          .DATE) // Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal
+  // annotation to fine tune that.
+  private Date dateServiceOperation;
 
-    public int getId() {
-        return id;
-    }
+  @Column private String notes;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  @ManyToOne(
+      fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, ServiceOperation is owner
+  // reference (ServiceOperation side is Many).
+  @JoinColumn(
+      name = "car_to_service_schedule_id",
+      referencedColumnName = "car_to_service_schedule_id")
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
+  private CarToServiceSchedule carToServiceSchedule;
 
-    public int getMileageServiceOperation() {
-        return mileageServiceOperation;
-    }
+  public ServiceOperation() {}
 
-    public void setMileageServiceOperation(int mileageServiceOperation) {
-        this.mileageServiceOperation = mileageServiceOperation;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public Date getDateServiceOperation() {
-        return dateServiceOperation;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setDateServiceOperation(Date dateServiceOperation) {
-        this.dateServiceOperation = dateServiceOperation;
-    }
+  public int getMileageServiceOperation() {
+    return mileageServiceOperation;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public void setMileageServiceOperation(int mileageServiceOperation) {
+    this.mileageServiceOperation = mileageServiceOperation;
+  }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+  public Date getDateServiceOperation() {
+    return dateServiceOperation;
+  }
 
-    public CarToServiceSchedule getCarToServiceSchedule() {
-        return carToServiceSchedule;
-    }
+  public void setDateServiceOperation(Date dateServiceOperation) {
+    this.dateServiceOperation = dateServiceOperation;
+  }
 
-    public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
-        this.carToServiceSchedule = carToServiceSchedule;
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    @Override
-    public String toString() {
-        return "ServiceOperation{" +
-                "id=" + id +
-                ", mileage_service_operation=" + mileageServiceOperation +
-                ", date_service_operation=" + dateServiceOperation +
-                ", notes='" + notes + '\'' +
-                '}';
-    }
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ServiceOperation that = (ServiceOperation) o;
-        return id == that.id && mileageServiceOperation == that.mileageServiceOperation && Objects.equals(dateServiceOperation, that.dateServiceOperation) && Objects.equals(notes, that.notes) && Objects.equals(carToServiceSchedule, that.carToServiceSchedule);
-    }
+  public CarToServiceSchedule getCarToServiceSchedule() {
+    return carToServiceSchedule;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, mileageServiceOperation, dateServiceOperation, notes, carToServiceSchedule);
-    }
+  public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
+    this.carToServiceSchedule = carToServiceSchedule;
+  }
+
+  @Override
+  public String toString() {
+    return "ServiceOperation{"
+        + "id="
+        + id
+        + ", mileage_service_operation="
+        + mileageServiceOperation
+        + ", date_service_operation="
+        + dateServiceOperation
+        + ", notes='"
+        + notes
+        + '\''
+        + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ServiceOperation that = (ServiceOperation) o;
+    return id == that.id
+        && mileageServiceOperation == that.mileageServiceOperation
+        && Objects.equals(dateServiceOperation, that.dateServiceOperation)
+        && Objects.equals(notes, that.notes)
+        && Objects.equals(carToServiceSchedule, that.carToServiceSchedule);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id, mileageServiceOperation, dateServiceOperation, notes, carToServiceSchedule);
+  }
 }

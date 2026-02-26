@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertFalse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
-
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -15,134 +14,164 @@ import java.util.Objects;
 @Table(name = "cars")
 public class Car {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_id")
-    private int id;
-    @NotBlank(message = "Select name")
-    private String name;
-    @PositiveOrZero(message = "Mileage must bee >=0")
-    private int mileage;
-    @Column(nullable = true) // @Nullable — не работает валидация на уровне Hibernate, лучше заменить на @Column(nullable = true).
-    private String notes;
-    @Column(name = "start_date", columnDefinition = "timestamptz(0)") // timestamptz(0) - время с часовой зоной, минимальная точность 0 - секунды без дробных знаков
-    private ZonedDateTime startDate;
-    @Column(name = "start_mileage")
-    private int startMileage;
-    @Column(name = "yearly_mileage")
-    private int yearlyMileage;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    private CarUser carUser;
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
-    @JsonIgnore
-    private List<CarToServiceSchedule> carToServiceSchedules;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "car_id")
+  private int id;
 
-    public Car() {
-    }
+  @NotBlank(message = "Select name")
+  private String name;
 
-    @JsonIgnore // чтобы в результат GET не выводился (методы начинающиеся с is считаются полями по конвенции)
-    @AssertFalse(message = "BMW millage >1000000 impossible")
-    public boolean isBad() {
-        return this.mileage > 1_000_000 && name.contains("BMW");
-    }
+  @PositiveOrZero(message = "Mileage must bee >=0")
+  private int mileage;
 
-    public int getId() {
-        return id;
-    }
+  @Column(
+      nullable = true) // @Nullable — не работает валидация на уровне Hibernate, лучше заменить на
+  // @Column(nullable = true).
+  private String notes;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  @Column(
+      name = "start_date",
+      columnDefinition =
+          "timestamptz(0)") // timestamptz(0) - время с часовой зоной, минимальная точность 0 -
+  // секунды без дробных знаков
+  private ZonedDateTime startDate;
 
-    public String getName() {
-        return name;
-    }
+  @Column(name = "start_mileage")
+  private int startMileage;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  @Column(name = "yearly_mileage")
+  private int yearlyMileage;
 
-    public CarUser getCarUser() {
-        return carUser;
-    }
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(
+      name = "user_id",
+      referencedColumnName =
+          "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
+  private CarUser carUser;
 
-    public void setCarUser(CarUser carUser) {
-        this.carUser = carUser;
-    }
+  @OneToMany(
+      mappedBy = "car",
+      cascade = CascadeType.ALL,
+      orphanRemoval =
+          false) // OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner
+  // reference (CarToServiceSchedule side is Many).
+  @JsonIgnore
+  private List<CarToServiceSchedule> carToServiceSchedules;
 
-    public List<CarToServiceSchedule> getCarToServiceSchedules() {
-        return carToServiceSchedules;
-    }
+  public Car() {}
 
-    public void setCarToServiceSchedules(List<CarToServiceSchedule> carToServiceSchedules) {
-        this.carToServiceSchedules = carToServiceSchedules;
-    }
+  @JsonIgnore // чтобы в результат GET не выводился (методы начинающиеся с is считаются полями по
+  // конвенции)
+  @AssertFalse(message = "BMW millage >1000000 impossible")
+  public boolean isBad() {
+    return this.mileage > 1_000_000 && name.contains("BMW");
+  }
 
-    public int getMileage() {
-        return mileage;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setMileage(int milage) {
-        this.mileage = milage;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public ZonedDateTime getStartDate() {
-        return startDate;
-    }
+  public CarUser getCarUser() {
+    return carUser;
+  }
 
-    public void setStartDate(ZonedDateTime startDate) {
-        this.startDate = startDate;
-    }
+  public void setCarUser(CarUser carUser) {
+    this.carUser = carUser;
+  }
 
-    public int getStartMileage() {
-        return startMileage;
-    }
+  public List<CarToServiceSchedule> getCarToServiceSchedules() {
+    return carToServiceSchedules;
+  }
 
-    public void setStartMileage(int startMileage) {
-        this.startMileage = startMileage;
-    }
+  public void setCarToServiceSchedules(List<CarToServiceSchedule> carToServiceSchedules) {
+    this.carToServiceSchedules = carToServiceSchedules;
+  }
 
-    public int getYearlyMileage() {
-        return yearlyMileage;
-    }
+  public int getMileage() {
+    return mileage;
+  }
 
-    public void setYearlyMileage(int yearlyMileage) {
-        this.yearlyMileage = yearlyMileage;
-    }
+  public void setMileage(int milage) {
+    this.mileage = milage;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return id == car.id && mileage == car.mileage && Objects.equals(name, car.name) && Objects.equals(notes, car.notes) && Objects.equals(carUser, car.carUser);
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, mileage, notes, carUser);
-    }
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
 
-    @Override
-    public String toString() {
-        return "CarUser{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+  public ZonedDateTime getStartDate() {
+    return startDate;
+  }
 
-                ", mileage='" + mileage + '\'' +
-                ", notes='" + notes + '\'' +
-                '}';
-    }
+  public void setStartDate(ZonedDateTime startDate) {
+    this.startDate = startDate;
+  }
 
+  public int getStartMileage() {
+    return startMileage;
+  }
+
+  public void setStartMileage(int startMileage) {
+    this.startMileage = startMileage;
+  }
+
+  public int getYearlyMileage() {
+    return yearlyMileage;
+  }
+
+  public void setYearlyMileage(int yearlyMileage) {
+    this.yearlyMileage = yearlyMileage;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Car car = (Car) o;
+    return id == car.id
+        && mileage == car.mileage
+        && Objects.equals(name, car.name)
+        && Objects.equals(notes, car.notes)
+        && Objects.equals(carUser, car.carUser);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, mileage, notes, carUser);
+  }
+
+  @Override
+  public String toString() {
+    return "CarUser{"
+        + "id="
+        + id
+        + ", name='"
+        + name
+        + '\''
+        + ", mileage='"
+        + mileage
+        + '\''
+        + ", notes='"
+        + notes
+        + '\''
+        + '}';
+  }
 }
-

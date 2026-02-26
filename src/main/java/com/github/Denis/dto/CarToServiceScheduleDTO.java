@@ -2,89 +2,94 @@ package com.github.Denis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * This class match DTO frontend form with backend Entity CarToServiceSchedule
- *
- */
+/** This class match DTO frontend form with backend Entity CarToServiceSchedule */
 public class CarToServiceScheduleDTO {
 
-    private Integer id;
-    @JsonProperty("periodicity_km")
-    private Integer periodicityKm;
-    @JsonProperty("periodicity_time_days")
-    private Long periodicityTimeDays;
-    private String notes;
-    private Integer carId;
-    private String serviceScheduleName;
-    private boolean isRequired;
+  private Integer id;
 
-    public CarToServiceScheduleDTO() {
+  @JsonProperty("periodicity_km")
+  private Integer periodicityKm;
 
-    }
+  @JsonProperty("periodicity_time_days")
+  private Long periodicityTimeDays;
 
-    public CarToServiceScheduleDTO(Integer id, Integer periodicityKm, Long periodicityTimeDays, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
-        this.id = id;
-        this.periodicityKm = periodicityKm;
-        this.periodicityTimeDays = periodicityTimeDays;
-        this.notes = notes;
-        this.carId = carId;
-        this.serviceScheduleName = serviceScheduleName;
-        this.isRequired = isRequired;
-    }
+  private String notes;
+  private Integer carId;
+  private String serviceScheduleName;
+  private boolean isRequired;
 
-    public Integer getId() {
-        return id;
-    }
+  public CarToServiceScheduleDTO() {}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public CarToServiceScheduleDTO(
+      Integer id,
+      Integer periodicityKm,
+      Long periodicityTimeDays,
+      String notes,
+      Integer carId,
+      String serviceScheduleName,
+      boolean isRequired) {
+    this.id = id;
+    this.periodicityKm = periodicityKm;
+    this.periodicityTimeDays = periodicityTimeDays;
+    this.notes = notes;
+    this.carId = carId;
+    this.serviceScheduleName = serviceScheduleName;
+    this.isRequired = isRequired;
+  }
 
-    public Integer getPeriodicityKm() {
-        return periodicityKm;
-    }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setPeriodicityKm(Integer periodicityKm) {
-        this.periodicityKm = periodicityKm;
-    }
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-    public Long getPeriodicityTimeDays() {
-        return periodicityTimeDays;
-    }
+  public Integer getPeriodicityKm() {
+    return periodicityKm;
+  }
 
-    public void setPeriodicityTimeDays(Long periodicityTimeDays) {
-        this.periodicityTimeDays = periodicityTimeDays;
-    }
+  public void setPeriodicityKm(Integer periodicityKm) {
+    this.periodicityKm = periodicityKm;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public Long getPeriodicityTimeDays() {
+    return periodicityTimeDays;
+  }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+  public void setPeriodicityTimeDays(Long periodicityTimeDays) {
+    this.periodicityTimeDays = periodicityTimeDays;
+  }
 
-    public Integer getCarId() {
-        return carId;
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    public void setCarId(Integer carId) {
-        this.carId = carId;
-    }
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
 
-    public String getServiceScheduleName() {
-        return serviceScheduleName;
-    }
+  public Integer getCarId() {
+    return carId;
+  }
 
-    public void setServiceScheduleName(String serviceScheduleName) {
-        this.serviceScheduleName = serviceScheduleName;
-    }
+  public void setCarId(Integer carId) {
+    this.carId = carId;
+  }
 
-    public boolean getIsRequired() {
-        return isRequired;
-    }
+  public String getServiceScheduleName() {
+    return serviceScheduleName;
+  }
 
-    public void setIsRequired(boolean required) {
-        isRequired = required;
-    }
+  public void setServiceScheduleName(String serviceScheduleName) {
+    this.serviceScheduleName = serviceScheduleName;
+  }
+
+  public boolean getIsRequired() {
+    return isRequired;
+  }
+
+  public void setIsRequired(boolean required) {
+    isRequired = required;
+  }
 }

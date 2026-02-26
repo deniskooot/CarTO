@@ -6,15 +6,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
- * Проверяет что вообще приложение загружается нормально.
- * Используется временный контейнер postgres для тестов, прогоняются миграции.
+ * Проверяет что вообще приложение загружается нормально. Используется временный контейнер postgres
+ * для тестов, прогоняются миграции.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("tc")
 @Testcontainers
 public class GeneralTest {
 
-    @Test
-    void contextLoads() {
-    }
+  @Test
+  void contextLoads() {}
 }

@@ -3,7 +3,6 @@ package com.github.Denis.entity;
 import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
@@ -12,133 +11,169 @@ import java.util.Objects;
 @Table(name = "car_to_service_schedules")
 public class CarToServiceSchedule {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "car_to_service_schedule_id")
-    private int id;
-    @JsonProperty("periodicity_km")
-    private int periodicityKm;
-    @Schema(type = "integer", format = "int64", example = "10")
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "car_to_service_schedule_id")
+  private int id;
 
-    @JsonProperty("periodicity_time_days")
-    private Duration periodicityTimeDays;
-    private String notes;
+  @JsonProperty("periodicity_km")
+  private int periodicityKm;
 
-    @ManyToOne(fetch = FetchType.LAZY) // ManyToOne Car reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
-    @JoinColumn(name = "car_id", referencedColumnName = "car_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    private Car car;
+  @Schema(type = "integer", format = "int64", example = "10")
+  @JsonProperty("periodicity_time_days")
+  private Duration periodicityTimeDays;
 
-    @ManyToOne(fetch = FetchType.LAZY) // ManyToOne ServiceSchedule reference, CarToServiceSchedule is owner reference (CarToServiceSchedule side is Many).
-    @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    private ServiceSchedule serviceSchedule;
+  private String notes;
 
-    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany ServiceOperation reference, ServiceOperation is owner reference (ServiceOperation side is Many).
-    @JsonIgnore
-    private List<ServiceOperation> serviceOperations;
+  @ManyToOne(
+      fetch = FetchType.LAZY) // ManyToOne Car reference, CarToServiceSchedule is owner reference
+  // (CarToServiceSchedule side is Many).
+  @JoinColumn(name = "car_id", referencedColumnName = "car_id")
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
+  private Car car;
 
-    @OneToMany(mappedBy = "carToServiceSchedule", cascade = CascadeType.ALL, orphanRemoval = false) // OneToMany Part reference, Part is owner reference (Part side is Many).
-    @JsonIgnore
-    private List<Part> parts;
+  @ManyToOne(
+      fetch =
+          FetchType
+              .LAZY) // ManyToOne ServiceSchedule reference, CarToServiceSchedule is owner reference
+  // (CarToServiceSchedule side is Many).
+  @JoinColumn(name = "service_schedule_id", referencedColumnName = "service_schedule_id")
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
+  private ServiceSchedule serviceSchedule;
 
-    public CarToServiceSchedule() {
+  @OneToMany(
+      mappedBy = "carToServiceSchedule",
+      cascade = CascadeType.ALL,
+      orphanRemoval =
+          false) // OneToMany ServiceOperation reference, ServiceOperation is owner reference
+  // (ServiceOperation side is Many).
+  @JsonIgnore
+  private List<ServiceOperation> serviceOperations;
+
+  @OneToMany(
+      mappedBy = "carToServiceSchedule",
+      cascade = CascadeType.ALL,
+      orphanRemoval =
+          false) // OneToMany Part reference, Part is owner reference (Part side is Many).
+  @JsonIgnore
+  private List<Part> parts;
+
+  public CarToServiceSchedule() {}
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getPeriodicityKm() {
+    return periodicityKm;
+  }
+
+  public void setPeriodicityKm(int periodicityKm) {
+    this.periodicityKm = periodicityKm;
+  }
+
+  @JsonIgnore
+  public Duration getPeriodicity() {
+    return periodicityTimeDays;
+  }
+
+  @JsonGetter("periodicity_time_days")
+  public Long getPeriodicityTimeDays() {
+    return periodicityTimeDays != null ? periodicityTimeDays.toDays() : null;
+  }
+
+  @JsonSetter("periodicity_time_days")
+  public void setPeriodicityTimeDays(Long periodicityTimeDays) {
+    if (periodicityTimeDays != null) {
+      this.periodicityTimeDays = Duration.ofDays(periodicityTimeDays);
     }
+    this.periodicityTimeDays = null;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
 
-    public int getPeriodicityKm() {
-        return periodicityKm;
-    }
+  public Car getCar() {
+    return car;
+  }
 
-    public void setPeriodicityKm(int periodicityKm) {
-        this.periodicityKm = periodicityKm;
-    }
+  public void setCar(Car car) {
+    this.car = car;
+  }
 
-    @JsonIgnore
-    public Duration getPeriodicity() {
-        return periodicityTimeDays;
-    }
+  public ServiceSchedule getServiceSchedule() {
+    return serviceSchedule;
+  }
 
-    @JsonGetter("periodicity_time_days")
-    public Long getPeriodicityTimeDays() {
-        return periodicityTimeDays != null ? periodicityTimeDays.toDays() : null;
-    }
+  public void setServiceSchedule(ServiceSchedule serviceSchedule) {
+    this.serviceSchedule = serviceSchedule;
+  }
 
-    @JsonSetter("periodicity_time_days")
-    public void setPeriodicityTimeDays(Long periodicityTimeDays) {
-        if (periodicityTimeDays != null) {
-            this.periodicityTimeDays = Duration.ofDays(periodicityTimeDays);
-        }
-        this.periodicityTimeDays = null;
-    }
+  public List<ServiceOperation> getServiceOperations() {
+    return serviceOperations;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public void setServiceOperations(List<ServiceOperation> serviceOperations) {
+    this.serviceOperations = serviceOperations;
+  }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+  public List<Part> getParts() {
+    return parts;
+  }
 
-    public Car getCar() {
-        return car;
-    }
+  public void setParts(List<Part> parts) {
+    this.parts = parts;
+  }
 
-    public void setCar(Car car) {
-        this.car = car;
-    }
+  @Override
+  public String toString() {
+    return "CarToServiceSchedule{"
+        + "id="
+        + id
+        + ", periodicity_km="
+        + periodicityKm
+        + ", periodicity_time_days="
+        + periodicityTimeDays
+        + ", notes='"
+        + notes
+        + '\''
+        + '}';
+  }
 
-    public ServiceSchedule getServiceSchedule() {
-        return serviceSchedule;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    CarToServiceSchedule that = (CarToServiceSchedule) o;
+    return id == that.id
+        && periodicityKm == that.periodicityKm
+        && Objects.equals(periodicityTimeDays, that.periodicityTimeDays)
+        && Objects.equals(notes, that.notes)
+        && Objects.equals(car, that.car)
+        && Objects.equals(serviceSchedule, that.serviceSchedule)
+        && Objects.equals(serviceOperations, that.serviceOperations)
+        && Objects.equals(parts, that.parts);
+  }
 
-    public void setServiceSchedule(ServiceSchedule serviceSchedule) {
-        this.serviceSchedule = serviceSchedule;
-    }
-
-    public List<ServiceOperation> getServiceOperations() {
-        return serviceOperations;
-    }
-
-    public void setServiceOperations(List<ServiceOperation> serviceOperations) {
-        this.serviceOperations = serviceOperations;
-    }
-
-    public List<Part> getParts() {
-        return parts;
-    }
-
-    public void setParts(List<Part> parts) {
-        this.parts = parts;
-    }
-
-    @Override
-    public String toString() {
-        return "CarToServiceSchedule{" +
-                "id=" + id +
-                ", periodicity_km=" + periodicityKm +
-                ", periodicity_time_days=" + periodicityTimeDays +
-                ", notes='" + notes + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CarToServiceSchedule that = (CarToServiceSchedule) o;
-        return id == that.id && periodicityKm == that.periodicityKm && Objects.equals(periodicityTimeDays, that.periodicityTimeDays) && Objects.equals(notes, that.notes) && Objects.equals(car, that.car) && Objects.equals(serviceSchedule, that.serviceSchedule) && Objects.equals(serviceOperations, that.serviceOperations) && Objects.equals(parts, that.parts);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, periodicityKm, periodicityTimeDays, notes, car, serviceSchedule, serviceOperations, parts);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id,
+        periodicityKm,
+        periodicityTimeDays,
+        notes,
+        car,
+        serviceSchedule,
+        serviceOperations,
+        parts);
+  }
 }

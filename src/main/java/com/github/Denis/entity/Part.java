@@ -4,103 +4,125 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-
 import java.util.Objects;
 
 @Entity
 @Table(name = "parts")
 public class Part {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "part_id")
-    private int id;
-    @NotBlank(message = "Select name")
-    private String name;
-    @JsonProperty("part_number_original")
-    private String partNumberOriginal;
-    @JsonProperty("part_number_analogs")
-    private String partNumberAnalogs;
-    @Column
-    private String notes;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "part_id")
+  private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
-    @JoinColumn(name = "car_to_service_schedule_id", referencedColumnName = "car_to_service_schedule_id")
-    @JsonIgnoreProperties({"hibernateLazyInitializer"})
-    private CarToServiceSchedule carToServiceSchedule;
+  @NotBlank(message = "Select name")
+  private String name;
 
-    public Part() {
-    }
+  @JsonProperty("part_number_original")
+  private String partNumberOriginal;
 
-    public int getId() {
-        return id;
-    }
+  @JsonProperty("part_number_analogs")
+  private String partNumberAnalogs;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  @Column private String notes;
 
-    public @NotBlank(message = "Select name") String getName() {
-        return name;
-    }
+  @ManyToOne(
+      fetch =
+          FetchType
+              .LAZY) // OneToMany CarToServiceSchedule reference, Part is owner reference (Part side
+  // is Many).
+  @JoinColumn(
+      name = "car_to_service_schedule_id",
+      referencedColumnName = "car_to_service_schedule_id")
+  @JsonIgnoreProperties({"hibernateLazyInitializer"})
+  private CarToServiceSchedule carToServiceSchedule;
 
-    public void setName(@NotBlank(message = "Select name") String name) {
-        this.name = name;
-    }
+  public Part() {}
 
-    public String getPartNumberOriginal() {
-        return partNumberOriginal;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setPartNumberOriginal(String partNumberOriginal) {
-        this.partNumberOriginal = partNumberOriginal;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public String getPartNumberAnalogs() {
-        return partNumberAnalogs;
-    }
+  public @NotBlank(message = "Select name") String getName() {
+    return name;
+  }
 
-    public void setPartNumberAnalogs(String partNumberAnalogs) {
-        this.partNumberAnalogs = partNumberAnalogs;
-    }
+  public void setName(@NotBlank(message = "Select name") String name) {
+    this.name = name;
+  }
 
-    public String getNotes() {
-        return notes;
-    }
+  public String getPartNumberOriginal() {
+    return partNumberOriginal;
+  }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+  public void setPartNumberOriginal(String partNumberOriginal) {
+    this.partNumberOriginal = partNumberOriginal;
+  }
 
-    public CarToServiceSchedule getCarToServiceSchedule() {
-        return carToServiceSchedule;
-    }
+  public String getPartNumberAnalogs() {
+    return partNumberAnalogs;
+  }
 
-    public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
-        this.carToServiceSchedule = carToServiceSchedule;
-    }
+  public void setPartNumberAnalogs(String partNumberAnalogs) {
+    this.partNumberAnalogs = partNumberAnalogs;
+  }
 
-    @Override
-    public String toString() {
-        return "Part{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", part_number_original='" + partNumberOriginal + '\'' +
-                ", part_number_analogs='" + partNumberAnalogs + '\'' +
-                ", notes='" + notes + '\'' +
-                '}';
-    }
+  public String getNotes() {
+    return notes;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Part part = (Part) o;
-        return id == part.id && Objects.equals(name, part.name) && Objects.equals(partNumberOriginal, part.partNumberOriginal) && Objects.equals(partNumberAnalogs, part.partNumberAnalogs) && Objects.equals(notes, part.notes) && Objects.equals(carToServiceSchedule, part.carToServiceSchedule);
-    }
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, partNumberOriginal, partNumberAnalogs, notes, carToServiceSchedule);
-    }
+  public CarToServiceSchedule getCarToServiceSchedule() {
+    return carToServiceSchedule;
+  }
+
+  public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
+    this.carToServiceSchedule = carToServiceSchedule;
+  }
+
+  @Override
+  public String toString() {
+    return "Part{"
+        + "id="
+        + id
+        + ", name='"
+        + name
+        + '\''
+        + ", part_number_original='"
+        + partNumberOriginal
+        + '\''
+        + ", part_number_analogs='"
+        + partNumberAnalogs
+        + '\''
+        + ", notes='"
+        + notes
+        + '\''
+        + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Part part = (Part) o;
+    return id == part.id
+        && Objects.equals(name, part.name)
+        && Objects.equals(partNumberOriginal, part.partNumberOriginal)
+        && Objects.equals(partNumberAnalogs, part.partNumberAnalogs)
+        && Objects.equals(notes, part.notes)
+        && Objects.equals(carToServiceSchedule, part.carToServiceSchedule);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        id, name, partNumberOriginal, partNumberAnalogs, notes, carToServiceSchedule);
+  }
 }

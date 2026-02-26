@@ -1,7 +1,11 @@
 package com.github.Denis.controller;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.github.Denis.entity.ServiceSchedule;
-import com.github.Denis.repository.ServiceOperationsRepository;
 import com.github.Denis.service.ServiceScheduleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,41 +14,32 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Duration;
-
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @WebMvcTest(ServiceScheduleController.class)
 class ServiceScheduleControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-    @MockitoBean
-    private ServiceScheduleService userService;
+  @MockitoBean private ServiceScheduleService userService;
 
-    @Test
-    void getById() throws Exception {
-        final String name = "Test User";
-        final int id = 1;
-        final long durationDays = 52;
+  @Test
+  void getById() throws Exception {
+    final String name = "Test User";
+    final int id = 1;
+    final long durationDays = 52;
 
-        ServiceSchedule result = new ServiceSchedule();
-        result.setId(id);
-        result.setName(name);
-        result.setDefaultPeriodTimeDays(durationDays);
+    ServiceSchedule result = new ServiceSchedule();
+    result.setId(id);
+    result.setName(name);
+    result.setDefaultPeriodTimeDays(durationDays);
 
-        // Define the behavior of the mocked service
-        when(userService.getServiceScheduleByID(id)).thenReturn(result);
+    // Define the behavior of the mocked service
+    when(userService.getServiceScheduleByID(id)).thenReturn(result);
 
-        mockMvc.perform(get("/api/serviceschedules/{id}", id).accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.name").value(name))
-                .andExpect(jsonPath("$.default_period_time_days").value(durationDays));
-    }
-
+    mockMvc
+        .perform(get("/api/serviceschedules/{id}", id).accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(id))
+        .andExpect(jsonPath("$.name").value(name))
+        .andExpect(jsonPath("$.default_period_time_days").value(durationDays));
+  }
 }
