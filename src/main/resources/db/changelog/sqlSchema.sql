@@ -70,7 +70,7 @@ ALTER TABLE service_operations ADD CONSTRAINT car_to_service_schedule_id_fk FORE
 --rollback ALTER TABLE service_operations ADD FOREIGN KEY (car_to_service_schedule_id) REFERENCES car_to_service_schedule (car_to_service_schedule_id));
 
 
---changeset TestUsers_sql:5 context:"Rename car_to_service_schedules, cars Foreign key for custom names"
+--changeset TestUsers_sql:5 context: "Rename car_to_service_schedules, cars Foreign key for custom names"
 
 ALTER TABLE car_to_service_schedules DROP CONSTRAINT car_to_service_schedule_car_id_fkey;
 ALTER TABLE car_to_service_schedules ADD CONSTRAINT car_id_fk FOREIGN KEY (car_id) REFERENCES cars (car_id);
@@ -99,3 +99,40 @@ ALTER TABLE cars ADD COLUMN yearly_mileage integer;
 ALTER TABLE cars ALTER COLUMN start_date TYPE timestamptz(0);
 
 --rollback ALTER TABLE cars ALTER COLUMN start_date TYPE date;
+
+-- changeset TestUsers_sql:8 context: "Bring cars table to the final version"
+
+ALTER TABLE cars ALTER COLUMN mileage SET NOT NULL;
+ALTER TABLE cars ALTER COLUMN name TYPE VARCHAR(255) USING (name::VARCHAR(255));
+ALTER TABLE cars ALTER COLUMN notes TYPE VARCHAR(255) USING (notes::VARCHAR(255));
+
+ALTER TABLE car_to_service_schedules ALTER COLUMN notes TYPE VARCHAR(255) USING (notes::VARCHAR(255));
+ALTER TABLE car_to_service_schedules ALTER COLUMN  periodicity_km SET NOT NULL;
+
+ALTER TABLE car_users ALTER COLUMN name TYPE VARCHAR(255) USING (name::VARCHAR(255));
+
+ALTER TABLE parts ALTER COLUMN name TYPE VARCHAR(255) USING (name::VARCHAR(255));
+ALTER TABLE parts ALTER COLUMN notes TYPE VARCHAR(255) USING (notes::VARCHAR(255));
+ALTER TABLE parts ALTER COLUMN part_number_analogs TYPE VARCHAR(255) USING (part_number_analogs::VARCHAR(255));
+ALTER TABLE parts ALTER COLUMN part_number_original TYPE VARCHAR(255) USING (part_number_original::VARCHAR(255));
+
+ALTER TABLE service_operations ALTER COLUMN  mileage_service_operation SET NOT NULL;
+ALTER TABLE service_operations ALTER COLUMN notes TYPE VARCHAR(255) USING (notes::VARCHAR(255));
+
+ALTER TABLE service_schedules ALTER COLUMN default_period_km SET NOT NULL;
+ALTER TABLE service_schedules ALTER COLUMN is_required SET NOT NULL;
+ALTER TABLE service_schedules ALTER COLUMN name TYPE VARCHAR(255) USING (name::VARCHAR(255));
+
+
+--rollback ALTER TABLE cars ALTER COLUMN mileage DROP NOT NULL;
+--rollback ALTER TABLE cars ALTER COLUMN name TYPE VARCHAR(50);
+--rollback ALTER TABLE cars ALTER COLUMN notes TYPE VARCHAR(1000);
+--rollback ALTER TABLE car_to_service_schedules ALTER COLUMN notes TYPE VARCHAR(1000);
+--rollback ALTER TABLE car_to_service_schedules ALTER COLUMN  periodicity_km DROP NOT NULL;
+--rollback ALTER TABLE car_users ALTER COLUMN name TYPE VARCHAR(50);
+--rollback ALTER TABLE parts ALTER COLUMN name TYPE VARCHAR(200);
+--rollback ALTER TABLE parts ALTER COLUMN notes TYPE VARCHAR(1000);
+--rollback ALTER TABLE parts ALTER COLUMN part_number_analogs TYPE VARCHAR(400);
+--rollback ALTER TABLE parts ALTER COLUMN part_number_original TYPE VARCHAR(50);
+--rollback ALTER TABLE service_operations ALTER COLUMN  mileage_service_operation DROP NOT NULL;
+--rollback ALTER TABLE service_operations ALTER COLUMN notes TYPE VARCHAR(1000);

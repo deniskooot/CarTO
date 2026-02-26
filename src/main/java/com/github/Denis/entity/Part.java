@@ -21,6 +21,7 @@ public class Part {
     private String partNumberOriginal;
     @JsonProperty("part_number_analogs")
     private String partNumberAnalogs;
+    @Column
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, Part is owner reference (Part side is Many).
@@ -28,10 +29,10 @@ public class Part {
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private CarToServiceSchedule carToServiceSchedule;
 
-    Part() {
+    public Part() {
     }
 
-    Part(int id, String name, String partNumberOriginal, String partNumberAnalogs, String notes) {
+    public Part(int id, String name, String partNumberOriginal, String partNumberAnalogs, String notes) {
         this.id = id;
         this.name = name;
         this.partNumberOriginal = partNumberOriginal;

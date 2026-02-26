@@ -22,6 +22,7 @@ public class ServiceOperation {
     @JsonProperty("date_service_operation")
     @Temporal(TemporalType.DATE) // Temporal data can have DATE, TIME, or TIMESTAMP precision. Use the @Temporal annotation to fine tune that.
     private Date dateServiceOperation;
+    @Column
     private String notes;
 
     @ManyToOne(fetch = FetchType.LAZY) // OneToMany CarToServiceSchedule reference, ServiceOperation is owner reference (ServiceOperation side is Many).
