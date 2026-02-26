@@ -32,14 +32,6 @@ public class Part {
     public Part() {
     }
 
-    public Part(int id, String name, String partNumberOriginal, String partNumberAnalogs, String notes) {
-        this.id = id;
-        this.name = name;
-        this.partNumberOriginal = partNumberOriginal;
-        this.partNumberAnalogs = partNumberAnalogs;
-        this.notes = notes;
-    }
-
     public int getId() {
         return id;
     }

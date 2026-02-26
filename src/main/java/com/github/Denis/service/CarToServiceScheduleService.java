@@ -77,7 +77,7 @@ public class CarToServiceScheduleService {
             // Приводим первый символ строки в верхний регистр
             newServiceSchedule.setName(StringUtils.normalizeServiceScheduleName(dto.getServiceScheduleName().trim()));
             newServiceSchedule.setDefaultPeriodKm(dto.getPeriodicityKm());
-            newServiceSchedule.setDefaultPeriodTimeDays(Duration.ofDays(dto.getPeriodicityTimeDays()));
+            newServiceSchedule.setDefaultPeriodTimeDays(dto.getPeriodicityTimeDays());
             newServiceSchedule.setRequired(dto.getIsRequired());
             // сохраняем новую работу в базу и получаем id
             serviceScheduleId = serviceScheduleRepository.save(newServiceSchedule).getId();
@@ -145,8 +145,7 @@ public class CarToServiceScheduleService {
             List<Part> parts = carToServiceSchedule.getParts(); //список запчастей
             Integer periodicityKm = carToServiceSchedule.getPeriodicityKm();//периодичность работы по пробегу
             Integer periodicityDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodKm();//периодичность работы по пробегу по умолчанию
-            Duration periodicityDays = carToServiceSchedule.getPeriodicityTimeDays();//периодичность работы по дате
-            Duration periodicityDaysDefault = carToServiceSchedule.getServiceSchedule().getDefaultPeriodTimeDays(); //периодичность работы по дате по умолчанию
+            Duration periodicityDays = carToServiceSchedule.getPeriodicity();//периодичность работы по дате
             //schedule_perspective_mileage_or_year - в чем перспектива
             //schedule_perspective_value - значение перспективы либо км либо количество лет
             Integer mileage = car_mileage; //пробег для выполнения работы

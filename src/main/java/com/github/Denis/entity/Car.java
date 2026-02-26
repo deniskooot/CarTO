@@ -42,14 +42,6 @@ public class Car {
     public Car() {
     }
 
-    public Car(int id, String name, int mileage, String notes, CarUser carUser) {
-        this.id = id;
-        this.name = name;
-        this.mileage = mileage;
-        this.notes = notes;
-        this.carUser = carUser;
-    }
-
     @JsonIgnore // чтобы в результат GET не выводился (методы начинающиеся с is считаются полями по конвенции)
     @AssertFalse(message = "BMW millage >1000000 impossible")
     public boolean isBad() {

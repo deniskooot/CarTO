@@ -31,11 +31,6 @@ public class CarUser {
     public CarUser() {
     }
 
-    public CarUser(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public int getId() {
         return id;
     }

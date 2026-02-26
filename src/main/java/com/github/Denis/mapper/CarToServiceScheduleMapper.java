@@ -14,12 +14,12 @@ public interface CarToServiceScheduleMapper {
 
     // Преобразование из Entity в DTO
     @Mapping(source = "car.id", target = "carId")
-    @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays", qualifiedByName = "mapDurationToInteger")
+    @Mapping(source = "periodicity", target = "periodicityTimeDays", qualifiedByName = "mapDurationToInteger")
     CarToServiceScheduleDTO toDTO(CarToServiceSchedule entity);
 
     // Преобразование из DTO в Entity
     @Mapping(source = "carId", target = "car", qualifiedByName = "mapCarIdToCar")
-    @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays", qualifiedByName = "mapIntegerToDuration")
+    @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays")
     CarToServiceSchedule toEntity(CarToServiceScheduleDTO dto);
 
     // Преобразование Duration to Integer

@@ -12,7 +12,7 @@ public class CarToServiceScheduleDTO {
     @JsonProperty("periodicity_km")
     private Integer periodicityKm;
     @JsonProperty("periodicity_time_days")
-    private Integer periodicityTimeDays;
+    private Long periodicityTimeDays;
     private String notes;
     private Integer carId;
     private String serviceScheduleName;
@@ -22,7 +22,7 @@ public class CarToServiceScheduleDTO {
 
     }
 
-    public CarToServiceScheduleDTO(Integer id, Integer periodicityKm, Integer periodicityTimeDays, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
+    public CarToServiceScheduleDTO(Integer id, Integer periodicityKm, Long periodicityTimeDays, String notes, Integer carId, String serviceScheduleName, boolean isRequired) {
         this.id = id;
         this.periodicityKm = periodicityKm;
         this.periodicityTimeDays = periodicityTimeDays;
@@ -48,11 +48,11 @@ public class CarToServiceScheduleDTO {
         this.periodicityKm = periodicityKm;
     }
 
-    public Integer getPeriodicityTimeDays() {
+    public Long getPeriodicityTimeDays() {
         return periodicityTimeDays;
     }
 
-    public void setPeriodicityTimeDays(Integer periodicityTimeDays) {
+    public void setPeriodicityTimeDays(Long periodicityTimeDays) {
         this.periodicityTimeDays = periodicityTimeDays;
     }
 

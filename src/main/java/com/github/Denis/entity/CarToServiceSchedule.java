@@ -1,11 +1,6 @@
 package com.github.Denis.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.github.Denis.converter.DurationJsonConverter;
+import com.fasterxml.jackson.annotation.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
@@ -25,8 +20,6 @@ public class CarToServiceSchedule {
     private int periodicityKm;
     @Schema(type = "integer", format = "int64", example = "10")
 
-    @JsonSerialize(using = DurationJsonConverter.DurationSerializer.class)
-    @JsonDeserialize(using = DurationJsonConverter.DurationDeserializer.class)
     @JsonProperty("periodicity_time_days")
     private Duration periodicityTimeDays;
     private String notes;
@@ -52,13 +45,6 @@ public class CarToServiceSchedule {
     public CarToServiceSchedule() {
     }
 
-    public CarToServiceSchedule(int id, int periodicityKm, int periodicity_time_days_int, String notes) {
-        this.id = id;
-        this.periodicityKm = periodicityKm;
-        this.periodicityTimeDays = Duration.ofDays(periodicity_time_days_int);
-        this.notes = notes;
-    }
-
     public int getId() {
         return id;
     }
@@ -75,12 +61,22 @@ public class CarToServiceSchedule {
         this.periodicityKm = periodicityKm;
     }
 
-    public Duration getPeriodicityTimeDays() {
+    @JsonIgnore
+    public Duration getPeriodicity() {
         return periodicityTimeDays;
     }
 
-    public void setPeriodicityTimeDays(Duration periodicityTimeDays) {
-        this.periodicityTimeDays = periodicityTimeDays;
+    @JsonGetter("periodicity_time_days")
+    public Long getPeriodicityTimeDays() {
+        return periodicityTimeDays != null ? periodicityTimeDays.toDays() : null;
+    }
+
+    @JsonSetter("periodicity_time_days")
+    public void setPeriodicityTimeDays(Long periodicityTimeDays) {
+        if (periodicityTimeDays != null) {
+            this.periodicityTimeDays = Duration.ofDays(periodicityTimeDays);
+        }
+        this.periodicityTimeDays = null;
     }
 
     public String getNotes() {

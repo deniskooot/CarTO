@@ -33,13 +33,6 @@ public class ServiceOperation {
     public ServiceOperation() {
     }
 
-    ServiceOperation(int id, int mileageServiceOperation, Date dateServiceOperation, String notes) {
-        this.id = id;
-        this.mileageServiceOperation = mileageServiceOperation;
-        this.dateServiceOperation = dateServiceOperation;
-        this.notes = notes;
-    }
-
     public int getId() {
         return id;
     }

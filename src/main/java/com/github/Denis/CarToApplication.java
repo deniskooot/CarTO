@@ -6,8 +6,6 @@ import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@EnableJpaRepositories(basePackages = "com.github.Denis.*")
-@EntityScan(basePackages = "com.github.Denis.entity")
 @SpringBootApplication
 public class CarToApplication {
 

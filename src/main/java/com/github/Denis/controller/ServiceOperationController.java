@@ -19,8 +19,6 @@ import java.util.List;
 @RequestMapping("/api")
 public class ServiceOperationController {
 
-    @PersistenceContext
-    private EntityManager entityManager;
     private final ServiceOperationsRepository serviceOperationsRepository;
     private final ServiceOperationMapper serviceOperationMapper;
 
