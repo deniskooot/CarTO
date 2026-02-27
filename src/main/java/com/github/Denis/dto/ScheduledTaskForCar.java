@@ -1,11 +1,12 @@
 package com.github.Denis.dto;
 
 import com.github.Denis.entity.Part;
+import com.github.Denis.entity.ServiceScheduleItem;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 /** DTO class for list of schedules for frontend */
-public class ScheduleListDTO {
+public class ScheduledTaskForCar {
 
   private String scheduleName; // Наименование работы
   private Integer scheduleMileageKm; // Пробег
@@ -19,9 +20,9 @@ public class ScheduleListDTO {
   //    @JsonProperty("car_to_service_schedule_id")
   //    private Integer carToServiceScheduleId;
 
-  public ScheduleListDTO() {}
+  public ScheduledTaskForCar() {}
 
-  public ScheduleListDTO(
+  public ScheduledTaskForCar(
       String scheduleName,
       Integer scheduleMileageKm,
       ZonedDateTime scheduleDate,
@@ -34,6 +35,17 @@ public class ScheduleListDTO {
     this.scheduleNotes = scheduleNotes;
     this.scheduleIsRequired = scheduleIsRequired;
     this.scheduleParts = scheduleParts;
+  }
+
+  public ScheduledTaskForCar(
+      int mileage, ZonedDateTime date, ServiceScheduleItem serviceScheduleItem) {
+    this(
+        serviceScheduleItem.getServiceSchedule().getName(),
+        mileage,
+        date,
+        serviceScheduleItem.getNotes(),
+        serviceScheduleItem.getServiceSchedule().isRequired(),
+        serviceScheduleItem.getParts());
   }
 
   public String getScheduleName() {

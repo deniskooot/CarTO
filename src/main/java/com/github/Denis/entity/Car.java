@@ -25,9 +25,7 @@ public class Car {
   @PositiveOrZero(message = "Mileage must bee >=0")
   private int mileage;
 
-  @Column(
-      nullable = true) // @Nullable — не работает валидация на уровне Hibernate, лучше заменить на
-  // @Column(nullable = true).
+  @Column(nullable = true)
   private String notes;
 
   @Column(
@@ -44,26 +42,20 @@ public class Car {
   private int yearlyMileage;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(
-      name = "user_id",
-      referencedColumnName =
-          "user_id") // Указываем колонку связи referencedColumnName - колонка в базе
+  // Указываем колонку связи referencedColumnName - колонка в базе
+  @JoinColumn(name = "user_id", referencedColumnName = "user_id")
   @JsonIgnoreProperties({"hibernateLazyInitializer"})
   private CarUser carUser;
 
-  @OneToMany(
-      mappedBy = "car",
-      cascade = CascadeType.ALL,
-      orphanRemoval =
-          false) // OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner
+  // OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner
+  @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = false)
   // reference (CarToServiceSchedule side is Many).
   @JsonIgnore
-  private List<CarToServiceSchedule> carToServiceSchedules;
+  private List<ServiceScheduleItem> serviceScheduleItems;
 
   public Car() {}
 
-  @JsonIgnore // чтобы в результат GET не выводился (методы начинающиеся с is считаются полями по
-  // конвенции)
+  @JsonIgnore
   @AssertFalse(message = "BMW millage >1000000 impossible")
   public boolean isBad() {
     return this.mileage > 1_000_000 && name.contains("BMW");
@@ -93,12 +85,12 @@ public class Car {
     this.carUser = carUser;
   }
 
-  public List<CarToServiceSchedule> getCarToServiceSchedules() {
-    return carToServiceSchedules;
+  public List<ServiceScheduleItem> getCarToServiceSchedules() {
+    return serviceScheduleItems;
   }
 
-  public void setCarToServiceSchedules(List<CarToServiceSchedule> carToServiceSchedules) {
-    this.carToServiceSchedules = carToServiceSchedules;
+  public void setCarToServiceSchedules(List<ServiceScheduleItem> serviceScheduleItems) {
+    this.serviceScheduleItems = serviceScheduleItems;
   }
 
   public int getMileage() {

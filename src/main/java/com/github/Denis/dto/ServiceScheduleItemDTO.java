@@ -3,7 +3,7 @@ package com.github.Denis.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /** This class match DTO frontend form with backend Entity CarToServiceSchedule */
-public class CarToServiceScheduleDTO {
+public class ServiceScheduleItemDTO {
 
   private Integer id;
 
@@ -18,9 +18,9 @@ public class CarToServiceScheduleDTO {
   private String serviceScheduleName;
   private boolean isRequired;
 
-  public CarToServiceScheduleDTO() {}
+  public ServiceScheduleItemDTO() {}
 
-  public CarToServiceScheduleDTO(
+  public ServiceScheduleItemDTO(
       Integer id,
       Integer periodicityKm,
       Long periodicityTimeDays,

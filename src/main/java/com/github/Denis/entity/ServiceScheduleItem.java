@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "car_to_service_schedules")
-public class CarToServiceSchedule {
+public class ServiceScheduleItem {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class CarToServiceSchedule {
   private ServiceSchedule serviceSchedule;
 
   @OneToMany(
-      mappedBy = "carToServiceSchedule",
+      mappedBy = "serviceScheduleItem",
       cascade = CascadeType.ALL,
       orphanRemoval =
           false) // OneToMany ServiceOperation reference, ServiceOperation is owner reference
@@ -51,14 +51,14 @@ public class CarToServiceSchedule {
   private List<ServiceOperation> serviceOperations;
 
   @OneToMany(
-      mappedBy = "carToServiceSchedule",
+      mappedBy = "serviceScheduleItem",
       cascade = CascadeType.ALL,
       orphanRemoval =
           false) // OneToMany Part reference, Part is owner reference (Part side is Many).
   @JsonIgnore
   private List<Part> parts;
 
-  public CarToServiceSchedule() {}
+  public ServiceScheduleItem() {}
 
   public int getId() {
     return id;
@@ -153,7 +153,7 @@ public class CarToServiceSchedule {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    CarToServiceSchedule that = (CarToServiceSchedule) o;
+    ServiceScheduleItem that = (ServiceScheduleItem) o;
     return id == that.id
         && periodicityKm == that.periodicityKm
         && Objects.equals(periodicityTimeDays, that.periodicityTimeDays)

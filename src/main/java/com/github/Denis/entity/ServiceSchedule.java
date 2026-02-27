@@ -43,7 +43,7 @@ public class ServiceSchedule {
           false) // OneToMany CarToServiceSchedule reference, CarToServiceSchedule is owner
   // reference (CarToServiceSchedule side is Many).
   @JsonIgnore
-  private List<CarToServiceSchedule> carToServiceSchedules;
+  private List<ServiceScheduleItem> serviceScheduleItems;
 
   public ServiceSchedule() {}
 
@@ -98,12 +98,12 @@ public class ServiceSchedule {
     }
   }
 
-  public List<CarToServiceSchedule> getCarToServiceSchedules() {
-    return carToServiceSchedules;
+  public List<ServiceScheduleItem> getCarToServiceSchedules() {
+    return serviceScheduleItems;
   }
 
-  public void setCarToServiceSchedules(List<CarToServiceSchedule> carToServiceSchedules) {
-    this.carToServiceSchedules = carToServiceSchedules;
+  public void setCarToServiceSchedules(List<ServiceScheduleItem> serviceScheduleItems) {
+    this.serviceScheduleItems = serviceScheduleItems;
   }
 
   @Override
@@ -116,12 +116,12 @@ public class ServiceSchedule {
         && Objects.equals(defaultPeriodKm, that.defaultPeriodKm)
         && Objects.equals(name, that.name)
         && Objects.equals(defaultPeriodTimeDays, that.defaultPeriodTimeDays)
-        && Objects.equals(carToServiceSchedules, that.carToServiceSchedules);
+        && Objects.equals(serviceScheduleItems, that.serviceScheduleItems);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, name, isRequired, defaultPeriodKm, defaultPeriodTimeDays, carToServiceSchedules);
+        id, name, isRequired, defaultPeriodKm, defaultPeriodTimeDays, serviceScheduleItems);
   }
 }

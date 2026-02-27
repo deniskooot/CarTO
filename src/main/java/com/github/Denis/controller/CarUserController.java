@@ -1,6 +1,8 @@
 package com.github.Denis.controller;
 
+import com.github.Denis.entity.Car;
 import com.github.Denis.entity.CarUser;
+import com.github.Denis.repository.CarRepository;
 import com.github.Denis.repository.CarUserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -15,22 +17,24 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api")
 public class CarUserController {
+  private final CarRepository carRepository;
   @PersistenceContext private EntityManager entityManager;
   private final CarUserRepository carUserRepository;
 
   @Autowired
-  CarUserController(CarUserRepository carUserRepository) {
+  CarUserController(CarUserRepository carUserRepository, CarRepository carRepository) {
     this.carUserRepository = carUserRepository;
+    this.carRepository = carRepository;
   }
 
   // Read
-  @GetMapping("/carusers")
+  @GetMapping("/carUsers")
   public List<CarUser> getCarUser() {
     return carUserRepository.findAll();
   }
 
   // Read by id
-  @GetMapping("/carusers/{id}")
+  @GetMapping("/carUsers/{id}")
   public CarUser getCarUserByID(@PathVariable int id) {
     return carUserRepository
         .findById(id)
@@ -38,8 +42,13 @@ public class CarUserController {
             () -> new ResponseStatusException(HttpStatusCode.valueOf(404), "Entity not found"));
   }
 
+  @GetMapping("/carUsers/{userId}/cars")
+  public List<Car> getCarList(@PathVariable Integer userId) {
+    return carRepository.getCarsByUserId(userId);
+  }
+
   // Create / Update
-  @PostMapping("/carusers")
+  @PostMapping("/carUsers")
   @Transactional
   public int saveNewCarUser(@RequestBody @Valid CarUser carUser) {
     carUser = carUserRepository.save(carUser);
@@ -47,7 +56,7 @@ public class CarUserController {
   }
 
   // Delete
-  @DeleteMapping("/carusers/{id}")
+  @DeleteMapping("/carUsers/{id}")
   public void deleteCarUser(@PathVariable int id) {
     carUserRepository.deleteById(id);
   }

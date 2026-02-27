@@ -28,13 +28,13 @@ public class ServiceOperationController {
   }
 
   // Read
-  @GetMapping("/serviceoperations")
+  @GetMapping("/serviceOperations")
   public List<ServiceOperation> getServiceOperation() {
     return serviceOperationsRepository.findAll();
   }
 
   // Read by id
-  @GetMapping("/serviceoperations/{id}")
+  @GetMapping("/serviceOperations/{id}")
   public ServiceOperation getServiceOperationByID(@PathVariable int id) {
     return serviceOperationsRepository
         .findById(id)
@@ -43,7 +43,7 @@ public class ServiceOperationController {
   }
 
   // Create / Update
-  @PostMapping("/serviceoperations")
+  @PostMapping("/serviceOperations")
   @Transactional
   public int saveNewServiceOperation(@RequestBody @Valid ServiceOperationDTO serviceOperationDTO) {
     ServiceOperation entity = serviceOperationMapper.toEntity(serviceOperationDTO);
@@ -52,7 +52,7 @@ public class ServiceOperationController {
   }
 
   // Delete
-  @DeleteMapping("/serviceoperations/{id}")
+  @DeleteMapping("/serviceOperations/{id}")
   public void deleteServiceOperation(@PathVariable int id) {
     serviceOperationsRepository.deleteById(id);
   }

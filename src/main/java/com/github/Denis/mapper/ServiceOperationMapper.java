@@ -1,8 +1,8 @@
 package com.github.Denis.mapper;
 
 import com.github.Denis.dto.ServiceOperationDTO;
-import com.github.Denis.entity.CarToServiceSchedule;
 import com.github.Denis.entity.ServiceOperation;
+import com.github.Denis.entity.ServiceScheduleItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -22,11 +22,11 @@ public interface ServiceOperationMapper {
   ServiceOperation toEntity(ServiceOperationDTO serviceOperationDTO);
 
   @Named("mapCarToServiceIdByServiceSchedule")
-  default CarToServiceSchedule mapCarToServiceIdByServiceSchedule(
+  default ServiceScheduleItem mapCarToServiceIdByServiceSchedule(
       Integer car_to_service_schedule_id) {
     if (car_to_service_schedule_id == null) return null;
-    CarToServiceSchedule carToServiceSchedule = new CarToServiceSchedule();
-    carToServiceSchedule.setId(car_to_service_schedule_id);
-    return carToServiceSchedule;
+    ServiceScheduleItem serviceScheduleItem = new ServiceScheduleItem();
+    serviceScheduleItem.setId(car_to_service_schedule_id);
+    return serviceScheduleItem;
   }
 }

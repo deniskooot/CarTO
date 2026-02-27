@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.github.Denis.entity.ServiceSchedule;
+import com.github.Denis.repository.ServiceScheduleItemRepository;
+import com.github.Denis.service.ServiceScheduleItemService;
 import com.github.Denis.service.ServiceScheduleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ class ServiceScheduleControllerTest {
   @Autowired private MockMvc mockMvc;
 
   @MockitoBean private ServiceScheduleService userService;
+
+  @MockitoBean private ServiceScheduleItemService serviceScheduleItemService;
+
+  @MockitoBean private ServiceScheduleItemRepository serviceScheduleItemRepository;
 
   @Test
   void getById() throws Exception {
@@ -36,7 +42,7 @@ class ServiceScheduleControllerTest {
     when(userService.getServiceScheduleByID(id)).thenReturn(result);
 
     mockMvc
-        .perform(get("/api/serviceschedules/{id}", id).accept(MediaType.APPLICATION_JSON))
+        .perform(get("/api/serviceSchedules/{id}", id).accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.id").value(id))
         .andExpect(jsonPath("$.name").value(name))

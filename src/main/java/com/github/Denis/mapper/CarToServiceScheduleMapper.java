@@ -1,8 +1,8 @@
 package com.github.Denis.mapper;
 
-import com.github.Denis.dto.CarToServiceScheduleDTO;
+import com.github.Denis.dto.ServiceScheduleItemDTO;
 import com.github.Denis.entity.Car;
-import com.github.Denis.entity.CarToServiceSchedule;
+import com.github.Denis.entity.ServiceScheduleItem;
 import java.time.Duration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,12 +17,12 @@ public interface CarToServiceScheduleMapper {
       source = "periodicity",
       target = "periodicityTimeDays",
       qualifiedByName = "mapDurationToInteger")
-  CarToServiceScheduleDTO toDTO(CarToServiceSchedule entity);
+  ServiceScheduleItemDTO toDTO(ServiceScheduleItem entity);
 
   // Преобразование из DTO в Entity
   @Mapping(source = "carId", target = "car", qualifiedByName = "mapCarIdToCar")
   @Mapping(source = "periodicityTimeDays", target = "periodicityTimeDays")
-  CarToServiceSchedule toEntity(CarToServiceScheduleDTO dto);
+  ServiceScheduleItem toEntity(ServiceScheduleItemDTO dto);
 
   // Преобразование Duration to Integer
   @Named("mapDurationToInteger")

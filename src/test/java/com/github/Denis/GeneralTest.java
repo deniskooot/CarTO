@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 /**
- * Проверяет что вообще приложение загружается нормально. Используется временный контейнер postgres
+ * Проверяет, что вообще приложение загружается нормально. Используется временный контейнер postgres
  * для тестов, прогоняются миграции.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

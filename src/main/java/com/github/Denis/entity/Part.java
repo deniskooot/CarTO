@@ -35,7 +35,7 @@ public class Part {
       name = "car_to_service_schedule_id",
       referencedColumnName = "car_to_service_schedule_id")
   @JsonIgnoreProperties({"hibernateLazyInitializer"})
-  private CarToServiceSchedule carToServiceSchedule;
+  private ServiceScheduleItem serviceScheduleItem;
 
   public Part() {}
 
@@ -79,12 +79,12 @@ public class Part {
     this.notes = notes;
   }
 
-  public CarToServiceSchedule getCarToServiceSchedule() {
-    return carToServiceSchedule;
+  public ServiceScheduleItem getCarToServiceSchedule() {
+    return serviceScheduleItem;
   }
 
-  public void setCarToServiceSchedule(CarToServiceSchedule carToServiceSchedule) {
-    this.carToServiceSchedule = carToServiceSchedule;
+  public void setCarToServiceSchedule(ServiceScheduleItem serviceScheduleItem) {
+    this.serviceScheduleItem = serviceScheduleItem;
   }
 
   @Override
@@ -117,12 +117,12 @@ public class Part {
         && Objects.equals(partNumberOriginal, part.partNumberOriginal)
         && Objects.equals(partNumberAnalogs, part.partNumberAnalogs)
         && Objects.equals(notes, part.notes)
-        && Objects.equals(carToServiceSchedule, part.carToServiceSchedule);
+        && Objects.equals(serviceScheduleItem, part.serviceScheduleItem);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, name, partNumberOriginal, partNumberAnalogs, notes, carToServiceSchedule);
+        id, name, partNumberOriginal, partNumberAnalogs, notes, serviceScheduleItem);
   }
 }
